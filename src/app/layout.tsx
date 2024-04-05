@@ -1,3 +1,4 @@
+import NavigationBar from "@/components/layout/NavigationBar";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -16,10 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-    <header>
+      <header></header>
+      <body className={inter.className}>
+        <NavigationBar />
 
-    </header>
-      <body className={inter.className}>{children}</body>
+        {children}
+      </body>
     </html>
   );
 }
