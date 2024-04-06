@@ -13,6 +13,7 @@ const config: Config = {
       button: ["14px", "18.9px"],
       body: ["16px", "21.6px"],
       "body-bold": ["14px", "18.9px"],
+      "number-card": ["60px", "81px"]
     },
     extend: {
       backgroundImage: {
