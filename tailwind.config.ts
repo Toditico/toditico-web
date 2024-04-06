@@ -11,6 +11,8 @@ const config: Config = {
       h1: ["28px", "37.8px"],
       h3: ["22px", "29.7px"],
       button: ["14px", "18.9px"],
+      body: ["16px", "21.6px"],
+      "body-bold": ["14px", "18.9px"],
     },
     extend: {
       backgroundImage: {
@@ -22,6 +24,7 @@ const config: Config = {
         primary: "#CE2C0D",
         secondary: "#DD562C",
         tertiary: "#041A42",
+        gray: "#EEE",
       },
     },
   },
