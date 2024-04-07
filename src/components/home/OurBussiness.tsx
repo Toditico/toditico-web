@@ -18,10 +18,10 @@ export default function OurBussiness() {
     ];
 
   return (
-    <div className="flex flex-col gap-6 items-center">
+    <div className="flex flex-col gap-6 items-center px-6">
       <p className="text-h1 text-primary font-bold">En nuestro negocio</p>
       {data.map(({ label, text }) => (
-        <OurBussinessCard {...{ label, text }} />
+        <OurBussinessCard {...{ label, text }} key={label} />
       ))}
     </div>
   );
