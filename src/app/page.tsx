@@ -1,5 +1,6 @@
 "use client";
 import OurBussiness from "@/components/home/OurBussiness";
+import OurStats from "@/components/home/OurStats";
 import dynamic from "next/dynamic";
 import { useMemo } from "react";
 
@@ -16,6 +17,7 @@ export default function Home() {
     <div className="flex flex-col gap-6 items-center py-12">
       <OurBussiness />
       <Map />
+      <OurStats />
     </div>
   );
 }
