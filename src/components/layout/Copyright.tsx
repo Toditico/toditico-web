@@ -9,7 +9,12 @@ export default function Copyright() {
     <div className="bg-primary py-3 px-6 flex flex-col gap-[10px] items-center h-[83px] text-white">
       <div className="flex flex-row gap-2">
         {links.map(({ src }) => (
-          <Image {...{ src }} height={24} alt="social" />
+          <Image
+            {...{ src }}
+            height={24}
+            alt="social"
+            key={JSON.stringify(src)}
+          />
         ))}
       </div>
       <p className="text-body-bold font-bold">© Copyright TODITICO 2024</p>

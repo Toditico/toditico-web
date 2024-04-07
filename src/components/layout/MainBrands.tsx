@@ -15,7 +15,13 @@ export default function MainBrands() {
     <>
       <div className="flex flex-row bg-primary h-20 py-8 px-6 gap-[10px] justify-between text-white">
         {brands.map(({ width, src }) => (
-          <Image {...{ width, src }} alt="Toditico" height={16} priority />
+          <Image
+            {...{ width, src }}
+            alt="Toditico"
+            height={16}
+            priority
+            key={JSON.stringify(src)}
+          />
         ))}
       </div>
     </>
