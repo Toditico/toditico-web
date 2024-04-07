@@ -5,7 +5,7 @@ type Props = {
 export default function OurBussinessCard({ label, text }: Props) {
   const getCircleClass = (label: "asociados" | "ofertas" | "garantías") => {
     const common =
-      "w-[120px] h-[120px] rounded-full flex items-center justify-center text-white text-number-card font-black";
+      "w-[120px] h-[120px] rounded-full flex items-center justify-center text-white text-number-card font-black md:w-[160px] md:h-[160px] md:text-number-card-tablet";
     const color =
       label === "asociados"
         ? "bg-secondary"
@@ -18,7 +18,7 @@ export default function OurBussinessCard({ label, text }: Props) {
     return label === "asociados" ? "01" : label === "garantías" ? "02" : "03";
   };
   const getLabelClass = (label: "asociados" | "ofertas" | "garantías") => {
-    const common = "text-h3 font-medium uppercase";
+    const common = "text-h3 font-medium uppercase md:text-h3-desktop";
     const color =
       label === "asociados"
         ? "text-secondary"
@@ -44,7 +44,7 @@ export default function OurBussinessCard({ label, text }: Props) {
       <div className="px-6 py-6 flex flex-col gap-[10px] items-center">
         <p className={getLabelClass(label)}>{label}</p>
         <div className={getBarClass(label)}></div>
-        <p className="text-button font-normal text-center">{text}</p>
+        <p className="text-button font-normal text-center md:text-body">{text}</p>
       </div>
     </div>
   );

@@ -26,13 +26,13 @@ export default function OurStatsCard({ type, number }: Props) {
 
   return (
     <div className="flex flex-col items-center shadow-lg w-full">
-      <div className="w-[120px] h-[120px] rounded-full flex items-center justify-center text-white text-number-card font-black bg-primary">
+      <div className="w-[160px] h-[160px] rounded-full flex items-center justify-center text-white text-number-card font-black bg-primary">
         {getCircleContent(type)}
       </div>
       <div className="px-6 py-6 flex flex-col gap-[10px] items-center">
-        <p className="text-h1 font-bold uppercase text-primary">{`+${number}`}</p>
+        <p className="text-h1 font-bold uppercase text-primary md:text-h1-tablet">{`+${number}`}</p>
         <div className="w-[80px] h-[4px] rounded bg-primary"></div>
-        <p className="text-button font-normal text-center uppercase">
+        <p className="text-button font-normal text-center uppercase md:text-body">
           {getCardText(type)}
         </p>
       </div>

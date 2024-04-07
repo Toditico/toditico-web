@@ -6,7 +6,7 @@ import Image from "next/image";
 export default function Copyright() {
   const links = [{ src: facebook }, { src: instagram }, { src: linkedin }];
   return (
-    <div className="bg-primary py-3 px-6 flex flex-col gap-[10px] items-center h-[83px] text-white">
+    <div className="bg-primary py-3 px-6 flex flex-col gap-[10px] items-center h-[83px] text-white md:h-[48px] md:flex-row-reverse md:justify-between">
       <div className="flex flex-row gap-2">
         {links.map(({ src }) => (
           <Image

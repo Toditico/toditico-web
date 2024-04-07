@@ -9,18 +9,17 @@ const config: Config = {
   theme: {
     fontSize: {
       h1: ["28px", "37.8px"],
+      "h1-tablet": ["38px", "51.3px"],
+      "h2-tablet": ["28px", "37.8px"],
       h3: ["22px", "29.7px"],
+      "h3-desktop": ["24px", "32.4px"],
       button: ["14px", "18.9px"],
       body: ["16px", "21.6px"],
       "body-bold": ["14px", "18.9px"],
-      "number-card": ["60px", "81px"]
+      "number-card": ["60px", "81px"],
+      "number-card-tablet": ["80px", "108px"],
     },
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
       colors: {
         primary: "#CE2C0D",
         secondary: "#DD562C",

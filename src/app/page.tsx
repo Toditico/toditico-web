@@ -14,7 +14,7 @@ export default function Home() {
   );
 
   return (
-    <div className="flex flex-col gap-6 items-center py-12">
+    <div className="flex flex-col gap-6 items-center">
       <OurBussiness />
       <Map />
       <OurStats />

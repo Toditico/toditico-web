@@ -18,11 +18,13 @@ export default function OurBussiness() {
     ];
 
   return (
-    <div className="flex flex-col gap-6 items-center px-6">
-      <p className="text-h1 text-primary font-bold">En nuestro negocio</p>
-      {data.map(({ label, text }) => (
-        <OurBussinessCard {...{ label, text }} key={label} />
-      ))}
+    <div className="px-6 py-12 md:px-[10px] md:pt-[48px] md:pb-[80px] md:w-[480px]">
+      <p className="text-h1 text-primary font-bold text-center mb-6 md:mb-12 md:text-h1-tablet">En nuestro negocio</p>
+      <div className="flex flex-col gap-4 items-center">
+        {data.map(({ label, text }) => (
+          <OurBussinessCard {...{ label, text }} key={label} />
+        ))}
+      </div>
     </div>
   );
 }
