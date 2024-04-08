@@ -10,7 +10,9 @@ const config: Config = {
     fontSize: {
       h1: ["28px", "37.8px"],
       "h1-tablet": ["38px", "51.3px"],
+      "h1-desktop": ["52px", "70.2px"],
       "h2-tablet": ["28px", "37.8px"],
+      "h2-desktop": ["38px", "51.3px"],
       h3: ["22px", "29.7px"],
       "h3-desktop": ["24px", "32.4px"],
       button: ["14px", "18.9px"],

@@ -7,12 +7,12 @@ export default function Header() {
   return (
     <>
       <NavigationBar />
-      <div className="h-[400px] bg-[url('../../public/images/hero-mobile.jpeg')] bg-cover py-[10px] px-[24px] flex items-center">
-        <div className="mx-auto my-[24px] text-center flex flex-col gap-[24px] items-center">
-          <h1 className="font-black text-h1 uppercase text-white md:text-h1-tablet">
+      <div className="h-[400px] bg-[url('../../public/images/hero-mobile.jpeg')] bg-cover py-[10px] px-[24px] flex items-center xl:h-[720px]">
+        <div className="mx-auto my-[24px] text-center flex flex-col gap-[24px] items-center xl:max-w-[1000px]">
+          <h1 className="font-black text-h1 uppercase text-white md:text-h1-tablet xl:text-h1-desktop">
             Rueda con confianza
           </h1>
-          <h3 className="font-medium text-h3 uppercase text-white md:text-h2-tablet">
+          <h3 className="font-medium text-h3 uppercase text-white md:text-h2-tablet xl:text-h2-desktop">
             Servicio superior, precios justos, calidad insuperable y garantía
             que perdura
           </h3>

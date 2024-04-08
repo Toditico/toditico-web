@@ -25,7 +25,7 @@ export default function OurStatsCard({ type, number }: Props) {
   };
 
   return (
-    <div className="flex flex-col items-center shadow-lg w-full">
+    <div className="flex flex-col items-center shadow-lg xl:min-w-[400px]">
       <div className="w-[160px] h-[160px] rounded-full flex items-center justify-center text-white text-number-card font-black bg-primary">
         {getCircleContent(type)}
       </div>

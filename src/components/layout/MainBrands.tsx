@@ -41,8 +41,8 @@ export default function MainBrands() {
   }, [width]);
 
   return (
-    <>
-      <div className="flex flex-row bg-primary h-20 py-8 px-6 gap-[10px] justify-between text-white md:p-12 md:h-[128px]">
+    <div className="bg-primary h-20 py-8 px-6 md:p-12 md:h-[128px] xl:h-[160px] xl:px-[10px] xl:py-12">
+      <div className="flex flex-row gap-[10px] justify-between text-white xl:max-w-[800px] mx-auto">
         {brands.map(({ width, src }) => (
           <Image
             {...{ width, src }}
@@ -59,6 +59,6 @@ export default function MainBrands() {
           />
         ))}
       </div>
-    </>
+    </div>
   );
 }

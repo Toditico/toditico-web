@@ -18,9 +18,9 @@ export default function OurBussiness() {
     ];
 
   return (
-    <div className="px-6 py-12 md:px-[10px] md:pt-[48px] md:pb-[80px] md:w-[480px]">
-      <p className="text-h1 text-primary font-bold text-center mb-6 md:mb-12 md:text-h1-tablet">En nuestro negocio</p>
-      <div className="flex flex-col gap-4 items-center">
+    <div className="px-6 py-12 md:px-[10px] md:pt-[48px] md:pb-[80px] md:w-[480px] xl:mx-auto xl:max-w-[1472px] xl:w-auto">
+      <p className="text-h1 text-primary font-bold text-center mb-6 md:mb-12 md:text-h1-tablet xl:text-h2-desktop">En nuestro negocio</p>
+      <div className="flex flex-col gap-4 items-center xl:flex-row">
         {data.map(({ label, text }) => (
           <OurBussinessCard {...{ label, text }} key={label} />
         ))}

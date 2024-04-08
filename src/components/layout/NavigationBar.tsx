@@ -6,7 +6,7 @@ import { colors } from "@/constants/colors";
 export default function NavigationBar() {
   return (
     <>
-      <nav className="h-24 flex flex-column px-6 py-3 gap-2.5">
+      <nav className="h-24 flex flex-column px-6 py-3 gap-2.5 xl:h-20 xl:flex-row xl:justify-between xl:items-center">
         <div className="flex flex-row justify-between items-center w-full">
           <Image
             src="/brand-no-logo.svg"
