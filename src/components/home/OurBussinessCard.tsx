@@ -39,7 +39,7 @@ export default function OurBussinessCard({ label, text }: Props) {
   };
 
   return (
-    <div className="flex flex-col items-center shadow-lg">
+    <div className="flex flex-col items-center shadow-lg xl:w-1/3">
       <div className={getCircleClass(label)}>{getCircleContent(label)}</div>
       <div className="px-6 py-6 flex flex-col gap-[10px] items-center">
         <p className={getLabelClass(label)}>{label}</p>

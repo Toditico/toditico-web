@@ -21,7 +21,7 @@ export default function OurStats() {
       <p className="text-h1 text-primary font-bold text-center mb-6 md:mb-12 md:text-h1-tablet xl:text-h2-desktop">
         Nuestros logros en números
       </p>
-      <div className="flex flex-col gap-4 items-center xl:flex-row">
+      <div className="flex flex-col gap-4 items-stretch w-full xl:flex-row">
         {data.map(({ type, number }) => (
           <OurStatsCard {...{ type, number }} key={type} />
         ))}
