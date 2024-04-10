@@ -7,7 +7,7 @@ export default function Header() {
   return (
     <>
       <NavigationBar />
-      <div className="h-[400px] bg-[url('../../public/images/hero-mobile.jpeg')] bg-cover py-[10px] px-[24px] flex items-center xl:h-[720px]">
+      <div className="h-[400px] bg-home bg-cover py-[10px] px-[24px] flex items-center md:bg-home-tablet xl:h-[720px]">
         <div className="mx-auto my-[24px] text-center flex flex-col gap-[24px] items-center xl:max-w-[1000px]">
           <h1 className="font-black text-h1 uppercase text-white md:text-h1-tablet xl:text-h1-desktop">
             Rueda con confianza

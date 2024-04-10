@@ -7,7 +7,7 @@ export default function ContactUs() {
   const phones = "+53 50745857 / +53 53476207";
   const time = "Todos los días de 9:00 am - 5:00 pm";
   return (
-    <div className="bg-gray py-12 px-6 flex flex-col gap-[10px] items-center">
+    <div className="bg-gray py-12 px-6 flex flex-col gap-[10px] items-center xl:flex-row xl:px-12 xl:justify-between">
       <Image src={brand} alt="Toditico Logo" />
       <div className="flex flex-col gap-4 text-center">
         <p className="text-body-bold font-bold uppercase">contáctenos</p>

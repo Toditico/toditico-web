@@ -29,6 +29,10 @@ const config: Config = {
         gray: "#EEE",
       },
     },
+    backgroundImage: {
+      home: "url('/images/home-mobile.jpeg')",
+      "home-tablet": "url('/images/home-tablet.jpeg')",
+    },
   },
   plugins: [],
 };
