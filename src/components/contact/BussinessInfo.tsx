@@ -1,11 +1,11 @@
 export default function BussinessInfo() {
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 px-6 mb-12 md:w-[500px] md:mx-auto">
       <div className="flex flex-col gap-4 text-center items-center mb-8">
         <p className="text-h2-tablet text-primary font-bold">Que es Toditico</p>
         <div className="w-[160px] h-[4px] rounded bg-primary"></div>
       </div>
-      <p className="text-button text-center">
+      <p className="text-button text-center md:text-left">
         TODITICO es un proyecto relativamente joven, con el concepto de tienda
         comercializadora de partes y piezas de la industria automotriz en el
         mercado cubano.
@@ -17,13 +17,13 @@ export default function BussinessInfo() {
         soluciones confiables y duraderas para mantener los vehículos en su
         mejor estado y garantizar la seguridad en las carreteras.
       </p>
-      <p className="text-button text-center">
+      <p className="text-button text-center md:text-left">
         Con la vista en nuestra prioridad, la satisfacción del cliente, contamos
         con un equipo altamente capacitado y apasionado por la industria,
         siempre dispuesto a dar el soporte necesario a nuestros clientes,
         proporcionando un servicio amable y eficiente.
       </p>
-      <div className="flex flex-col gap-4 text-center">
+      <div className="flex flex-col gap-4 text-center md:text-left">
         <p className="font-bold text-button">
           Misión: <br />
           <span className="font-normal text-button">
