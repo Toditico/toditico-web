@@ -32,6 +32,7 @@ const config: Config = {
     backgroundImage: {
       home: "url('/images/home-mobile.jpeg')",
       "home-tablet": "url('/images/home-tablet.jpeg')",
+      contact: "url('/images/aboutus.jpeg')",
     },
   },
   plugins: [],
