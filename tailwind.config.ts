@@ -23,8 +23,10 @@ const config: Config = {
       "number-card-tablet": ["80px", "108px"],
       "contact-bottom-info": ["30px", "40.5px"],
       "contact-bottom-info-tablet": ["40px", "54px"],
+      "contact-bottom-info-desktop": ["60px", "81px"],
       "contact-bottom-info-trust": ["40px", "54px"],
       "contact-bottom-info-trust-tablet": ["50px", "67.5px"],
+      "contact-bottom-info-trust-desktop": ["70px", "94.5px"],
     },
     extend: {
       colors: {
