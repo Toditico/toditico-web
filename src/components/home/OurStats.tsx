@@ -1,18 +1,24 @@
 import OurStatsCard from "./OurStatsCard";
 
-export default function OurStats() {
+type Props = {
+  sales: number;
+  customers: number;
+  products: number;
+};
+
+export default function OurStats({ sales, customers, products }: Props) {
   const data: { type: "sales" | "customers" | "products"; number: number }[] = [
     {
       type: "sales",
-      number: 4500,
+      number: sales,
     },
     {
       type: "customers",
-      number: 2000,
+      number: customers,
     },
     {
       type: "products",
-      number: 600,
+      number: products,
     },
   ];
 
