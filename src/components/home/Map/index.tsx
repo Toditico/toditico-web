@@ -5,6 +5,8 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import { Inventory, Workshop } from "@/types/home";
 import { Icon, latLng, Point, latLngBounds } from "leaflet";
 import { useMemo } from "react";
+import InventoryPopup from "./InventoryPopup";
+import { NoPaddingPopup } from "./styles";
 
 type Props = {
   inventories: Inventory[];
@@ -24,8 +26,6 @@ const workshopIcon = new Icon({
 });
 
 export default function Map({ inventories, workshops }: Props) {
-  console.log(inventories);
-
   const inventoryMarkers = useMemo(() => {
     return inventories
       .filter(({ latitude, longitude }) => latitude && longitude)
@@ -35,7 +35,9 @@ export default function Map({ inventories, workshops }: Props) {
           position={latLng(inventory.latitude ?? 0, inventory.longitude ?? 0)}
           icon={inventoryIcon}
         >
-          <Popup>prueba</Popup>
+          <NoPaddingPopup>
+            <InventoryPopup {...{ inventory }} />
+          </NoPaddingPopup>
         </Marker>
       ));
   }, inventories);
@@ -75,4 +77,3 @@ export default function Map({ inventories, workshops }: Props) {
     </MapContainer>
   );
 }
-

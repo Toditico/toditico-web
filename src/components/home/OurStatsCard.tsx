@@ -18,7 +18,7 @@ export default function OurStatsCard({ type, number }: Props) {
   };
   const getCardText = (type: "sales" | "customers" | "products") => {
     return type === "sales"
-      ? "Ventas mensuales"
+      ? "Ventas"
       : type === "customers"
       ? "Clientes satisfechos"
       : "Piezas disonibles en stock";
