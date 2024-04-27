@@ -9,7 +9,7 @@ import { useEffect, useMemo, useState } from "react";
 export default function Home() {
   const Map = useMemo(
     () =>
-      dynamic(() => import("@/components/home/Map"), {
+      dynamic(() => import("@/components/home/Map/"), {
         ssr: false,
       }),
     []
@@ -32,7 +32,12 @@ export default function Home() {
   return (
     <div className="flex flex-col gap-6 items-center">
       <OurBussiness />
-      <Map />
+      {data && (
+        <Map
+          inventories={data?.inventories ?? []}
+          workshops={data?.workshops ?? []}
+        />
+      )}
       <OurStats
         customers={data?.stats.customers ?? 0}
         products={data?.stats.products ?? 0}
