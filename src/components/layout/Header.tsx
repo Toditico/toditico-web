@@ -42,7 +42,7 @@ export default function Header() {
           )}
           {!isCatalogView && (
             <Button
-              className="text-button h-[44px] rounded-lg py-[10px] px-[16px] uppercase bg-primary font-bold max-w-[300px] md:h-[56px] md:py-[16px]"
+              className="text-button h-[44px] rounded-lg py-[10px] px-[16px] uppercase font-bold max-w-[300px] md:h-[56px] md:py-[16px]"
               variant="contained"
               startIcon={<IconShoppingBag />}
             >

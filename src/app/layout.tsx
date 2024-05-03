@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { ThemeProvider } from "@emotion/react";
+import { theme } from "@/theme";
 
 const satoshi = localFont({ src: "../../public/fonts/Satoshi-Variable.woff2" });
 export default function RootLayout({
@@ -12,12 +14,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <header></header>
-      <body className={satoshi.className}>
-        <Header />
-        {children}
-        <Footer/>
-      </body>
+      <ThemeProvider {...{ theme }}>
+        <body className={satoshi.className}>
+          <Header />
+          {children}
+          <Footer />
+        </body>
+      </ThemeProvider>
     </html>
   );
 }
