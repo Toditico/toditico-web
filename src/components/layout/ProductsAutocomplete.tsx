@@ -13,6 +13,10 @@ export default function ProductsAutocomplete() {
       }}
       filterOptions={(x) => x}
       forcePopupIcon={false}
+      popupIcon={false}
+      autoComplete
+      filterSelectedOptions
+      includeInputInList
       {...{ options }}
       renderInput={(params) => (
         <TextField

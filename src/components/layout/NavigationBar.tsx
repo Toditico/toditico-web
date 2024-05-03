@@ -3,6 +3,7 @@ import { IconMenu2 } from "@tabler/icons-react";
 import { IconShoppingBag } from "@tabler/icons-react";
 import { colors } from "@/constants/colors";
 import ProductsAutocomplete from "./ProductsAutocomplete";
+import CurrenciesSelect from "./CurrenciesSelect";
 
 export default function NavigationBar() {
   return (
@@ -21,8 +22,9 @@ export default function NavigationBar() {
             <IconMenu2 color={colors.primary} />
           </div>
         </div>
-        <div className="flex flex-row">
+        <div className="flex flex-row gap-2">
           <ProductsAutocomplete />
+	  <CurrenciesSelect />
         </div>
       </nav>
     </>

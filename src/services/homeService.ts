@@ -1,4 +1,4 @@
-import {HomeResponse} from "@/types/home";
+import { HomeResponse } from "@/types/home";
 import { BaseService } from "./baseService";
 
 class HomeService extends BaseService<HomeResponse> {
