@@ -1,12 +1,14 @@
+import { useCurrencyStore } from "@/stores/currency";
 import { Currency } from "@/types/shared";
 import { TextField, Autocomplete } from "@mui/material";
-import { useState } from "react";
 
 export default function CurrenciesSelect() {
-  const [currencies, setCurrencies] = useState<Currency[]>([
-    { name: "USD", exchangeFactor: 1, _id: "1" },
-    { name: "CUP", exchangeFactor: 390, _id: "2" },
-  ]);
+  const currencies = useCurrencyStore((state) => state.currencies);
+  const selectedCurrency = useCurrencyStore((state) => state.selectedCurrency);
+  const setSelectedCurrency = useCurrencyStore(
+    (state) => state.setSelectedCurrency
+  );
+
   return (
     <Autocomplete
       className="rounded"
@@ -17,6 +19,9 @@ export default function CurrenciesSelect() {
       disableClearable
       options={currencies}
       getOptionLabel={({ name }) => name}
+      isOptionEqualToValue={(option, value) => option._id === value._id}
+      value={selectedCurrency ?? null}
+      onChange={(event: any, value: Currency) => setSelectedCurrency(value)}
       renderInput={(params) => (
         <TextField
           {...params}

@@ -2,6 +2,7 @@
 import OurBussiness from "@/components/home/OurBussiness";
 import OurStats from "@/components/home/OurStats";
 import clientHomeService from "@/services/clientHomeService";
+import { useCurrencyStore } from "@/stores/currency";
 import { HomeResponse } from "@/types/home";
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
@@ -17,10 +18,14 @@ export default function Home() {
 
   const [data, setData] = useState<HomeResponse>();
 
+  const setCurrencies = useCurrencyStore((state) => state.setCurrencies);
+
   useEffect(() => {
     const getData = async () => {
       try {
         const data = await clientHomeService.getData();
+        const { currencies } = data;
+        setCurrencies(currencies);
         setData(data);
       } catch (error) {
         console.log("error: ", error);
