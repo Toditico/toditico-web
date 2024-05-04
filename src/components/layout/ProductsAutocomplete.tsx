@@ -1,11 +1,15 @@
 import { colors } from "@/constants/colors";
+import clientProductService from "@/services/clientProductsService";
 import { useInventoryStore } from "@/stores/inventory";
+import { Product } from "@/types/shared";
 import { InputAdornment, TextField, Autocomplete } from "@mui/material";
 import { IconSearch } from "@tabler/icons-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { debounce } from "@mui/material/utils";
 
 export default function ProductsAutocomplete() {
-  const [options, setOptions] = useState<any[]>([]);
+  const [value, setValue] = useState<string>("");
+  const [options, setOptions] = useState<Product[]>([]);
   const inventories = useInventoryStore((state) => state.inventories);
   const setOpenSelectionModal = useInventoryStore(
     (state) => state.setOpenSelectionModal
@@ -17,8 +21,17 @@ export default function ProductsAutocomplete() {
     if (selectedInventory) {
       return;
     }
-    setOpenSelectionModal(true)
+    setOpenSelectionModal(true);
   };
+  const fetchProducts = useMemo(() => {
+    return debounce(async () => {
+      const products = await clientProductService.getAutocomplete(
+        value,
+        selectedInventory!._id
+      );
+    }, 1000);
+  }, [selectedInventory]);
+
   return (
     <Autocomplete
       className="rounded"
@@ -34,6 +47,10 @@ export default function ProductsAutocomplete() {
       onFocus={checkIfThereIsAnyInventorySelected}
       {...{ options }}
       disabled={inventories.length === 0}
+      onInputChange={(event, inputValue) => {
+        setValue(inputValue);
+        fetchProducts();
+      }}
       renderInput={(params) => (
         <TextField
           {...params}

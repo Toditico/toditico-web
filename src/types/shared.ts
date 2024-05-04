@@ -10,7 +10,6 @@ export type Inventory = {
   address?: string;
   latitude: number;
   longitude: number;
-  isPublic: boolean;
   _id: string
 };
 
@@ -20,6 +19,16 @@ export type Workshop = {
   address?: string;
   latitude?: number;
   longitude?: number;
-  isPublic?: boolean;
 };
 
+export type Product = {
+  name: string
+  description?: string
+  sellPrice: number
+  count: number
+  // modules: PopulatedDoc<Brand & Module>[]
+  code: string
+  imageUrl?: string
+  secondaryImagesUrls?: string[]
+  _id: string
+}
