@@ -11,6 +11,7 @@ export type Inventory = {
   latitude: number;
   longitude: number;
   isPublic: boolean;
+  _id: string
 };
 
 export type Workshop = {

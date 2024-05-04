@@ -18,6 +18,7 @@ const config: Config = {
       "h3-desktop": ["24px", "32.4px"],
       button: ["14px", "18.9px"],
       body: ["16px", "21.6px"],
+      small: ["12px", "16.2px"],
       "body-bold": ["14px", "18.9px"],
       "number-card": ["60px", "81px"],
       "number-card-tablet": ["80px", "108px"],
@@ -34,6 +35,7 @@ const config: Config = {
         secondary: "#DD562C",
         tertiary: "#041A42",
         gray: "#EEE",
+        "dark-gray": "#999",
       },
     },
     backgroundImage: {

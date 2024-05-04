@@ -22,6 +22,7 @@ export default function CurrenciesSelect() {
       isOptionEqualToValue={(option, value) => option._id === value._id}
       value={selectedCurrency ?? null}
       onChange={(event: any, value: Currency) => setSelectedCurrency(value)}
+      disabled={currencies.length === 0}
       renderInput={(params) => (
         <TextField
           {...params}
