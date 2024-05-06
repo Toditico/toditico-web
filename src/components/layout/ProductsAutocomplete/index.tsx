@@ -4,14 +4,12 @@ import { useInventoryStore } from "@/stores/inventory";
 import { Product } from "@/types/shared";
 import { InputAdornment, TextField, Autocomplete } from "@mui/material";
 import { IconSearch } from "@tabler/icons-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ProductsAutocompleteOption from "./ProductAutocompleteOption";
 
 export default function ProductsAutocomplete() {
   const [value, setValue] = useState<string>("");
-  const [options, setOptions] = useState<Product[]>([
-    { _id: "01", code: "01", count: 10, name: "hola", sellPrice: 10 },
-  ]);
+  const [options, setOptions] = useState<Product[]>([]);
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
 
   const inventories = useInventoryStore((state) => state.inventories);
@@ -52,7 +50,7 @@ export default function ProductsAutocomplete() {
 
   return (
     <Autocomplete
-      className="rounded w-[calc(100%-100px)]"
+      className="rounded w-[calc(100%-100px)] xl:w-[500px]"
       sx={{
         height: "40px",
       }}

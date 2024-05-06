@@ -24,7 +24,7 @@ export default function NavigationBar() {
             height={40}
             priority
           />
-          <div className="flex flex-row gap-4">
+          <div className="flex flex-row gap-4 xl:hidden">
             <IconBuildingWarehouse
               color={colors.primary}
               onClick={() => setOpenSelectionModal(true)}
@@ -33,9 +33,17 @@ export default function NavigationBar() {
             <IconMenu2 color={colors.primary} />
           </div>
         </div>
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row gap-2 xl:w-[600px] xl:items-center">
           <ProductsAutocomplete />
           <CurrenciesSelect />
+          <div className="flex-row gap-4 hidden xl:flex">
+            <IconBuildingWarehouse
+              color={colors.primary}
+              onClick={() => setOpenSelectionModal(true)}
+            />
+            <IconShoppingBag color={colors.primary} />
+            <IconMenu2 color={colors.primary} />
+          </div>
         </div>
       </nav>
     </>
