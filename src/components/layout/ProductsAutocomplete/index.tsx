@@ -52,7 +52,7 @@ export default function ProductsAutocomplete() {
 
   return (
     <Autocomplete
-      className="rounded"
+      className="rounded w-[calc(100%-100px)]"
       sx={{
         height: "40px",
       }}
@@ -78,18 +78,22 @@ export default function ProductsAutocomplete() {
           variant="filled"
           type="search"
           sx={{ height: "40px" }}
+          placeholder="Buscar"
+          fullWidth
           InputProps={{
-            placeholder: "Buscar",
-            sx: { height: "40px", paddingTop: "0 !important" },
-            startAdornment: (
-              <InputAdornment
-                className="testing"
-                position="start"
-                style={{ marginTop: 0 }}
-              >
-                <IconSearch color={colors.primary} />
-              </InputAdornment>
-            ),
+            ...params.InputProps,
+            ...{
+              sx: { height: "40px", paddingTop: "0 !important" },
+              startAdornment: (
+                <InputAdornment
+                  className="testing"
+                  position="start"
+                  style={{ marginTop: 0 }}
+                >
+                  <IconSearch color={colors.primary} />
+                </InputAdornment>
+              ),
+            },
           }}
         />
       )}
