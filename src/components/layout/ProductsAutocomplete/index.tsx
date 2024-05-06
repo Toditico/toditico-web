@@ -4,12 +4,16 @@ import { useInventoryStore } from "@/stores/inventory";
 import { Product } from "@/types/shared";
 import { InputAdornment, TextField, Autocomplete } from "@mui/material";
 import { IconSearch } from "@tabler/icons-react";
-import { useMemo, useState } from "react";
-import { debounce } from "@mui/material/utils";
+import { useEffect, useMemo, useRef, useState } from "react";
+import ProductsAutocompleteOption from "./ProductAutocompleteOption";
 
 export default function ProductsAutocomplete() {
   const [value, setValue] = useState<string>("");
-  const [options, setOptions] = useState<Product[]>([]);
+  const [options, setOptions] = useState<Product[]>([
+    { _id: "01", code: "01", count: 10, name: "hola", sellPrice: 10 },
+  ]);
+  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+
   const inventories = useInventoryStore((state) => state.inventories);
   const setOpenSelectionModal = useInventoryStore(
     (state) => state.setOpenSelectionModal
@@ -23,14 +27,28 @@ export default function ProductsAutocomplete() {
     }
     setOpenSelectionModal(true);
   };
-  const fetchProducts = useMemo(() => {
-    return debounce(async () => {
+
+  useEffect(() => {
+    console.log("options changed: ", options);
+  }, [options]);
+
+  useEffect(() => {
+    if (!value) {
+      return;
+    }
+    const fetchProducts = async () => {
       const products = await clientProductService.getAutocomplete(
         value,
         selectedInventory!._id
       );
-    }, 1000);
-  }, [selectedInventory]);
+      setOptions(products);
+    };
+    fetchProducts();
+  }, [value]);
+
+  const selectedProduct = (product: Product) => {
+    console.log("clicked product: ", product);
+  };
 
   return (
     <Autocomplete
@@ -39,17 +57,20 @@ export default function ProductsAutocomplete() {
         height: "40px",
       }}
       filterOptions={(x) => x}
+      options={options}
+      autoComplete
+      includeInputInList
+      filterSelectedOptions
       forcePopupIcon={false}
       popupIcon={false}
-      autoComplete
-      filterSelectedOptions
-      includeInputInList
+      getOptionLabel={(product) => product.name}
       onFocus={checkIfThereIsAnyInventorySelected}
-      {...{ options }}
       disabled={inventories.length === 0}
       onInputChange={(event, inputValue) => {
-        setValue(inputValue);
-        fetchProducts();
+        clearTimeout(timerRef.current);
+        timerRef.current = setTimeout(() => {
+          setValue(inputValue);
+        }, 1000);
       }}
       renderInput={(params) => (
         <TextField
@@ -72,6 +93,16 @@ export default function ProductsAutocomplete() {
           }}
         />
       )}
+      renderOption={(props, product) => {
+        return (
+          <ProductsAutocompleteOption
+            {...{ props }}
+            key={product._id}
+            onClick={selectedProduct}
+            product={product}
+          />
+        );
+      }}
     />
   );
 }

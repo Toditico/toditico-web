@@ -5,9 +5,9 @@ import {
   IconBuildingWarehouse,
 } from "@tabler/icons-react";
 import { colors } from "@/constants/colors";
-import ProductsAutocomplete from "./ProductsAutocomplete";
 import CurrenciesSelect from "./CurrenciesSelect";
 import { useInventoryStore } from "@/stores/inventory";
+import ProductsAutocomplete from "./ProductsAutocomplete";
 
 export default function NavigationBar() {
   const setOpenSelectionModal = useInventoryStore(
