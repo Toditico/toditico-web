@@ -2,7 +2,12 @@ import { colors } from "@/constants/colors";
 import clientProductService from "@/services/clientProductsService";
 import { useInventoryStore } from "@/stores/inventory";
 import { Product } from "@/types/shared";
-import { InputAdornment, TextField, Autocomplete } from "@mui/material";
+import {
+  InputAdornment,
+  TextField,
+  Autocomplete,
+  CircularProgress,
+} from "@mui/material";
 import { IconSearch } from "@tabler/icons-react";
 import { useEffect, useRef, useState } from "react";
 import ProductsAutocompleteOption from "./ProductAutocompleteOption";
@@ -10,6 +15,7 @@ import ProductsAutocompleteOption from "./ProductAutocompleteOption";
 export default function ProductsAutocomplete() {
   const [value, setValue] = useState<string>("");
   const [options, setOptions] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
 
   const inventories = useInventoryStore((state) => state.inventories);
@@ -26,6 +32,10 @@ export default function ProductsAutocomplete() {
     setOpenSelectionModal(true);
   };
 
+  const clearOptions = () => {
+    setOptions([]);
+  };
+
   useEffect(() => {
     console.log("options changed: ", options);
   }, [options]);
@@ -35,11 +45,18 @@ export default function ProductsAutocomplete() {
       return;
     }
     const fetchProducts = async () => {
-      const products = await clientProductService.getAutocomplete(
-        value,
-        selectedInventory!._id
-      );
-      setOptions(products);
+      setLoading(true);
+      try {
+        const products = await clientProductService.getAutocomplete(
+          value,
+          selectedInventory!._id
+        );
+        setOptions(products);
+      } catch (error) {
+        setOptions([]);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchProducts();
   }, [value]);
@@ -63,9 +80,21 @@ export default function ProductsAutocomplete() {
       popupIcon={false}
       getOptionLabel={(product) => product.name}
       onFocus={checkIfThereIsAnyInventorySelected}
+      onBlur={clearOptions}
+      noOptionsText="Inserte al menos 3 caracteres"
+      loading={loading}
+      loadingText=<div className="flex items-center gap-2">
+        <CircularProgress size={16} />
+        Por favor espere...
+      </div>
       disabled={inventories.length === 0}
       onInputChange={(event, inputValue) => {
         clearTimeout(timerRef.current);
+        if (!inputValue) {
+          setValue("");
+          setOptions([]);
+          return;
+        }
         timerRef.current = setTimeout(() => {
           setValue(inputValue);
         }, 1000);
@@ -83,11 +112,7 @@ export default function ProductsAutocomplete() {
             ...{
               sx: { height: "40px", paddingTop: "0 !important" },
               startAdornment: (
-                <InputAdornment
-                  className="testing"
-                  position="start"
-                  style={{ marginTop: 0 }}
-                >
+                <InputAdornment position="start" style={{ marginTop: 0 }}>
                   <IconSearch color={colors.primary} />
                 </InputAdornment>
               ),
