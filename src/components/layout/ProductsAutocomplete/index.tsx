@@ -1,4 +1,6 @@
+import { breakpoints } from "@/constants/breakpoints";
 import { colors } from "@/constants/colors";
+import { useWindowSize } from "@/hooks/useWindowSize";
 import clientProductService from "@/services/clientProductsService";
 import { useInventoryStore } from "@/stores/inventory";
 import { Product } from "@/types/shared";
@@ -16,6 +18,7 @@ export default function ProductsAutocomplete() {
   const [value, setValue] = useState<string>("");
   const [options, setOptions] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const { width } = useWindowSize();
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
 
   const inventories = useInventoryStore((state) => state.inventories);
@@ -98,6 +101,18 @@ export default function ProductsAutocomplete() {
         timerRef.current = setTimeout(() => {
           setValue(inputValue);
         }, 1000);
+      }}
+      componentsProps={{
+        paper: {
+          sx: {
+            width:
+              width < breakpoints.tablet
+                ? "90vw"
+                : width < breakpoints.desktop
+                ? undefined
+                : "600px",
+          },
+        },
       }}
       renderInput={(params) => (
         <TextField
