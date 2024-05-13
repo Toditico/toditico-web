@@ -20,6 +20,16 @@ class ProductService extends BaseService<Product> {
     const url = `/autocomplete?${queryParams}`;
     return this.instance.get(url).then((result) => result.data);
   };
+
+  getDetails = (code: string, inventoryId: string, currencyId: string) => {
+    const queryParamsOptions = {
+      inventoryId,
+      currencyId,
+    };
+    const queryParams = stringify(queryParamsOptions, { indices: false });
+    const url = `/details/${code}?${queryParams}`;
+    return this.instance.get(url).then((result) => result.data);
+  };
 }
 
 const productService = new ProductService();

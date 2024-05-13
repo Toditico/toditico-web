@@ -1,5 +1,6 @@
 import { Product } from "@/types/shared";
 import Image from "next/image";
+import Link from "next/link";
 import PlaceHolderImage from "../../../../public/images/placeholder.png";
 
 type Props = {
@@ -13,7 +14,11 @@ export default function ProductsAutocompleteOption({
 }: Props) {
   const { name, sellPrice, imageUrl } = product;
   return (
-    <div className="flex gap-1 mb-2 cursor-pointer items-center" onClick={() => onClick(product)}>
+    <Link
+      className="flex gap-1 mb-2 cursor-pointer items-center"
+      href={`/product/${product.code}`}
+      onClick={() => onClick(product)}
+    >
       <Image
         src={`${imageUrl}` || PlaceHolderImage}
         alt="Placeholder Image"
@@ -24,6 +29,6 @@ export default function ProductsAutocompleteOption({
         <p className="text-body font-bold text-dark-gray">{name}</p>
         <p className="text-body font-bold">{`$${sellPrice ?? 350}`}</p>
       </div>
-    </div>
+    </Link>
   );
 }

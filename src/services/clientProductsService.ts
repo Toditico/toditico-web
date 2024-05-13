@@ -7,8 +7,10 @@ class ClientProductService extends ClientBaseService<Product> {
     super("products/");
   }
 
-  getData = () => {
-    return this.getOne();
+  getDetails = (code: string, currencyId: string, inventoryId: string) => {
+    return this.getOne(
+      `/details/${code}?currency=${currencyId}&inventory=${inventoryId}`
+    );
   };
 
   getAutocomplete = (text: string, inventory: string) => {

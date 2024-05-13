@@ -41,6 +41,8 @@ const config: Config = {
     backgroundImage: {
       home: "url('/images/home-mobile.jpeg')",
       "home-tablet": "url('/images/home-tablet.jpeg')",
+      catalog: "url('/images/catalog-tablet.jpeg')",
+      "catalog-desktop": "url('/images/catalog-desktop.jpeg')",
       contact: "url('/images/aboutus.jpeg')",
       "contact-bottom": "url('/images/aboutusbottom.jpeg')",
     },

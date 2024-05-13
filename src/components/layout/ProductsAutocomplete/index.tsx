@@ -40,10 +40,6 @@ export default function ProductsAutocomplete() {
   };
 
   useEffect(() => {
-    console.log("options changed: ", options);
-  }, [options]);
-
-  useEffect(() => {
     if (!value) {
       return;
     }
@@ -65,7 +61,8 @@ export default function ProductsAutocomplete() {
   }, [value]);
 
   const selectedProduct = (product: Product) => {
-    console.log("clicked product: ", product);
+    setOptions([]);
+    setValue("");
   };
 
   return (

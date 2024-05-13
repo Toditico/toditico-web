@@ -14,8 +14,9 @@ export default function Header() {
       ? "Sobre nosotros, Toditico"
       : "Catálogo de productos";
   };
+
   const isHomeView = path === "/";
-  const isCatalogView = path === "/catalog";
+  const isCatalogView = path === "/catalog" || path.startsWith('/product');
   const isContactView = path === "/contact";
 
   return (
@@ -27,6 +28,7 @@ export default function Header() {
           {
             "bg-home md:bg-home-tablet bg-cover": isHomeView,
             "bg-contact bg-center": isContactView,
+            "bg-catalog xl:bg-catalog-desktop bg-center": isCatalogView,
           }
         )}
       >
