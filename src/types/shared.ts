@@ -32,3 +32,10 @@ export type Product = {
   secondaryImagesUrls?: string[]
   _id: string
 }
+
+export type Module = {
+  name: string
+  imageUrl?: string
+  _id: string
+}
+

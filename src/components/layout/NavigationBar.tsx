@@ -9,7 +9,11 @@ import CurrenciesSelect from "./CurrenciesSelect";
 import { useInventoryStore } from "@/stores/inventory";
 import ProductsAutocomplete from "./ProductsAutocomplete";
 
-export default function NavigationBar() {
+type Props = {
+  openMenu: () => void;
+};
+
+export default function NavigationBar({ openMenu }: Props) {
   const setOpenSelectionModal = useInventoryStore(
     (state) => state.setOpenSelectionModal
   );
@@ -30,7 +34,7 @@ export default function NavigationBar() {
               onClick={() => setOpenSelectionModal(true)}
             />
             <IconShoppingBag color={colors.primary} />
-            <IconMenu2 color={colors.primary} />
+            <IconMenu2 color={colors.primary} onClick={() => openMenu()} />
           </div>
         </div>
         <div className="flex flex-row gap-2 xl:w-[600px] xl:items-center">

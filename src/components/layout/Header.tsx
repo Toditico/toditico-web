@@ -1,12 +1,15 @@
 import NavigationBar from "@/components/layout/NavigationBar";
-import { Button } from "@mui/material";
+import { Button, Drawer } from "@mui/material";
 import { IconShoppingBag } from "@tabler/icons-react";
 import MainBrands from "@/components/layout/MainBrands";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+import { useState } from "react";
+import AppDrawer from "./AppDrawer/";
 
 export default function Header() {
   const path = usePathname();
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const getH1Content = (path: string) => {
     return path === "/"
       ? "Rueda con confianza"
@@ -16,12 +19,19 @@ export default function Header() {
   };
 
   const isHomeView = path === "/";
-  const isCatalogView = path === "/catalog" || path.startsWith('/product');
+  const isCatalogView = path === "/catalog" || path.startsWith("/product");
   const isContactView = path === "/contact";
+  const openDrawer = () => {
+    setDrawerOpen(true);
+  };
+  const closeDrawer = () => {
+    setDrawerOpen(false);
+  };
 
   return (
     <>
-      <NavigationBar />
+      <AppDrawer isOpen={drawerOpen} closeDrawer={closeDrawer} />
+      <NavigationBar openMenu={openDrawer} />
       <div
         className={clsx(
           "h-[400px] py-[10px] px-[24px] flex items-center xl:h-[720px]",

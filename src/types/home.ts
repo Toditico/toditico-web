@@ -1,4 +1,4 @@
-import { Currency, Inventory, Workshop } from "./shared";
+import { Currency, Inventory, Module, Workshop } from "./shared";
 
 export type Stats = {
   customers: number;
@@ -11,4 +11,5 @@ export type HomeResponse = {
   inventories: Inventory[];
   workshops: Workshop[];
   currencies: Currency[];
+  modules: Module[]
 };
