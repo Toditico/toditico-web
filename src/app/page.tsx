@@ -1,7 +1,6 @@
 "use client";
 import OurBussiness from "@/components/home/OurBussiness";
 import OurStats from "@/components/home/OurStats";
-import InventorySelectionDialog from "@/components/layout/InventorySelectionDialog";
 import { useCommonData } from "@/hooks/useCommonData";
 import dynamic from "next/dynamic";
 import { useMemo } from "react";
@@ -31,7 +30,6 @@ export default function Home() {
         products={data?.stats.products ?? 0}
         sales={data?.stats.sales ?? 0}
       />
-      <InventorySelectionDialog />
     </div>
   );
 }

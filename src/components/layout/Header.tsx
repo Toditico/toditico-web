@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import { useState } from "react";
 import AppDrawer from "./AppDrawer/";
+import InventorySelectionDialog from "@/components/layout/InventorySelectionDialog";
 
 export default function Header() {
   const path = usePathname();
@@ -31,6 +32,7 @@ export default function Header() {
   return (
     <>
       <AppDrawer isOpen={drawerOpen} closeDrawer={closeDrawer} />
+      <InventorySelectionDialog />
       <NavigationBar openMenu={openDrawer} />
       <div
         className={clsx(
