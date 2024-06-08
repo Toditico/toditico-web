@@ -6,7 +6,7 @@ export type Stats = {
   products: number;
 };
 
-export type HomeResponse = {
+export type CommonResponse = {
   stats: Stats;
   inventories: Inventory[];
   workshops: Workshop[];

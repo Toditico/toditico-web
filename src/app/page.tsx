@@ -2,13 +2,9 @@
 import OurBussiness from "@/components/home/OurBussiness";
 import OurStats from "@/components/home/OurStats";
 import InventorySelectionDialog from "@/components/layout/InventorySelectionDialog";
-import clientHomeService from "@/services/clientHomeService";
-import { useCurrencyStore } from "@/stores/currency";
-import { useInventoryStore } from "@/stores/inventory";
-import { useModuleStore } from "@/stores/module";
-import { HomeResponse } from "@/types/home";
+import { useCommonData } from "@/hooks/useCommonData";
 import dynamic from "next/dynamic";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 
 export default function Home() {
   const Map = useMemo(
@@ -19,27 +15,7 @@ export default function Home() {
     []
   );
 
-  const [data, setData] = useState<HomeResponse>();
-
-  const setCurrencies = useCurrencyStore((state) => state.setCurrencies);
-  const setInventories = useInventoryStore((state) => state.setInventories);
-  const setModules = useModuleStore((state) => state.setModules);
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const data = await clientHomeService.getData();
-        const { currencies, inventories, modules } = data;
-        setCurrencies(currencies);
-        setInventories(inventories);
-        setModules(modules);
-        setData(data);
-      } catch (error) {
-        console.log("error: ", error);
-      }
-    };
-    getData();
-  }, []);
+  const data = useCommonData();
 
   return (
     <div className="flex flex-col gap-6 items-center">
