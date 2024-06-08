@@ -1,5 +1,5 @@
 import NavigationBar from "@/components/layout/NavigationBar";
-import { Button, Drawer } from "@mui/material";
+import { Button } from "@mui/material";
 import { IconShoppingBag } from "@tabler/icons-react";
 import MainBrands from "@/components/layout/MainBrands";
 import { usePathname } from "next/navigation";
@@ -19,7 +19,7 @@ export default function Header() {
   };
 
   const isHomeView = path === "/";
-  const isCatalogView = path === "/catalog" || path.startsWith("/product");
+  const isCatalogView = path === "/catalogue" || path.startsWith("/product");
   const isContactView = path === "/contact";
   const openDrawer = () => {
     setDrawerOpen(true);
