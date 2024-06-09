@@ -2,7 +2,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
-import { Inventory, Workshop } from "@/types/home";
+import { Inventory, Workshop } from "@/types/shared";
 import { Icon, latLng, Point, latLngBounds } from "leaflet";
 import { useMemo } from "react";
 import InventoryPopup from "./InventoryPopup";

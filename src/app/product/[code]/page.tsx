@@ -7,7 +7,7 @@ import { useInventoryStore } from "@/stores/inventory";
 import { Product } from "@/types/shared";
 import { useEffect, useState } from "react";
 
-export default function Product({ params }: { params: { code: string } }) {
+export default function ProductPage({ params }: { params: { code: string } }) {
   const { code } = params;
   const [product, setProduct] = useState<Product | null>(null);
   const selectedInventory = useInventoryStore(

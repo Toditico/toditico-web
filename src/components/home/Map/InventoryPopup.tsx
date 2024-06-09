@@ -1,4 +1,4 @@
-import { Inventory } from "@/types/home";
+import { Inventory } from "@/types/shared";
 
 type Props = {
   inventory: Inventory;
