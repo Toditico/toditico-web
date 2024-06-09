@@ -1,7 +1,7 @@
-import { HomeResponse } from "@/types/home";
+import { CommonResponse } from "@/types/home";
 import { ClientBaseService } from "./clientBaseService";
 
-class ClientCommonService extends ClientBaseService<HomeResponse> {
+class ClientCommonService extends ClientBaseService<CommonResponse> {
   constructor() {
     super("common/");
   }

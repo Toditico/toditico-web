@@ -9,6 +9,7 @@ import {
   TextField,
   Autocomplete,
   CircularProgress,
+  Skeleton,
 } from "@mui/material";
 import { IconSearch } from "@tabler/icons-react";
 import { useEffect, useRef, useState } from "react";
@@ -65,7 +66,7 @@ export default function ProductsAutocomplete() {
     setValue("");
   };
 
-  return (
+  return inventories.length ? (
     <Autocomplete
       className="rounded w-[calc(100%-100px)] xl:w-[500px]"
       sx={{
@@ -143,5 +144,7 @@ export default function ProductsAutocomplete() {
         );
       }}
     />
+  ) : (
+    <Skeleton variant="rectangular" width={262} height={40}></Skeleton>
   );
 }

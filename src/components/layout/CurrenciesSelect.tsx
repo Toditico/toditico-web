@@ -1,6 +1,6 @@
 import { useCurrencyStore } from "@/stores/currency";
 import { Currency } from "@/types/shared";
-import { TextField, Autocomplete } from "@mui/material";
+import { TextField, Autocomplete, Skeleton } from "@mui/material";
 
 export default function CurrenciesSelect() {
   const currencies = useCurrencyStore((state) => state.currencies);
@@ -9,7 +9,7 @@ export default function CurrenciesSelect() {
     (state) => state.setSelectedCurrency
   );
 
-  return (
+  return selectedCurrency ? (
     <Autocomplete
       className="rounded"
       sx={{
@@ -20,7 +20,7 @@ export default function CurrenciesSelect() {
       options={currencies}
       getOptionLabel={({ name }) => name}
       isOptionEqualToValue={(option, value) => option._id === value._id}
-      value={selectedCurrency ?? null}
+      value={selectedCurrency}
       onChange={(event: any, value: Currency) => setSelectedCurrency(value)}
       disabled={currencies.length === 0}
       renderInput={(params) => (
@@ -40,5 +40,7 @@ export default function CurrenciesSelect() {
         />
       )}
     />
+  ) : (
+    <Skeleton variant="rectangular" width={96} height={40} />
   );
 }
