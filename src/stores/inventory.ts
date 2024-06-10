@@ -11,6 +11,9 @@ type InventoryState = {
 };
 
 const initialSelectedInventory = (): Inventory | null => {
+  if (typeof window === "undefined") {
+    return null;
+  }
   const storageInventory = localStorage.getItem("inventory");
   return storageInventory ? JSON.parse(storageInventory) : null;
 };

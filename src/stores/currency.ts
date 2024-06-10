@@ -9,6 +9,9 @@ type CurrencyState = {
 };
 
 const initialSelectedCurrency = (): Currency | null => {
+  if (typeof window === "undefined") {
+    return null;
+  }
   const storageCurrency = localStorage.getItem("currency");
   return storageCurrency ? JSON.parse(storageCurrency) : null;
 };
