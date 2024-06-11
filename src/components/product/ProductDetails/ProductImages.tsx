@@ -21,12 +21,13 @@ export default function ProductImages({ images }: Props) {
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="w-full h-[260px] relative">
+      <div className="w-full h-[320px] relative">
         <Image
           src={selectedImageUrl}
           alt="Product image"
           fill
           className="rounded-lg"
+	  style={{objectFit: "contain"}}
         />
       </div>
     </div>
