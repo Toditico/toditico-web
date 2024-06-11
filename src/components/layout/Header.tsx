@@ -4,7 +4,7 @@ import { IconShoppingBag } from "@tabler/icons-react";
 import MainBrands from "@/components/layout/MainBrands";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AppDrawer from "./AppDrawer/";
 import InventorySelectionDialog from "@/components/layout/InventorySelectionDialog";
 
@@ -28,6 +28,10 @@ export default function Header() {
   const closeDrawer = () => {
     setDrawerOpen(false);
   };
+
+  useEffect(() => {
+    setDrawerOpen(false);
+  }, [path]);
 
   return (
     <>
