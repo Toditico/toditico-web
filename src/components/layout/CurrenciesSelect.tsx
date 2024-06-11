@@ -1,6 +1,8 @@
+"use client";
 import { useCurrencyStore } from "@/stores/currency";
 import { Currency } from "@/types/shared";
 import { TextField, Autocomplete, Skeleton } from "@mui/material";
+import { useEffect, useState } from "react";
 
 export default function CurrenciesSelect() {
   const currencies = useCurrencyStore((state) => state.currencies);
@@ -9,7 +11,13 @@ export default function CurrenciesSelect() {
     (state) => state.setSelectedCurrency
   );
 
-  return selectedCurrency ? (
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    setIsLoading(selectedCurrency ? false : true);
+  }, [selectedCurrency]);
+
+  return !isLoading ? (
     <Autocomplete
       className="rounded"
       sx={{
@@ -20,7 +28,7 @@ export default function CurrenciesSelect() {
       options={currencies}
       getOptionLabel={({ name }) => name}
       isOptionEqualToValue={(option, value) => option._id === value._id}
-      value={selectedCurrency}
+      value={selectedCurrency!}
       onChange={(event: any, value: Currency) => setSelectedCurrency(value)}
       disabled={currencies.length === 0}
       renderInput={(params) => (

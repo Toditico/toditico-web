@@ -1,4 +1,5 @@
 import { useInventoryStore } from "@/stores/inventory";
+import { Inventory } from "@/types/shared";
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { IconX, IconInfoCircle } from "@tabler/icons-react";
 import InventoryCard from "./InventoryCard";
@@ -17,13 +18,19 @@ export default function InventorySelectionDialog() {
   const setSelectedInventory = useInventoryStore(
     (state) => state.setSelectedInventory
   );
+  const inventorySelected = (inventory: Inventory) => {
+    setSelectedInventory(inventory);
+    setOpenSelectionModal(false);
+  };
 
   return (
     <Dialog open={openSelectionModal} className="rounded">
       <DialogTitle className="flex items-center justify-between">
         <>
           <p>Seleccione el inventario</p>
-          <IconX onClick={() => setOpenSelectionModal(false)} />
+          {selectedInventory && (
+            <IconX onClick={() => setOpenSelectionModal(false)} />
+          )}
         </>
       </DialogTitle>
       <DialogContent>
@@ -34,7 +41,7 @@ export default function InventorySelectionDialog() {
                 {...{ inventory }}
                 isSelected={inventory._id === selectedInventory?._id}
                 key={inventory._id}
-                onClick={setSelectedInventory}
+                onClick={inventorySelected}
               />
             ))}
           </div>
