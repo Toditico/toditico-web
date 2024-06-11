@@ -1,4 +1,4 @@
-import { Product } from "@/types/shared";
+import { Currency, Product } from "@/types/shared";
 import Image from "next/image";
 import Link from "next/link";
 import PlaceHolderImage from "../../../../public/images/placeholder.png";
@@ -6,11 +6,13 @@ import PlaceHolderImage from "../../../../public/images/placeholder.png";
 type Props = {
   product: Product;
   onClick: (product: Product) => void;
+  selectedCurrency: Currency;
 };
 
 export default function ProductsAutocompleteOption({
   product,
   onClick,
+  selectedCurrency
 }: Props) {
   const { name, sellPrice, imageUrl } = product;
   return (
@@ -27,7 +29,7 @@ export default function ProductsAutocompleteOption({
       />
       <div className="flex flex-col">
         <p className="text-body font-bold text-dark-gray">{name}</p>
-        <p className="text-body font-bold">{`$${sellPrice ?? 350}`}</p>
+        <p className="text-body font-bold">{`${sellPrice ?? -0} ${selectedCurrency.name}`}</p>
       </div>
     </Link>
   );

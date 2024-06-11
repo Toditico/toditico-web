@@ -1,15 +1,19 @@
 "use client";
 
+import { Currency } from "@/types/shared";
+
 type Props = {
   originalPrice?: number;
   finalPrice: number;
   discount?: number;
+  selectedCurrency: Currency;
 };
 
 export default function ProductPrice({
   discount,
   finalPrice,
   originalPrice,
+  selectedCurrency,
 }: Props) {
   // INFO Need to add the kit section and the product status
   return (
@@ -24,7 +28,9 @@ export default function ProductPrice({
           </div>
         </div>
       )}
-      <p className="text-primary text-h2-desktop font-bold">${finalPrice}</p>
+      <p className="text-primary text-h2-desktop font-bold">
+        {finalPrice} {selectedCurrency.name}
+      </p>
     </div>
   );
 }

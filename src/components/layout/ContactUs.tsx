@@ -19,7 +19,7 @@ export default function ContactUs() {
         </div>
       </div>
       <div className="flex flex-col gap-4 text-center xl:text-left xl:max-w-[300px]">
-        <p className="text-body-bold font-bold uppercase">Rueda con confianza</p>
+        <p className="mt-2 text-body-bold font-bold uppercase">Rueda con confianza</p>
         <p className="text-body">Servicio superior, precios justos, calidad insuperable y garantía que perdura.</p>
       </div>
     </div>

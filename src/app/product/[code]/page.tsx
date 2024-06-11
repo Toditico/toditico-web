@@ -34,8 +34,8 @@ export default function ProductPage({ params }: { params: { code: string } }) {
 
   return (
     <div className="p-6">
-      {product ? (
-        <ProductDetails {...{ product }}></ProductDetails>
+      {product && selectedCurrency ? (
+        <ProductDetails {...{ product, selectedCurrency }}></ProductDetails>
       ) : (
         <ProductDetailsSkeleton />
       )}

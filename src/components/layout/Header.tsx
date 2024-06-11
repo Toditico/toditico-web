@@ -39,6 +39,7 @@ export default function Header() {
       <InventorySelectionDialog />
       <NavigationBar openMenu={openDrawer} />
       <div
+        id="header"
         className={clsx(
           "h-[400px] py-[10px] px-[24px] flex items-center xl:h-[720px]",
           {

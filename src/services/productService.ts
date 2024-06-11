@@ -11,10 +11,11 @@ class ProductService extends BaseService<Product> {
     return this.getOne();
   };
 
-  getAutocomplete = (text: string, inventoryId: string) => {
+  getAutocomplete = (text: string, inventoryId: string, currencyId: string) => {
     const queryParamsOptions = {
       text,
       inventoryId,
+      currencyId
     };
     const queryParams = stringify(queryParamsOptions, { indices: false });
     const url = `/autocomplete?${queryParams}`;

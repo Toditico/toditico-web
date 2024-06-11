@@ -1,6 +1,6 @@
 "use client";
 
-import { Product } from "@/types/shared";
+import { Currency, Product } from "@/types/shared";
 import { useEffect, useState } from "react";
 import ProductImages from "./ProductImages";
 import ProductInfo from "./ProductInfo";
@@ -9,8 +9,10 @@ import { IconShoppingBag } from "@tabler/icons-react";
 
 type Props = {
   product: Product;
+  selectedCurrency: Currency;
 };
-export default function ProductDetails({ product }: Props) {
+
+export default function ProductDetails({ product, selectedCurrency }: Props) {
   const [images, setImages] = useState<string[]>([]);
   useEffect(() => {
     const mainImage = product.imageUrl ?? "";
@@ -23,7 +25,7 @@ export default function ProductDetails({ product }: Props) {
     <div className="flex flex-col gap-6">
       <ProductImages {...{ images }} />
       <div className="flex flex-col gap-6">
-        <ProductInfo {...{ product }} />
+        <ProductInfo {...{ product, selectedCurrency }} />
         <Button
           variant="outlined"
           startIcon={<IconShoppingBag size={24} />}

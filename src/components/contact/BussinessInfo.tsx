@@ -11,7 +11,8 @@ export default function BussinessInfo() {
             TODITICO es un proyecto relativamente joven, con el concepto de
             tienda comercializadora de partes y piezas de la industria
             automotriz en el mercado cubano.
-            <br />
+          </p>
+          <p className="text-button text-center md:text-left xl:text-body">
             Surge en enero del 2022, como resultado del deseo profundo de
             satisfacer las necesidades en dicho mercado, apostando siempre al
             crecimiento y profesionalidad. Abarcando diferentes nichos
@@ -41,7 +42,7 @@ export default function BussinessInfo() {
               En función de nuestra misión, ser el proyecto más exitoso y
               respetado en Cuba. Con un stock estable, de fácil alcance y
               precios altamente competitivos. Ofrecer un servicio de venta y
-              postventa de excelencia. cubano.
+              postventa de excelencia.
             </span>
           </p>
           <p className="font-bold text-button xl:text-body">

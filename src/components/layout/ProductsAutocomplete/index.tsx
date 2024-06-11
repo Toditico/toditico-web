@@ -2,6 +2,7 @@ import { breakpoints } from "@/constants/breakpoints";
 import { colors } from "@/constants/colors";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import clientProductService from "@/services/clientProductsService";
+import { useCurrencyStore } from "@/stores/currency";
 import { useInventoryStore } from "@/stores/inventory";
 import { Product } from "@/types/shared";
 import {
@@ -29,6 +30,7 @@ export default function ProductsAutocomplete() {
   const selectedInventory = useInventoryStore(
     (state) => state.selectedInventory
   );
+  const selectedCurrency = useCurrencyStore((state) => state.selectedCurrency);
   const checkIfThereIsAnyInventorySelected = () => {
     if (selectedInventory) {
       return;
@@ -49,6 +51,7 @@ export default function ProductsAutocomplete() {
       try {
         const products = await clientProductService.getAutocomplete(
           value,
+          selectedCurrency!._id,
           selectedInventory!._id
         );
         setOptions(products);
@@ -66,7 +69,7 @@ export default function ProductsAutocomplete() {
     setValue("");
   };
 
-  return inventories.length ? (
+  return inventories.length && selectedCurrency ? (
     <Autocomplete
       className="rounded w-[calc(100%-100px)] xl:w-[500px]"
       sx={{
@@ -140,6 +143,7 @@ export default function ProductsAutocomplete() {
             key={product._id}
             onClick={selectedProduct}
             product={product}
+            selectedCurrency={selectedCurrency}
           />
         );
       }}

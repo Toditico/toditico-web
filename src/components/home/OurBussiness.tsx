@@ -9,7 +9,7 @@ export default function OurBussiness() {
       },
       {
         label: "garantías",
-        text: "En función de una compra segura, ofrecemos garantía posventa. Para tal servicio, contamos con una red de talleres y mecánicos de confianza. Contáctenos para más detalles.",
+        text: "En función de una compra segura, ofrecemos garantía postventa. Para tal servicio, contamos con una red de talleres y mecánicos de confianza. Contáctenos para más detalles.",
       },
       {
         label: "ofertas",
