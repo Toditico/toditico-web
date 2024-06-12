@@ -1,3 +1,4 @@
+export const revalidate = 180
 import commonService from "@/services/commonService";
 import { getNearestMultipleOf50 } from "@/utils/numbers";
 import { NextResponse } from "next/server";
