@@ -4,7 +4,7 @@ import { BaseService } from "./baseService";
 
 class ProductService extends BaseService<Product> {
   constructor() {
-    super("products");
+    super("products/web");
   }
 
   getData = () => {

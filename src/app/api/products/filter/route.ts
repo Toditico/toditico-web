@@ -4,10 +4,12 @@ import { NextResponse } from "next/server";
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const data = await productService.getAutocomplete(
+    const data = await productService.filterProducts(
       searchParams.get("text") ?? "",
       searchParams.get("inventory") ?? "",
-      searchParams.get("currency") ?? ""
+      searchParams.get("currency") ?? "",
+      Number(searchParams.get("page")) ?? NaN,
+      Number(searchParams.get("limit")) ?? NaN,
     );
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
