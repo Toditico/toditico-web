@@ -17,6 +17,18 @@ class ClientProductService extends ClientBaseService<Product> {
       `autocomplete?text=${text}&currency=${currencyId}&inventory=${inventoryId}`
     );
   };
+
+  filterProducts = (
+    text: string,
+    currencyId: string,
+    inventoryId: string,
+    page: number,
+    limit: number
+  ) => {
+    return this.getAll(
+      `filter?text=${text}&currency=${currencyId}&inventory=${inventoryId}&page=${page}&limit=${limit}`
+    );
+  };
 }
 
 const clientProductService = new ClientProductService();

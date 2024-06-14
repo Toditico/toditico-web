@@ -11,11 +11,30 @@ class ProductService extends BaseService<Product> {
     return this.getOne();
   };
 
+  filterProducts = (
+    text: string,
+    inventoryId: string,
+    currencyId: string,
+    page: number,
+    limit: number
+  ) => {
+    const queryParamsOptions = {
+      text,
+      inventoryId,
+      currencyId,
+      page,
+      limit,
+    };
+    const queryParams = stringify(queryParamsOptions, { indices: false });
+    const url = `/filter?${queryParams}`;
+    return this.instance.get(url).then((result) => result.data);
+  };
+
   getAutocomplete = (text: string, inventoryId: string, currencyId: string) => {
     const queryParamsOptions = {
       text,
       inventoryId,
-      currencyId
+      currencyId,
     };
     const queryParams = stringify(queryParamsOptions, { indices: false });
     const url = `/autocomplete?${queryParams}`;

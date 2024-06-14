@@ -9,9 +9,14 @@ import { useState } from "react";
 type Props = {
   inventories: Inventory[];
   selectedInventory: Inventory | null;
+  onFilter: (text: string, inventoryId: string) => void;
 };
 
-export default function Filters({ inventories, selectedInventory }: Props) {
+export default function Filters({
+  inventories,
+  selectedInventory,
+  onFilter,
+}: Props) {
   const [inventory, setInventory] = useState<string>(
     selectedInventory?._id ?? ""
   );
@@ -68,6 +73,7 @@ export default function Filters({ inventories, selectedInventory }: Props) {
         className="text-button h-[56px] rounded-lg p-4 uppercase font-bold text-button"
         variant="contained"
         startIcon={<IconFilter size={24} />}
+        onClick={() => onFilter(productName, inventory)}
       >
         Filtrar
       </Button>
