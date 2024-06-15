@@ -7,10 +7,8 @@ import clientProductService from "@/services/clientProductsService";
 import { useCurrencyStore } from "@/stores/currency";
 import { useInventoryStore } from "@/stores/inventory";
 import { useModuleStore } from "@/stores/module";
-import { Product } from "@/types/shared";
-import { Backdrop, Skeleton } from "@mui/material";
+import { Module, Product } from "@/types/shared";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 
 export default function Catalogue() {
   useCommonData();
@@ -25,11 +23,14 @@ export default function Catalogue() {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [text, setText] = useState("");
+  const [page, setPage] = useState(1);
   const [inventoryId, setInventoryId] = useState(selectedInventory?._id ?? "");
 
   const onFilter = async (text: string, inventoryId: string) => {
     setText(text);
     setInventoryId(inventoryId);
+    setProducts([]);
+    setPage(1);
   };
 
   useEffect(() => {
@@ -45,7 +46,7 @@ export default function Catalogue() {
           selectedCurrency._id,
           inventoryId,
           selectedModule._id,
-          1,
+          page,
           10
         );
 
@@ -58,43 +59,26 @@ export default function Catalogue() {
     };
 
     fecthProducts();
-  }, [text, inventoryId, selectedCurrency, selectedModule]);
+  }, [text, inventoryId, selectedCurrency, selectedModule, page]);
 
   return (
     <>
       <div className="flex flex-col gap-[10px] pt-6 px-[10x] pb-0">
-        {modules.length && selectedModule ? (
-          <>
-            <ModulesSelection
-              modules={modules}
-              selectedModule={selectedModule}
-              onModuleSelected={(module) => setSelectedModule(module)}
-            />
-            <Filters
-              onFilter={onFilter}
-              inventories={inventories}
-              selectedInventory={selectedInventory}
-            />
-            <ProductsContainer {...{ products }} />
-          </>
-        ) : (
-          <>
-            <Skeleton variant="rectangular" height={360} width={"100%"} />
-            <Skeleton variant="rectangular" height={56} width={"100%"} />
-            <Skeleton variant="rectangular" height={56} width={"100%"} />
-            <Skeleton variant="rectangular" height={56} width={"100%"} />
-          </>
-        )}
+        <>
+          <ModulesSelection
+            modules={modules}
+            selectedModule={selectedModule}
+            onModuleSelected={setSelectedModule}
+          />
+          <Filters
+            onFilter={onFilter}
+            inventories={inventories}
+            selectedInventory={selectedInventory}
+            isLoading={modules.length === 0}
+          />
+          <ProductsContainer {...{ products, isLoading }} />
+        </>
       </div>
-      <Backdrop open={isLoading} sx={{ zIndex: "100" }}>
-        <Image
-          src="/brand.svg"
-          alt="Toditico"
-          width={300}
-          height={200}
-          priority
-        />
-      </Backdrop>
     </>
   );
 }
