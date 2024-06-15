@@ -8,6 +8,7 @@ export async function GET(request: Request) {
       searchParams.get("text") ?? "",
       searchParams.get("inventory") ?? "",
       searchParams.get("currency") ?? "",
+      searchParams.get("module") ?? "",
       Number(searchParams.get("page")) ?? NaN,
       Number(searchParams.get("limit")) ?? NaN,
     );

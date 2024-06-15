@@ -22,11 +22,12 @@ class ClientProductService extends ClientBaseService<Product> {
     text: string,
     currencyId: string,
     inventoryId: string,
+    moduleId: string,
     page: number,
     limit: number
   ) => {
     return this.getAll(
-      `filter?text=${text}&currency=${currencyId}&inventory=${inventoryId}&page=${page}&limit=${limit}`
+      `filter?text=${text}&currency=${currencyId}&inventory=${inventoryId}&module=${moduleId}&page=${page}&limit=${limit}`
     );
   };
 }

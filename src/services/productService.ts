@@ -15,6 +15,7 @@ class ProductService extends BaseService<Product> {
     text: string,
     inventoryId: string,
     currencyId: string,
+    moduleId: string,
     page: number,
     limit: number
   ) => {
@@ -22,6 +23,7 @@ class ProductService extends BaseService<Product> {
       text,
       inventoryId,
       currencyId,
+      moduleId,
       page,
       limit,
     };

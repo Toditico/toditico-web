@@ -8,9 +8,15 @@ import { MobileStepper } from "@mui/material";
 
 type Props = {
   modules: Module[];
+  selectedModule: Module;
+  onModuleSelected: (module: Module) => void;
 };
 
-export default function ModulesSelection({ modules }: Props) {
+export default function ModulesSelection({
+  modules,
+  selectedModule,
+  onModuleSelected,
+}: Props) {
   const [activeStep, setActiveStep] = useState(0);
   const handleStepChanged = (step: number) => {
     setActiveStep(step);
@@ -26,7 +32,12 @@ export default function ModulesSelection({ modules }: Props) {
         containerStyle={{ width: "100vw" }}
       >
         {modules.map((module) => (
-          <ModulesSelectionItem module={module} key={module._id} />
+          <ModulesSelectionItem
+            module={module}
+            key={module._id}
+            isSelected={module._id === selectedModule._id}
+            onClick={onModuleSelected}
+          />
         ))}
       </SwipeableViews>
       <MobileStepper

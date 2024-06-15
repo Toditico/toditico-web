@@ -17,9 +17,11 @@ export const useModuleStore = create<ModuleState>((set) => ({
       return { selectedModule: module };
     }),
   setModules: (modules) =>
-    set(() => {
+    set((state) => {
+      const { selectedModule } = state;
       return {
         modules,
+        selectedModule: selectedModule ?? modules[0],
       };
     }),
 }));
