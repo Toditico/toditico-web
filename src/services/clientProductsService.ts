@@ -26,7 +26,7 @@ class ClientProductService extends ClientBaseService<Product> {
     page: number,
     limit: number
   ) => {
-    return this.getAll(
+    return this.getAllPaginated(
       `filter?text=${text}&currency=${currencyId}&inventory=${inventoryId}&module=${moduleId}&page=${page}&limit=${limit}`
     );
   };

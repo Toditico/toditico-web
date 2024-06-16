@@ -7,15 +7,28 @@ import { useCurrencyStore } from "@/stores/currency";
 import ProductCardInfo from "./ProductCardInfo";
 import { Button } from "@mui/material";
 import { IconShoppingBag } from "@tabler/icons-react";
+import { useInView } from "react-intersection-observer";
 
 type Props = {
   product: Product;
+  isInViewportHandler?: () => void;
 };
 
-export default function ProductCard({ product }: Props) {
+export default function ProductCard({ product, isInViewportHandler }: Props) {
   const selectedCurrency = useCurrencyStore((state) => state.selectedCurrency);
+  const { ref } = useInView({
+    onChange: (inView) => {
+      if (inView.valueOf() && isInViewportHandler) {
+        isInViewportHandler();
+      }
+    },
+  });
+
   return (
-    <div className="rounded-t-lg w-full flex flex-col shadow-md pb-3">
+    <div
+      ref={isInViewportHandler ? ref : undefined}
+      className="rounded-t-lg w-full flex flex-col shadow-md pb-3"
+    >
       <div className="h-[40px] bg-primary rounded-t-lg"></div>
       <div className="w-full h-[260px] relative">
         <Image

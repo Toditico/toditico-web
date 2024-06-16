@@ -1,7 +1,7 @@
 export type Currency = {
   name: string;
   exchangeFactor: number;
-  _id: string
+  _id: string;
 };
 
 export type Inventory = {
@@ -10,7 +10,7 @@ export type Inventory = {
   address?: string;
   latitude: number;
   longitude: number;
-  _id: string
+  _id: string;
 };
 
 export type Workshop = {
@@ -22,20 +22,24 @@ export type Workshop = {
 };
 
 export type Product = {
-  name: string
-  description?: string
-  sellPrice: number
-  count: number
+  name: string;
+  description?: string;
+  sellPrice: number;
+  count: number;
   // modules: PopulatedDoc<Brand & Module>[]
-  code: string
-  imageUrl?: string
-  secondaryImagesUrls?: string[]
-  _id: string
-}
+  code: string;
+  imageUrl?: string;
+  secondaryImagesUrls?: string[];
+  _id: string;
+};
 
 export type Module = {
-  name: string
-  imageUrl?: string
-  _id: string
-}
+  name: string;
+  imageUrl?: string;
+  _id: string;
+};
 
+export type PaginationInfo = {
+  maxPage: number;
+  count: number;
+};

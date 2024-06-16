@@ -21,6 +21,7 @@
     "qs": "^6.12.1",
     "react": "^18",
     "react-dom": "^18",
+    "react-intersection-observer": "^9.10.3",
     "react-leaflet": "^4.2.1",
     "react-swipeable-views": "^0.14.0",
     "zustand": "^4.5.2"

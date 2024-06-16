@@ -7,7 +7,7 @@ import clientProductService from "@/services/clientProductsService";
 import { useCurrencyStore } from "@/stores/currency";
 import { useInventoryStore } from "@/stores/inventory";
 import { useModuleStore } from "@/stores/module";
-import { Module, Product } from "@/types/shared";
+import { Product } from "@/types/shared";
 import { useEffect, useState } from "react";
 
 export default function Catalogue() {
@@ -24,6 +24,7 @@ export default function Catalogue() {
   const [isLoading, setIsLoading] = useState(false);
   const [text, setText] = useState("");
   const [page, setPage] = useState(1);
+  const [maxPage, setMaxPage] = useState(10);
   const [inventoryId, setInventoryId] = useState(selectedInventory?._id ?? "");
 
   const onFilter = async (text: string, inventoryId: string) => {
@@ -35,22 +36,24 @@ export default function Catalogue() {
 
   useEffect(() => {
     const fecthProducts = async () => {
-      if (!selectedCurrency || !inventoryId || !selectedModule) {
+      if (!selectedCurrency || !inventoryId || !selectedModule || isLoading) {
         return;
       }
 
       setIsLoading(true);
       try {
-        const products = await clientProductService.filterProducts(
-          text,
-          selectedCurrency._id,
-          inventoryId,
-          selectedModule._id,
-          page,
-          10
-        );
+        const { result: products, paginationInfo } =
+          await clientProductService.filterProducts(
+            text,
+            selectedCurrency._id,
+            inventoryId,
+            selectedModule._id,
+            page,
+            10
+          );
 
         setProducts(products);
+        setMaxPage(paginationInfo.maxPage);
       } catch (error) {
         console.error("Error while getting filters");
       } finally {
@@ -60,6 +63,42 @@ export default function Catalogue() {
 
     fecthProducts();
   }, [text, inventoryId, selectedCurrency, selectedModule, page]);
+
+  const fetchNextPage = () => {
+    const nextPage = async () => {
+      if (!selectedCurrency || !inventoryId || !selectedModule || isLoading) {
+        return;
+      }
+
+      if (page === maxPage) {
+        return;
+      }
+
+      setIsLoading(true);
+      try {
+        const { result, paginationInfo } =
+          await clientProductService.filterProducts(
+            text,
+            selectedCurrency._id,
+            inventoryId,
+            selectedModule._id,
+            page + 1,
+            10
+          );
+
+        setProducts([...products, ...result]);
+        setPage(page + 1);
+        setMaxPage(paginationInfo.maxPage);
+        console.log("Page: ", page);
+        console.log("Max Page: ", maxPage);
+      } catch (error) {
+        console.error("Error while getting filters");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    nextPage();
+  };
 
   return (
     <>
@@ -76,7 +115,7 @@ export default function Catalogue() {
             selectedInventory={selectedInventory}
             isLoading={modules.length === 0}
           />
-          <ProductsContainer {...{ products, isLoading }} />
+          <ProductsContainer {...{ products, isLoading, fetchNextPage }} />
         </>
       </div>
     </>
