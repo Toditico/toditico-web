@@ -34,43 +34,21 @@ export default function Catalogue() {
     setPage(1);
   };
 
+  const fetchNextPage = () => {
+    if (page === maxPage) {
+      return;
+    }
+
+    if (isLoading) {
+      return;
+    }
+
+    setPage(page + 1);
+  };
+
   useEffect(() => {
     const fecthProducts = async () => {
       if (!selectedCurrency || !inventoryId || !selectedModule || isLoading) {
-        return;
-      }
-
-      setIsLoading(true);
-      try {
-        const { result: products, paginationInfo } =
-          await clientProductService.filterProducts(
-            text,
-            selectedCurrency._id,
-            inventoryId,
-            selectedModule._id,
-            page,
-            10
-          );
-
-        setProducts(products);
-        setMaxPage(paginationInfo.maxPage);
-      } catch (error) {
-        console.error("Error while getting filters");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fecthProducts();
-  }, [text, inventoryId, selectedCurrency, selectedModule, page]);
-
-  const fetchNextPage = () => {
-    const nextPage = async () => {
-      if (!selectedCurrency || !inventoryId || !selectedModule || isLoading) {
-        return;
-      }
-
-      if (page === maxPage) {
         return;
       }
 
@@ -82,23 +60,21 @@ export default function Catalogue() {
             selectedCurrency._id,
             inventoryId,
             selectedModule._id,
-            page + 1,
+            page,
             10
           );
 
         setProducts([...products, ...result]);
-        setPage(page + 1);
         setMaxPage(paginationInfo.maxPage);
-        console.log("Page: ", page);
-        console.log("Max Page: ", maxPage);
       } catch (error) {
         console.error("Error while getting filters");
       } finally {
         setIsLoading(false);
       }
     };
-    nextPage();
-  };
+
+    fecthProducts();
+  }, [text, inventoryId, selectedCurrency, selectedModule, page]);
 
   return (
     <>
