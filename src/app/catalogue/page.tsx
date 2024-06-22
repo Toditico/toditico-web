@@ -7,7 +7,7 @@ import clientProductService from "@/services/clientProductsService";
 import { useCurrencyStore } from "@/stores/currency";
 import { useInventoryStore } from "@/stores/inventory";
 import { useModuleStore } from "@/stores/module";
-import { Product } from "@/types/shared";
+import { Module, Product } from "@/types/shared";
 import { useEffect, useState } from "react";
 
 export default function Catalogue() {
@@ -27,9 +27,18 @@ export default function Catalogue() {
   const [maxPage, setMaxPage] = useState(10);
   const [inventoryId, setInventoryId] = useState(selectedInventory?._id ?? "");
 
-  const onFilter = async (text: string, inventoryId: string) => {
-    setText(text);
+  const onFilter = async (userInput: string, userSelectedInventory: string) => {
+    if (text === userInput && inventoryId === userSelectedInventory) {
+      return;
+    }
+    setText(userInput);
     setInventoryId(inventoryId);
+    setProducts([]);
+    setPage(1);
+  };
+
+  const onSelectedModule = async (module: Module) => {
+    setSelectedModule(module);
     setProducts([]);
     setPage(1);
   };
@@ -83,7 +92,7 @@ export default function Catalogue() {
           <ModulesSelection
             modules={modules}
             selectedModule={selectedModule}
-            onModuleSelected={setSelectedModule}
+            onModuleSelected={onSelectedModule}
           />
           <Filters
             onFilter={onFilter}
