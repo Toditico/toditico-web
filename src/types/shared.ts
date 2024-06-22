@@ -21,17 +21,20 @@ export type Workshop = {
   longitude?: number;
 };
 
-export type Product = {
-  name: string;
-  description?: string;
-  sellPrice: number;
-  count: number;
-  // modules: PopulatedDoc<Brand & Module>[]
-  code: string;
-  imageUrl?: string;
-  secondaryImagesUrls?: string[];
-  _id: string;
-};
+export type ProductStatus = 'AVAILABLE' | 'LOW_STOCK' | 'NOT_AVAILABLE'
+
+export interface Product {
+  name: string
+  description?: string
+  sellPrice: number
+  finalPrice: number
+  code: string
+  imageUrl?: string
+  secondaryImagesUrls?: string[]
+  discountPercent: number
+  status: ProductStatus
+  _id: string
+}
 
 export type Module = {
   name: string;

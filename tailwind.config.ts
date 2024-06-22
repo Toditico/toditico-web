@@ -35,7 +35,9 @@ const config: Config = {
         secondary: "#DD562C",
         tertiary: "#041A42",
         gray: "#EEE",
+        available: "#40A9FF",
         "dark-gray": "#999",
+        "low-stock": "#FFC53D",
       },
     },
     backgroundImage: {
