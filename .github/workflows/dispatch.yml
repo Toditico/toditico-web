@@ -1,0 +1,18 @@
+name: Dispatch to Personal Repo
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send repository dispatch
+        run: |
+          curl -X POST -H "Accept: application/vnd.github.v3+json" \
+          -H "Authorization: token ${{ secrets.PERSONAL_ACCESS_TOKEN }}" \
+          https://api.github.com/repos/AndyADF/toditico-web/dispatches \
+          -d '{"event_type":"sync"}'
