@@ -21,7 +21,9 @@ export default function ProductInfo({ product, selectedCurrency }: Props) {
       </div>
       <hr />
       <ProductPrice
-        finalPrice={product.sellPrice}
+        discount={product.discountPercent}
+	originalPrice={product.sellPrice}
+        finalPrice={product.finalPrice}
         selectedCurrency={selectedCurrency}
       />
     </div>

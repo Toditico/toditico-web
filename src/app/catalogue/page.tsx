@@ -17,7 +17,7 @@ export default function Catalogue() {
   const setSelectedModule = useModuleStore((state) => state.setSelectedModule);
   const inventories = useInventoryStore((state) => state.inventories);
   const selectedInventory = useInventoryStore(
-    (state) => state.selectedInventory
+    (state) => state.selectedInventory,
   );
   const selectedCurrency = useCurrencyStore((state) => state.selectedCurrency);
   const [products, setProducts] = useState<Product[]>([]);
@@ -70,7 +70,7 @@ export default function Catalogue() {
             inventoryId,
             selectedModule._id,
             page,
-            10
+            10,
           );
 
         setProducts([...products, ...result]);

@@ -22,7 +22,9 @@ export default function ProductCardInfo({ product, selectedCurrency }: Props) {
       </div>
       <div className="flex justify-between items-center">
         <ProductCardPrice
-          finalPrice={product.sellPrice}
+	  originalPrice={product.sellPrice}
+          finalPrice={product.finalPrice}
+	  discount={product.discountPercent}
           selectedCurrency={selectedCurrency}
         />
         <Link href={`/product/${product.code}`}>

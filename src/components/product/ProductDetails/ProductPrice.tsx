@@ -18,7 +18,7 @@ export default function ProductPrice({
   // INFO Need to add the kit section and the product status
   return (
     <div className="flex flex-col">
-      {originalPrice && discount && (
+      {originalPrice && discount ? (
         <div className="flex justify-between">
           <p className="text-body-bold font-bold text-gray line-through">
             ${originalPrice}
@@ -27,7 +27,7 @@ export default function ProductPrice({
             -{discount}%
           </div>
         </div>
-      )}
+      ) : null}
       <p className="text-primary text-h2-desktop font-bold">
         {finalPrice} {selectedCurrency.name}
       </p>

@@ -25,10 +25,10 @@ export default function ProductsAutocomplete() {
 
   const inventories = useInventoryStore((state) => state.inventories);
   const setOpenSelectionModal = useInventoryStore(
-    (state) => state.setOpenSelectionModal
+    (state) => state.setOpenSelectionModal,
   );
   const selectedInventory = useInventoryStore(
-    (state) => state.selectedInventory
+    (state) => state.selectedInventory,
   );
   const selectedCurrency = useCurrencyStore((state) => state.selectedCurrency);
   const checkIfThereIsAnyInventorySelected = () => {
@@ -52,7 +52,7 @@ export default function ProductsAutocomplete() {
         const products = await clientProductService.getAutocomplete(
           value,
           selectedCurrency!._id,
-          selectedInventory!._id
+          selectedInventory!._id,
         );
         setOptions(products);
       } catch (error) {
@@ -110,8 +110,8 @@ export default function ProductsAutocomplete() {
               width < breakpoints.tablet
                 ? "90vw"
                 : width < breakpoints.desktop
-                ? undefined
-                : "600px",
+                  ? undefined
+                  : "600px",
           },
         },
       }}
@@ -138,13 +138,14 @@ export default function ProductsAutocomplete() {
       )}
       renderOption={(props, product) => {
         return (
-          <ProductsAutocompleteOption
-            {...{ props }}
-            key={product._id}
-            onClick={selectedProduct}
-            product={product}
-            selectedCurrency={selectedCurrency}
-          />
+          <div className="relative" key={product._id}>
+            <ProductsAutocompleteOption
+              {...{ props }}
+              onClick={selectedProduct}
+              product={product}
+              selectedCurrency={selectedCurrency}
+            />
+          </div>
         );
       }}
     />
