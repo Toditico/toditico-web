@@ -6,6 +6,7 @@ import ProductImages from "./ProductImages";
 import ProductInfo from "./ProductInfo";
 import { Button } from "@mui/material";
 import { IconShoppingBag } from "@tabler/icons-react";
+import { useCartStore } from "@/stores/cart";
 
 type Props = {
   product: Product;
@@ -13,6 +14,11 @@ type Props = {
 };
 
 export default function ProductDetails({ product, selectedCurrency }: Props) {
+  const increaseProduct = useCartStore((state) => state.increaseProduct);
+  const addProductToCart = () => {
+    increaseProduct(product);
+  };
+
   const [images, setImages] = useState<string[]>([]);
   useEffect(() => {
     const mainImage = product.imageUrl ?? "";
@@ -36,7 +42,12 @@ export default function ProductDetails({ product, selectedCurrency }: Props) {
             padding: "16px",
           }}
         >
-          <p className="text-button uppercase font-bold">Añadir a cesta</p>
+          <p
+            className="text-button uppercase font-bold"
+            onClick={addProductToCart}
+          >
+            Añadir a cesta
+          </p>
         </Button>
       </div>
     </div>

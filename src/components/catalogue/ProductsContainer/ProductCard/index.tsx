@@ -8,6 +8,7 @@ import ProductCardInfo from "./ProductCardInfo";
 import { Button } from "@mui/material";
 import { IconShoppingBag } from "@tabler/icons-react";
 import { useInView } from "react-intersection-observer";
+import { useCartStore } from "@/stores/cart";
 
 type Props = {
   product: Product;
@@ -23,6 +24,11 @@ export default function ProductCard({ product, isInViewportHandler }: Props) {
       }
     },
   });
+
+  const increaseProduct = useCartStore((state) => state.increaseProduct);
+  const addProductToCart = () => {
+    increaseProduct(product);
+  };
 
   return (
     <div
@@ -53,6 +59,7 @@ export default function ProductCard({ product, isInViewportHandler }: Props) {
             borderWidth: "2px",
             padding: "16px",
           }}
+	  onClick={addProductToCart}
         >
           <p className="text-button uppercase font-bold">Añadir a cesta</p>
         </Button>

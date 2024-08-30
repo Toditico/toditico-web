@@ -11,11 +11,12 @@ import ProductsAutocomplete from "./ProductsAutocomplete";
 
 type Props = {
   openMenu: () => void;
+  openCart: () => void;
 };
 
-export default function NavigationBar({ openMenu }: Props) {
+export default function NavigationBar({ openMenu, openCart }: Props) {
   const setOpenSelectionModal = useInventoryStore(
-    (state) => state.setOpenSelectionModal
+    (state) => state.setOpenSelectionModal,
   );
   return (
     <>
@@ -33,7 +34,10 @@ export default function NavigationBar({ openMenu }: Props) {
               color={colors.primary}
               onClick={() => setOpenSelectionModal(true)}
             />
-            <IconShoppingBag color={colors.primary} />
+            <IconShoppingBag
+              color={colors.primary}
+              onClick={() => openCart()}
+            />
             <IconMenu2 color={colors.primary} onClick={() => openMenu()} />
           </div>
         </div>

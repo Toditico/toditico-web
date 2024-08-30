@@ -7,16 +7,18 @@ import clsx from "clsx";
 import { useEffect, useState } from "react";
 import AppDrawer from "./AppDrawer/";
 import InventorySelectionDialog from "@/components/layout/InventorySelectionDialog";
+import CartDrawer from "./CartDrawer";
 
 export default function Header() {
   const path = usePathname();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
   const getH1Content = (path: string) => {
     return path === "/"
       ? "Rueda con confianza"
       : path === "/contact"
-      ? "Sobre nosotros, Toditico"
-      : "Catálogo de productos";
+        ? "Sobre nosotros, Toditico"
+        : "Catálogo de productos";
   };
 
   const isHomeView = path === "/";
@@ -29,15 +31,24 @@ export default function Header() {
     setDrawerOpen(false);
   };
 
+  const openCartDrawer = () => {
+    setCartDrawerOpen(true);
+  };
+  const closeCartDrawer = () => {
+    setCartDrawerOpen(false);
+  };
+
   useEffect(() => {
     setDrawerOpen(false);
+    setCartDrawerOpen(false);
   }, [path]);
 
   return (
     <>
       <AppDrawer isOpen={drawerOpen} closeDrawer={closeDrawer} />
+      <CartDrawer isOpen={cartDrawerOpen} closeDrawer={closeCartDrawer} />
       <InventorySelectionDialog />
-      <NavigationBar openMenu={openDrawer} />
+      <NavigationBar openMenu={openDrawer} openCart={openCartDrawer} />
       <div
         id="header"
         className={clsx(
@@ -46,7 +57,7 @@ export default function Header() {
             "bg-home md:bg-home-tablet bg-cover": isHomeView,
             "bg-contact bg-center": isContactView,
             "bg-catalog xl:bg-catalog-desktop bg-center": isCatalogView,
-          }
+          },
         )}
       >
         <div className="mx-auto my-[24px] text-center flex flex-col gap-[24px] items-center xl:max-w-[1000px]">
