@@ -1,15 +1,15 @@
-import { Inventory } from "@/types/shared";
+import { Inventory, Workshop } from "@/types/shared";
 
 type Props = {
-  inventory: Inventory;
+  element: Inventory | Workshop;
 };
-export default function InventoryPopup({ inventory }: Props) {
+export default function InventoryWorkshopPopup({ element }: Props) {
   return (
     <div className="pa-2 gap-[10px] rounded flex flex-col max-w-[125px]">
       <div className="bg-primary rounded py-1 px-4 text-center text-body-bold font-bold text-white uppercase">
-        {inventory.name}
+        {element.name}
       </div>
-      <p className="text-body">{inventory.address}</p>
+      <p className="text-body">{element.address}</p>
     </div>
   );
 }

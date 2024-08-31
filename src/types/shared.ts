@@ -19,6 +19,7 @@ export type Workshop = {
   address?: string;
   latitude?: number;
   longitude?: number;
+  _id: string
 };
 
 export type ProductStatus = "AVAILABLE" | "LOW_STOCK" | "NOT_AVAILABLE";
