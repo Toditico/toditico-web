@@ -8,6 +8,7 @@ import { colors } from "@/constants/colors";
 import CurrenciesSelect from "./CurrenciesSelect";
 import { useInventoryStore } from "@/stores/inventory";
 import ProductsAutocomplete from "./ProductsAutocomplete";
+import { useCartStore } from "@/stores/cart";
 
 type Props = {
   openMenu: () => void;
@@ -18,9 +19,11 @@ export default function NavigationBar({ openMenu, openCart }: Props) {
   const setOpenSelectionModal = useInventoryStore(
     (state) => state.setOpenSelectionModal,
   );
+  const totalProducts = useCartStore((state) => state.totalProducts);
+
   return (
     <>
-      <nav className="h-[120px] bg-white flex flex-col px-6 py-3 gap-2.5 fixed z-[1500] w-full top-0 xl:h-20 xl:flex-row xl:justify-between xl:items-center">
+      <nav className="h-[120px] bg-white flex flex-col px-6 py-3 gap-2.5 fixed z-[1100] w-full top-0 xl:h-20 xl:flex-row xl:justify-between xl:items-center">
         <div className="flex flex-row justify-between items-center w-full">
           <Image
             src="/brand-no-logo.svg"
@@ -34,10 +37,17 @@ export default function NavigationBar({ openMenu, openCart }: Props) {
               color={colors.primary}
               onClick={() => setOpenSelectionModal(true)}
             />
-            <IconShoppingBag
-              color={colors.primary}
-              onClick={() => openCart()}
-            />
+            <div className="relative">
+              <IconShoppingBag
+                color={colors.primary}
+                onClick={() => openCart()}
+              />
+              {totalProducts ? (
+                <div className="bg-primary rounded-full absolute top-[-12px] right-[-8px] h-5 w-5 text-small flex justify-center items-center text-white font-bold">
+                  {totalProducts}
+                </div>
+              ) : null}
+            </div>
             <IconMenu2 color={colors.primary} onClick={() => openMenu()} />
           </div>
         </div>
