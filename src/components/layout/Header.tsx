@@ -52,7 +52,7 @@ export default function Header() {
       <div
         id="header"
         className={clsx(
-          "h-[400px] py-[10px] px-[24px] flex items-center xl:h-[720px]",
+          "h-[400px] pb-[10px] mt-[120px] px-[24px] flex items-center xl:h-[720px] xl:mt-20",
           {
             "bg-home md:bg-home-tablet bg-cover": isHomeView,
             "bg-contact bg-center": isContactView,

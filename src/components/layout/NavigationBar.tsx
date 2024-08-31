@@ -20,7 +20,7 @@ export default function NavigationBar({ openMenu, openCart }: Props) {
   );
   return (
     <>
-      <nav className="h-[120px] flex flex-col px-6 py-3 gap-2.5 xl:h-20 xl:flex-row xl:justify-between xl:items-center">
+      <nav className="h-[120px] bg-white flex flex-col px-6 py-3 gap-2.5 fixed z-[1500] w-full top-0 xl:h-20 xl:flex-row xl:justify-between xl:items-center">
         <div className="flex flex-row justify-between items-center w-full">
           <Image
             src="/brand-no-logo.svg"
