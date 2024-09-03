@@ -1,20 +1,26 @@
-"use client";
+import { getCommonDataAction } from "@/actions/commonActions";
 import OurBussiness from "@/components/home/OurBussiness";
 import OurStats from "@/components/home/OurStats";
-import { useCommonData } from "@/hooks/useCommonData";
+import StoreCommonData from "@/components/layout/StoreCommonData";
+import { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { useMemo } from "react";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "Inicio | TODITICO",
+  description: "...",
+};
+
+export default async function Home() {
   const Map = useMemo(
     () =>
       dynamic(() => import("@/components/home/Map/"), {
         ssr: false,
       }),
-    []
+    [],
   );
 
-  const data = useCommonData();
+  const data = await getCommonDataAction();
 
   return (
     <div className="flex flex-col gap-6 items-center">
@@ -30,6 +36,7 @@ export default function Home() {
         products={data?.stats.products ?? 0}
         sales={data?.stats.sales ?? 0}
       />
+      <StoreCommonData commonData={data} />
     </div>
   );
 }
