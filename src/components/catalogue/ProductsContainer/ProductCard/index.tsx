@@ -9,6 +9,7 @@ import { Button } from "@mui/material";
 import { IconShoppingBag } from "@tabler/icons-react";
 import { useInView } from "react-intersection-observer";
 import { useCartStore } from "@/stores/cart";
+import { useInventoryStore } from "@/stores/inventory";
 
 type Props = {
   product: Product;
@@ -17,6 +18,7 @@ type Props = {
 
 export default function ProductCard({ product, isInViewportHandler }: Props) {
   const selectedCurrency = useCurrencyStore((state) => state.selectedCurrency);
+  const selectedInventory = useInventoryStore((state) => state.selectedInventory);
   const { ref } = useInView({
     onChange: (inView) => {
       if (inView.valueOf() && isInViewportHandler) {
@@ -48,6 +50,7 @@ export default function ProductCard({ product, isInViewportHandler }: Props) {
         <ProductCardInfo
           product={product}
           selectedCurrency={selectedCurrency!}
+	  selectedInventory={selectedInventory!}
         />
         <Button
           variant="outlined"

@@ -1,5 +1,3 @@
-"use client";
-
 import { ProductStatus } from "@/types/shared";
 import clsx from "clsx";
 

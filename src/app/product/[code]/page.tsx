@@ -1,44 +1,51 @@
-"use client";
+import { getCommonDataAction } from "@/actions/commonActions";
+import { getProductDetailsAction } from "@/actions/productActions";
+import StoreCommonData from "@/components/layout/StoreCommonData";
 import ProductDetails from "@/components/product/ProductDetails";
-import ProductDetailsSkeleton from "@/components/product/ProductDetails/Skeleton";
-import clientProductService from "@/services/clientProductsService";
-import { useCurrencyStore } from "@/stores/currency";
-import { useInventoryStore } from "@/stores/inventory";
-import { Product } from "@/types/shared";
-import { useEffect, useState } from "react";
+import { Metadata } from "next";
+import { Suspense } from "react";
 
-export default function ProductPage({ params }: { params: { code: string } }) {
+type PageProps = {
+  params: {
+    code: string;
+  };
+  searchParams: {
+    currency: string;
+    inventory: string;
+  };
+};
+
+export async function generateMetadata({
+  params,
+  searchParams,
+}: PageProps): Promise<Metadata> {
   const { code } = params;
-  const [product, setProduct] = useState<Product | null>(null);
-  const selectedInventory = useInventoryStore(
-    (state) => state.selectedInventory
-  );
-  const selectedCurrency = useCurrencyStore((state) => state.selectedCurrency);
+  const { currency, inventory } = searchParams;
 
-  useEffect(() => {
-    const getProductDetails = async () => {
-      try {
-        if (!selectedCurrency || !selectedInventory) {
-          return;
-        }
-        const product = await clientProductService.getDetails(
-          code,
-          selectedCurrency._id,
-          selectedInventory._id
-        );
-        setProduct(product);
-      } catch (error) {}
-    };
-    getProductDetails();
-  }, [code, selectedInventory, selectedCurrency]);
+  const product = await getProductDetailsAction(code, inventory, currency)
+
+  return {
+    title: product.name,
+    description: product.description,
+    openGraph: {
+      images: [product.imageUrl || ""],
+    },
+  };
+}
+
+export default async function ProductPage({ params, searchParams }: PageProps) {
+  const { code } = params;
+  const { currency, inventory } = searchParams;
+
+  const commonData = await getCommonDataAction();
+  const product = await getProductDetailsAction(code, inventory, currency);
 
   return (
     <div className="p-6">
-      {product && selectedCurrency ? (
-        <ProductDetails {...{ product, selectedCurrency }}></ProductDetails>
-      ) : (
-        <ProductDetailsSkeleton />
-      )}
+      <StoreCommonData commonData={commonData} />
+      <Suspense>
+        <ProductDetails {...{ product }}></ProductDetails>
+      </Suspense>
     </div>
   );
 }

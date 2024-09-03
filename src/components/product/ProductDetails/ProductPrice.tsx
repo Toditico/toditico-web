@@ -1,5 +1,3 @@
-"use client";
-
 import { Currency } from "@/types/shared";
 
 type Props = {

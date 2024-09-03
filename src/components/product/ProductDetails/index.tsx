@@ -1,25 +1,47 @@
 "use client";
-
-import { Currency, Product } from "@/types/shared";
+import { Product } from "@/types/shared";
 import { useEffect, useState } from "react";
 import ProductImages from "./ProductImages";
 import ProductInfo from "./ProductInfo";
 import { Button } from "@mui/material";
 import { IconShoppingBag } from "@tabler/icons-react";
 import { useCartStore } from "@/stores/cart";
+import { useCurrencyStore } from "@/stores/currency";
+import { useInventoryStore } from "@/stores/inventory";
+import { usePathname, useRouter } from "next/navigation";
 
 type Props = {
   product: Product;
-  selectedCurrency: Currency;
 };
 
-export default function ProductDetails({ product, selectedCurrency }: Props) {
+export default function ProductDetails({ product }: Props) {
   const increaseProduct = useCartStore((state) => state.increaseProduct);
+  const selectedCurrency = useCurrencyStore((state) => state.selectedCurrency);
+  const selectedInventory = useInventoryStore(
+    (state) => state.selectedInventory,
+  );
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const pathName = usePathname();
+
   const addProductToCart = () => {
     increaseProduct(product);
   };
 
+  useEffect(() => {
+    setLoading(!selectedCurrency);
+  }, [selectedCurrency]);
+
+  useEffect(() => {
+    if (selectedCurrency && selectedInventory) {
+      router.push(
+        `${pathName}?currency=${selectedCurrency._id}&inventory=${selectedInventory._id}`,
+      );
+    }
+  }, [selectedCurrency, selectedInventory]);
+
   const [images, setImages] = useState<string[]>([]);
+
   useEffect(() => {
     const mainImage = product.imageUrl ?? "";
     const secondaryImages =
@@ -27,11 +49,12 @@ export default function ProductDetails({ product, selectedCurrency }: Props) {
     const images = [mainImage, ...secondaryImages];
     setImages(images.filter((image) => image));
   }, [product]);
-  return (
+
+  return !loading ? (
     <div className="flex flex-col gap-6">
       <ProductImages {...{ images }} />
       <div className="flex flex-col gap-6">
-        <ProductInfo {...{ product, selectedCurrency }} />
+        <ProductInfo {...{ product }} selectedCurrency={selectedCurrency!} />
         <Button
           variant="outlined"
           startIcon={<IconShoppingBag size={24} />}
@@ -51,5 +74,5 @@ export default function ProductDetails({ product, selectedCurrency }: Props) {
         </Button>
       </div>
     </div>
-  );
+  ) : null;
 }

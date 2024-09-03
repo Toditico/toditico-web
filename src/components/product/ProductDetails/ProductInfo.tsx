@@ -1,4 +1,3 @@
-"use client";
 import { Currency, Product } from "@/types/shared";
 import ProductPrice from "./ProductPrice";
 import ProductCardStatus from "@/components/catalogue/ProductsContainer/ProductCard/ProductStatus";
