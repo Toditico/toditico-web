@@ -13,17 +13,19 @@ export default function Header() {
   const path = usePathname();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
-  const getH1Content = (path: string) => {
-    return path === "/"
+
+  const isHomeView = path === "/home";
+  const isCatalogView = path === "/catalogue" || path.startsWith("/product");
+  const isContactView = path === "/contact";
+
+  const getH1Content = () => {
+    return isHomeView
       ? "Rueda con confianza"
-      : path === "/contact"
+      : isContactView
         ? "Sobre nosotros, Toditico"
         : "Catálogo de productos";
   };
 
-  const isHomeView = path === "/";
-  const isCatalogView = path === "/catalogue" || path.startsWith("/product");
-  const isContactView = path === "/contact";
   const openDrawer = () => {
     setDrawerOpen(true);
   };
@@ -62,7 +64,7 @@ export default function Header() {
       >
         <div className="mx-auto my-[24px] text-center flex flex-col gap-[24px] items-center xl:max-w-[1000px]">
           <h1 className="font-black text-h1 uppercase text-white md:text-h1-tablet xl:text-h1-desktop">
-            {getH1Content(path)}
+            {getH1Content()}
           </h1>
           {isHomeView && (
             <h3 className="font-medium text-h3 uppercase text-white md:text-h2-tablet xl:text-h2-desktop">
