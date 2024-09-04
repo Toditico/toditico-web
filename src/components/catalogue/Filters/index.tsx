@@ -8,7 +8,8 @@ import { useEffect, useState } from "react";
 
 type Props = {
   inventories: Inventory[];
-  selectedInventory: Inventory | null;
+  selectedInventory: string;
+  selectedQuery: string;
   isLoading?: boolean;
   onFilter: (userInput: string, userSelectedInventory: string) => void;
 };
@@ -16,6 +17,7 @@ type Props = {
 export default function Filters({
   inventories,
   selectedInventory,
+  selectedQuery,
   onFilter,
   isLoading = false,
 }: Props) {
@@ -23,20 +25,14 @@ export default function Filters({
   const [productName, setProductName] = useState<string>("");
 
   useEffect(() => {
+    setProductName(selectedQuery);
+  }, [selectedQuery]);
+
+  useEffect(() => {
     if (selectedInventory) {
-      setInventory(selectedInventory._id);
+      setInventory(selectedInventory);
     }
   }, [selectedInventory]);
-
-  const checkIfFiltersChanged = (
-    userInput: string,
-    userSelectedInventory: string,
-  ) => {
-    if (productName === userInput && inventory === userSelectedInventory) {
-      return;
-    }
-    onFilter(userInput, userSelectedInventory);
-  };
 
   return (
     <div className="flex flex-col p-6 gap-4">
@@ -94,10 +90,10 @@ export default function Filters({
           />
 
           <Button
-            className="text-button h-[56px] rounded-lg p-4 uppercase font-bold text-button"
+            className="h-[56px] rounded-lg p-4 uppercase font-bold text-button"
             variant="contained"
             startIcon={<IconFilter size={24} />}
-            onClick={() => checkIfFiltersChanged(productName, inventory)}
+            onClick={() => onFilter(productName, inventory)}
           >
             Filtrar
           </Button>

@@ -8,7 +8,6 @@ import ProductsContainer from "../ProductsContainer";
 import { useEffect, useState } from "react";
 import { useModuleStore } from "@/stores/module";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useInventoryStore } from "@/stores/inventory";
 
 type Props = {
   data: CommonResponse;
@@ -34,9 +33,8 @@ export default function CatalogueClientWrapper({
   const setSelectedModule = useModuleStore((state) => state.setSelectedModule);
   const selectedModule = useModuleStore((state) => state.selectedModule);
 
-  const selectedInventory = useInventoryStore(
-    (state) => state.selectedInventory,
-  );
+  const selectedInventory = searchParams.get("inventory") ?? "";
+  const selectedQuery = searchParams.get("query") ?? "";
 
   const onModuleSelected = (module: Module) => {
     setSelectedModule(module);
@@ -49,11 +47,19 @@ export default function CatalogueClientWrapper({
   };
 
   const onFilter = async (userInput: string, userSelectedInventory: string) => {
+    const previousProductName = searchParams.get("query");
+    const previousSelectedInventory = searchParams.get("inventory");
+    if (
+      userInput === previousProductName &&
+      userSelectedInventory === previousSelectedInventory
+    ) {
+      return;
+    }
     setProducts([]);
     const currency = searchParams.get("currency");
     const moduleParam = searchParams.get("module");
     const queryParams = `currency=${currency}&inventory=${userSelectedInventory}&query=${userInput}&module=${moduleParam}&page=1`;
-    router.push(`${pathName}/${queryParams}`);
+    router.push(`${pathName}?${queryParams}`);
   };
 
   const fetchNextPage = () => {
@@ -78,7 +84,7 @@ export default function CatalogueClientWrapper({
       />
       <Filters
         inventories={data.inventories}
-        {...{ onFilter, selectedInventory }}
+        {...{ onFilter, selectedInventory, selectedQuery }}
       />
       <ProductsContainer {...{ products, maxPage, fetchNextPage }} />
     </>
