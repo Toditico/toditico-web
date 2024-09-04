@@ -8,7 +8,8 @@ import { useMemo } from "react";
 
 export const metadata: Metadata = {
   title: "Inicio | TODITICO",
-  description: "...",
+  description:
+    "TODITICO es un proyecto relativamente joven, con el concepto de tienda comercializadora de partes y piezas de la industria automotriz en el mercado cubano",
 };
 
 export default async function Home() {

@@ -2,6 +2,7 @@ import { getCommonDataAction } from "@/actions/commonActions";
 import { filterProductsAction } from "@/actions/productActions";
 import CatalogueClientWrapper from "@/components/catalogue/CatalogueClientWrapper";
 import StoreCommonData from "@/components/layout/StoreCommonData";
+import { Metadata } from "next";
 
 type PageProps = {
   searchParams: {
@@ -11,6 +12,12 @@ type PageProps = {
     query: string;
     page: number;
   };
+};
+
+export const metadata: Metadata = {
+  title: "Catálogo | TODITICO",
+  description:
+    "TODITICO es un proyecto relativamente joven, con el concepto de tienda comercializadora de partes y piezas de la industria automotriz en el mercado cubano",
 };
 
 export default async function Catalogue({ searchParams }: PageProps) {
