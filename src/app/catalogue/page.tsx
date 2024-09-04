@@ -22,16 +22,21 @@ export const metadata: Metadata = {
 
 export default async function Catalogue({ searchParams }: PageProps) {
   const { currency, inventory, module, query, page } = searchParams;
-  const data = await getCommonDataAction();
 
-  const { result: products, paginationInfo } = await filterProductsAction(
-    query || "",
-    inventory,
-    currency,
-    module,
-    page ?? 1,
-    10,
-  );
+  const promises = [
+    getCommonDataAction(),
+    filterProductsAction(
+      query || "",
+      inventory,
+      currency,
+      module,
+      page ?? 1,
+      10,
+    ),
+  ];
+
+  const [data, filterProducts] = await Promise.all(promises);
+  const { result: products, paginationInfo } = filterProducts;
 
   return (
     <>

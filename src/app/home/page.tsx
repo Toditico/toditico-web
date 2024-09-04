@@ -28,14 +28,14 @@ export default async function Home() {
       <OurBussiness />
       {data && (
         <Map
-          inventories={data?.inventories ?? []}
-          workshops={data?.workshops ?? []}
+          inventories={data.inventories ?? []}
+          workshops={data.workshops ?? []}
         />
       )}
       <OurStats
-        customers={data?.stats.customers ?? 0}
-        products={data?.stats.products ?? 0}
-        sales={data?.stats.sales ?? 0}
+        customers={data.stats.customers ?? 0}
+        products={data.stats.products ?? 0}
+        sales={data.stats.sales ?? 0}
       />
       <StoreCommonData commonData={data} />
     </div>
