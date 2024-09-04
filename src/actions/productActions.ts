@@ -8,8 +8,25 @@ const getProductDetailsAction = async (
   inventory: string,
   currency: string,
 ): Promise<Product> => {
-  const product = await productService.getDetails(code, inventory, currency);
-  return product;
+  return productService.getDetails(code, inventory, currency);
 };
 
-export { getProductDetailsAction };
+const filterProductsAction = async (
+  text: string,
+  inventoryId: string,
+  currencyId: string,
+  moduleId: string,
+  page: number,
+  limit: number,
+) => {
+  return productService.filterProducts(
+    text,
+    inventoryId,
+    currencyId,
+    moduleId,
+    page,
+    limit,
+  );
+};
+
+export { getProductDetailsAction, filterProductsAction };

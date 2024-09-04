@@ -9,20 +9,30 @@ import { useState } from "react";
 type Props = {
   inventories: Inventory[];
   selectedInventory: Inventory | null;
-  onFilter: (text: string, inventoryId: string) => void;
-  isLoading: boolean;
+  isLoading?: boolean;
+  onFilter: (userInput: string, userSelectedInventory: string) => void;
 };
 
 export default function Filters({
   inventories,
   selectedInventory,
   onFilter,
-  isLoading,
+  isLoading = false,
 }: Props) {
   const [inventory, setInventory] = useState<string>(
-    selectedInventory?._id ?? ""
+    selectedInventory?._id ?? "",
   );
   const [productName, setProductName] = useState<string>("");
+
+  const checkIfFiltersChanged = (
+    userInput: string,
+    userSelectedInventory: string,
+  ) => {
+    if (productName === userInput && inventory === userSelectedInventory) {
+      return;
+    }
+    onFilter(userInput, userSelectedInventory);
+  };
 
   return (
     <div className="flex flex-col p-6 gap-4">
@@ -83,7 +93,7 @@ export default function Filters({
             className="text-button h-[56px] rounded-lg p-4 uppercase font-bold text-button"
             variant="contained"
             startIcon={<IconFilter size={24} />}
-            onClick={() => onFilter(productName, inventory)}
+            onClick={() => checkIfFiltersChanged(productName, inventory)}
           >
             Filtrar
           </Button>

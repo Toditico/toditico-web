@@ -1,8 +1,12 @@
+"use client";
 import { Drawer } from "@mui/material";
 import SocialNetworks from "../SocialNetworks";
 import DrawerList from "./DrawerList";
 import { DrawerListItem } from "./DrawerList/DrawerListItem";
 import InventorySelection from "./InventorySelection";
+import { useCurrencyStore } from "@/stores/currency";
+import { useInventoryStore } from "@/stores/inventory";
+import { useModuleStore } from "@/stores/module";
 
 type Props = {
   isOpen: boolean;
@@ -10,9 +14,18 @@ type Props = {
 };
 
 export default function AppDrawer({ isOpen, closeDrawer }: Props) {
+  const selectedCurrency = useCurrencyStore((state) => state.selectedCurrency);
+  const selectedInventory = useInventoryStore(
+    (state) => state.selectedInventory,
+  );
+  const selectedModule = useModuleStore((state) => state.selectedModule);
+
   const navigationItems: DrawerListItem[] = [
     { label: "Inicio", link: "/" },
-    { label: "Catálogo", link: "/catalogue" },
+    {
+      label: "Catálogo",
+      link: `/catalogue?inventory=${selectedInventory?._id}&currency=${selectedCurrency?._id}&module=${selectedModule?._id}&query=`,
+    },
     { label: "Nosotros", link: "/contact" },
   ];
 

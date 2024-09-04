@@ -6,15 +6,17 @@ import { Skeleton } from "@mui/material";
 
 type Props = {
   products: Product[];
-  isLoading: boolean;
-  fetchNextPage: () => void;
+  isLoading?: boolean;
+  maxPage: number;
+  fetchNextPage: () => void
 };
 
 export default function ProductsContainer({
   products,
-  isLoading,
   fetchNextPage,
+  isLoading = false,
 }: Props) {
+
   return (
     <div className="flex flex-col gap-4 px-6 pb-4">
       {products.map((product, index) => (

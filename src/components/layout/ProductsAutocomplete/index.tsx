@@ -69,7 +69,7 @@ export default function ProductsAutocomplete() {
     setValue("");
   };
 
-  return inventories.length && selectedCurrency && selectedInventory ? (
+  return inventories.length && selectedCurrency ? (
     <Autocomplete
       className="rounded w-[calc(100%-100px)] xl:w-[500px]"
       sx={{
@@ -144,7 +144,7 @@ export default function ProductsAutocomplete() {
               onClick={selectedProduct}
               product={product}
               selectedCurrency={selectedCurrency}
-	      selectedInventory={selectedInventory}
+              selectedInventory={selectedInventory!}
             />
           </div>
         );

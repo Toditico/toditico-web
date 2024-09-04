@@ -8,14 +8,14 @@ import { MobileStepper, Skeleton } from "@mui/material";
 
 type Props = {
   modules: Module[];
-  selectedModule: Module | null;
   onModuleSelected: (module: Module) => void;
+  selectedModule: Module | null;
 };
 
 export default function ModulesSelection({
   modules,
-  selectedModule,
   onModuleSelected,
+  selectedModule,
 }: Props) {
   const [activeStep, setActiveStep] = useState(0);
   const handleStepChanged = (step: number) => {
@@ -24,7 +24,7 @@ export default function ModulesSelection({
 
   return (
     <div className="flex flex-col gap-4 items-center max-w-[100vw]">
-      {modules.length === 0 && !selectedModule ? (
+      {modules.length === 0 || !selectedModule ? (
         <>
           <Skeleton height={360} variant="rectangular" />
         </>
@@ -41,7 +41,7 @@ export default function ModulesSelection({
               <ModulesSelectionItem
                 module={module}
                 key={module._id}
-                isSelected={module._id === selectedModule!._id}
+                isSelected={module._id === selectedModule._id}
                 onClick={onModuleSelected}
               />
             ))}
