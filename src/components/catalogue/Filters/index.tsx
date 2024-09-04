@@ -4,7 +4,7 @@ import { colors } from "@/constants/colors";
 import { Inventory } from "@/types/shared";
 import { Button, MenuItem, Select, Skeleton, TextField } from "@mui/material";
 import { IconFilter } from "@tabler/icons-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
   inventories: Inventory[];
@@ -19,10 +19,14 @@ export default function Filters({
   onFilter,
   isLoading = false,
 }: Props) {
-  const [inventory, setInventory] = useState<string>(
-    selectedInventory?._id ?? "",
-  );
+  const [inventory, setInventory] = useState<string>("");
   const [productName, setProductName] = useState<string>("");
+
+  useEffect(() => {
+    if (selectedInventory) {
+      setInventory(selectedInventory._id);
+    }
+  }, [selectedInventory]);
 
   const checkIfFiltersChanged = (
     userInput: string,

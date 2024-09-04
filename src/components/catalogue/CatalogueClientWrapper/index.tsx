@@ -1,7 +1,7 @@
 "use client";
 
 import { CommonResponse } from "@/types/home";
-import { Inventory, Module, Product } from "@/types/shared";
+import { Module, Product } from "@/types/shared";
 import ModulesSelection from "../ModulesSelection";
 import Filters from "../Filters";
 import ProductsContainer from "../ProductsContainer";

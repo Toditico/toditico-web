@@ -16,7 +16,6 @@ type PageProps = {
 export default async function Catalogue({ searchParams }: PageProps) {
   const { currency, inventory, module, query, page } = searchParams;
   const data = await getCommonDataAction();
-  console.log("Fetching products for module: ", module);
 
   const { result: products, paginationInfo } = await filterProductsAction(
     query || "",
