@@ -8,6 +8,7 @@ import ProductsContainer from "../ProductsContainer";
 import { useEffect, useState } from "react";
 import { useModuleStore } from "@/stores/module";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCurrencyStore } from "@/stores/currency";
 
 type Props = {
   data: CommonResponse;
@@ -32,6 +33,19 @@ export default function CatalogueClientWrapper({
 
   const setSelectedModule = useModuleStore((state) => state.setSelectedModule);
   const selectedModule = useModuleStore((state) => state.selectedModule);
+  const selectedCurrency = useCurrencyStore((state) => state.selectedCurrency);
+
+  useEffect(() => {
+    if (selectedCurrency) {
+      setProducts([]);
+      const currency = selectedCurrency._id;
+      const inventory = searchParams.get("inventory");
+      const moduleParam = searchParams.get("module");
+      const query = searchParams.get("query") || "";
+      const queryParams = `currency=${currency}&inventory=${inventory}&query=${query}&module=${moduleParam}&page=1`;
+      router.push(`${pathName}?${queryParams}`, { scroll: true });
+    }
+  }, [selectedCurrency]);
 
   const selectedInventory = searchParams.get("inventory") ?? "";
   const selectedQuery = searchParams.get("query") ?? "";
@@ -59,7 +73,7 @@ export default function CatalogueClientWrapper({
     const currency = searchParams.get("currency");
     const moduleParam = searchParams.get("module");
     const queryParams = `currency=${currency}&inventory=${userSelectedInventory}&query=${userInput}&module=${moduleParam}&page=1`;
-    router.push(`${pathName}?${queryParams}`);
+    router.push(`${pathName}?${queryParams}`, { scroll: false });
   };
 
   const fetchNextPage = () => {
