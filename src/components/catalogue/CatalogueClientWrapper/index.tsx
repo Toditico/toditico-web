@@ -36,7 +36,10 @@ export default function CatalogueClientWrapper({
   const selectedCurrency = useCurrencyStore((state) => state.selectedCurrency);
 
   useEffect(() => {
-    if (selectedCurrency) {
+    if (
+      selectedCurrency &&
+      selectedCurrency._id !== searchParams.get("currency")
+    ) {
       setProducts([]);
       const currency = selectedCurrency._id;
       const inventory = searchParams.get("inventory");

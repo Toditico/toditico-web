@@ -8,8 +8,6 @@ export function middleware(request: NextRequest) {
   const fromURL = request.headers.get("referer");
   const toURL = nextUrl.pathname;
 
-  console.log("previos URL: ", fromURL);
-
   if (!fromURL?.includes(toURL) && nextUrl.searchParams.has("page")) {
     nextUrl.searchParams.delete("page");
     return NextResponse.redirect(nextUrl);
