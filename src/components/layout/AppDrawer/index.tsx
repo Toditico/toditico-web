@@ -21,7 +21,7 @@ export default function AppDrawer({ isOpen, closeDrawer }: Props) {
   const selectedModule = useModuleStore((state) => state.selectedModule);
 
   const navigationItems: DrawerListItem[] = [
-    { label: "Inicio", link: "/" },
+    { label: "Inicio", link: "/home" },
     {
       label: "Catálogo",
       link: `/catalogue?inventory=${selectedInventory?._id}&currency=${selectedCurrency?._id}&module=${selectedModule?._id}&query=`,
