@@ -19,7 +19,7 @@ export type Workshop = {
   address?: string;
   latitude?: number;
   longitude?: number;
-  _id: string
+  _id: string;
 };
 
 export type ProductStatus = "AVAILABLE" | "LOW_STOCK" | "NOT_AVAILABLE";
@@ -51,4 +51,9 @@ export type Module = {
 export type PaginationInfo = {
   maxPage: number;
   count: number;
+};
+
+export type FilterProductsType = {
+  result: Product[];
+  paginationInfo: PaginationInfo;
 };

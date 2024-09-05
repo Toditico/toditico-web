@@ -4,6 +4,8 @@ import CatalogueClientWrapper from "@/components/catalogue/CatalogueClientWrappe
 import StoreCommonData from "@/components/layout/StoreCommonData";
 import { Metadata } from "next";
 import ogImage from "@public/opengraph-image.jpg";
+import { FilterProductsType } from "@/types/shared";
+import { CommonResponse } from "@/types/home";
 
 type PageProps = {
   searchParams: {
@@ -52,17 +54,18 @@ export default async function Catalogue({ searchParams }: PageProps) {
   ];
 
   const [data, filterProducts] = await Promise.all(promises);
-  const { result: products, paginationInfo } = filterProducts;
+  const { result: products, paginationInfo } =
+    filterProducts as FilterProductsType;
 
   return (
     <>
       <div className="flex flex-col gap-[10px] pt-6 px-[10x] pb-0">
         <>
-          <StoreCommonData commonData={data} />
+          <StoreCommonData commonData={data as CommonResponse} />
           <CatalogueClientWrapper
             lastFetchedProducts={products}
             maxPage={paginationInfo.maxPage}
-            data={data}
+            data={data as CommonResponse}
           />
         </>
       </div>
