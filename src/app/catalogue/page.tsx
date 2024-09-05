@@ -3,6 +3,7 @@ import { filterProductsAction } from "@/actions/productActions";
 import CatalogueClientWrapper from "@/components/catalogue/CatalogueClientWrapper";
 import StoreCommonData from "@/components/layout/StoreCommonData";
 import { Metadata } from "next";
+import ogImage from "@public/opengraph-image.jpg";
 
 type PageProps = {
   searchParams: {
@@ -18,6 +19,21 @@ export const metadata: Metadata = {
   title: "Catálogo | TODITICO",
   description:
     "TODITICO es un proyecto relativamente joven, con el concepto de tienda comercializadora de partes y piezas de la industria automotriz en el mercado cubano",
+  metadataBase: new URL("https://toditico-web-eight.vercel.app/"),
+  openGraph: {
+    images: {
+      url: ogImage.src,
+      width: ogImage.width,
+      height: ogImage.height,
+    },
+  },
+  twitter: {
+    images: {
+      url: ogImage.src,
+      width: ogImage.width,
+      height: ogImage.height,
+    },
+  },
 };
 
 export default async function Catalogue({ searchParams }: PageProps) {

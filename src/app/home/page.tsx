@@ -5,11 +5,27 @@ import StoreCommonData from "@/components/layout/StoreCommonData";
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { useMemo } from "react";
+import ogImage from "@public/opengraph-image.jpg";
 
 export const metadata: Metadata = {
   title: "Inicio | TODITICO",
   description:
     "TODITICO es un proyecto relativamente joven, con el concepto de tienda comercializadora de partes y piezas de la industria automotriz en el mercado cubano",
+  metadataBase: new URL("https://toditico-web-eight.vercel.app/"),
+  openGraph: {
+    images: {
+      url: ogImage.src,
+      width: ogImage.width,
+      height: ogImage.height,
+    },
+  },
+  twitter: {
+    images: {
+      url: ogImage.src,
+      width: ogImage.width,
+      height: ogImage.height,
+    },
+  },
 };
 
 export default async function Home() {
