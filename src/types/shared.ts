@@ -8,8 +8,8 @@ export type Inventory = {
   name: string;
   phoneNumbers?: string[];
   address?: string;
-  latitude?: number;
-  longitude?: number;
+  latitude: number;
+  longitude: number;
   _id: string;
 };
 
@@ -17,8 +17,8 @@ export type Workshop = {
   name: string;
   phoneNumbers?: string[];
   address?: string;
-  latitude?: number;
-  longitude?: number;
+  latitude: number;
+  longitude: number;
   _id: string;
 };
 
