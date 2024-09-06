@@ -4,7 +4,7 @@ import { colors } from "@/constants/colors";
 import { Inventory } from "@/types/shared";
 import { Button, MenuItem, Select, Skeleton, TextField } from "@mui/material";
 import { IconFilter } from "@tabler/icons-react";
-import { useEffect, useState } from "react";
+import { KeyboardEventHandler, useEffect, useState } from "react";
 
 type Props = {
   inventories: Inventory[];
@@ -35,7 +35,14 @@ export default function Filters({
   }, [selectedInventory]);
 
   return (
-    <div className="flex flex-col p-6 gap-4">
+    <div
+      className="flex flex-col p-6 gap-4"
+      onKeyDown={(e) => {
+        if (e.code === "Enter") {
+          onFilter(productName, inventory);
+        }
+      }}
+    >
       {isLoading ? (
         <>
           <Skeleton variant="rectangular" height={56} width={"100%"} />
