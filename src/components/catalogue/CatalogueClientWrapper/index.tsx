@@ -26,9 +26,11 @@ export default function CatalogueClientWrapper({
   const router = useRouter();
 
   const [products, setProducts] = useState<Product[]>([]);
+  const [isFetchingProducts, setIsFetchingProducts] = useState(true);
 
   useEffect(() => {
     setProducts([...products, ...lastFetchedProducts]);
+    setIsFetchingProducts(false);
   }, [lastFetchedProducts]);
 
   const setSelectedModule = useModuleStore((state) => state.setSelectedModule);
@@ -47,6 +49,7 @@ export default function CatalogueClientWrapper({
       const query = searchParams.get("query") || "";
       const queryParams = `currency=${currency}&inventory=${inventory}&query=${query}&module=${moduleParam}&page=1`;
       router.push(`${pathName}?${queryParams}`, { scroll: true });
+      setIsFetchingProducts(true);
     }
   }, [selectedCurrency]);
 
@@ -61,6 +64,7 @@ export default function CatalogueClientWrapper({
     const query = searchParams.get("query") || "";
     const queryParams = `currency=${currency}&inventory=${inventory}&query=${query}&module=${module._id}&page=1`;
     router.push(`${pathName}?${queryParams}`, { scroll: false });
+    setIsFetchingProducts(true);
   };
 
   const onFilter = async (userInput: string, userSelectedInventory: string) => {
@@ -77,6 +81,7 @@ export default function CatalogueClientWrapper({
     const moduleParam = searchParams.get("module");
     const queryParams = `currency=${currency}&inventory=${userSelectedInventory}&query=${userInput}&module=${moduleParam}&page=1`;
     router.push(`${pathName}?${queryParams}`, { scroll: false });
+    setIsFetchingProducts(true);
   };
 
   const fetchNextPage = () => {
@@ -91,6 +96,7 @@ export default function CatalogueClientWrapper({
     const moduleParam = searchParams.get("module");
     const queryParams = `currency=${currency}&inventory=${inventory}&query=${query}&module=${moduleParam}&page=${page + 1}`;
     router.push(`${pathName}?${queryParams}`, { scroll: false });
+    setIsFetchingProducts(true);
   };
 
   return (
@@ -103,7 +109,10 @@ export default function CatalogueClientWrapper({
         inventories={data.inventories}
         {...{ onFilter, selectedInventory, selectedQuery }}
       />
-      <ProductsContainer {...{ products, maxPage, fetchNextPage }} />
+      <ProductsContainer
+        {...{ products, maxPage, fetchNextPage }}
+        isLoading={isFetchingProducts}
+      />
     </>
   );
 }
