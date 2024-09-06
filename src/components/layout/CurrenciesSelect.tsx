@@ -8,7 +8,7 @@ export default function CurrenciesSelect() {
   const currencies = useCurrencyStore((state) => state.currencies);
   const selectedCurrency = useCurrencyStore((state) => state.selectedCurrency);
   const setSelectedCurrency = useCurrencyStore(
-    (state) => state.setSelectedCurrency
+    (state) => state.setSelectedCurrency,
   );
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -35,6 +35,10 @@ export default function CurrenciesSelect() {
         <TextField
           {...params}
           variant="filled"
+          onKeyDown={(e) => {
+            e.preventDefault();
+            return;
+          }}
           sx={{
             height: "40px",
             "& .MuiInputBase-root": {
