@@ -46,4 +46,5 @@ const filterProductsAction = unstable_cache(
   undefined,
   { revalidate: FILTER_PRODUCTS_REVALIDATE_SECONDS },
 );
+
 export { getProductDetailsAction, filterProductsAction };
