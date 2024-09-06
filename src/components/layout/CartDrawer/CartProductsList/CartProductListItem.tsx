@@ -1,6 +1,6 @@
 import { Product, ProductCount } from "@/types/shared";
 import Image from "next/image";
-import PlaceHolderImage from "@public/images/placeholder.png";
+import PlaceHolderImage from "@public/images/placeholder.webp";
 import {
   IconCircleX,
   IconCircleMinus,

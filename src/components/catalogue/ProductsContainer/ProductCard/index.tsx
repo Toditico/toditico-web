@@ -2,7 +2,7 @@
 
 import { Product } from "@/types/shared";
 import Image from "next/image";
-import PlaceHolderImage from "../../../../../public/images/placeholder.png";
+import PlaceHolderImage from "@public/images/placeholder.webp";
 import { useCurrencyStore } from "@/stores/currency";
 import ProductCardInfo from "./ProductCardInfo";
 import { Button } from "@mui/material";
