@@ -15,6 +15,7 @@ import {
 import { IconSearch } from "@tabler/icons-react";
 import { useEffect, useRef, useState } from "react";
 import ProductsAutocompleteOption from "./ProductAutocompleteOption";
+import { getProductsAutocompleteAction } from "@/actions/productActions";
 
 export default function ProductsAutocomplete() {
   const [value, setValue] = useState<string>("");
@@ -49,7 +50,7 @@ export default function ProductsAutocomplete() {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const products = await clientProductService.getAutocomplete(
+        const products = await getProductsAutocompleteAction(
           value,
           selectedCurrency!._id,
           selectedInventory!._id,

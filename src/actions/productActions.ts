@@ -47,4 +47,24 @@ const filterProductsAction = unstable_cache(
   { revalidate: FILTER_PRODUCTS_REVALIDATE_SECONDS },
 );
 
-export { getProductDetailsAction, filterProductsAction };
+const getProductsAutocompleteAction = unstable_cache(
+  async (
+    text: string,
+    inventoryId: string,
+    currencyId: string,
+  ): Promise<Product[]> => {
+    const data = await productService.getAutocomplete(
+      text,
+      inventoryId,
+      currencyId,
+    );
+    return normalizeProductsData(data);
+  },
+  undefined,
+  { revalidate: FILTER_PRODUCTS_REVALIDATE_SECONDS },
+);
+export {
+  getProductDetailsAction,
+  filterProductsAction,
+  getProductsAutocompleteAction,
+};
