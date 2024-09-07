@@ -1,3 +1,4 @@
+"use client"
 import NavigationBar from "@/components/layout/NavigationBar";
 import { Button } from "@mui/material";
 import { IconShoppingBag } from "@tabler/icons-react";
