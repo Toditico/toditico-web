@@ -8,6 +8,10 @@ import { useEffect, useState } from "react";
 import AppDrawer from "./AppDrawer/";
 import InventorySelectionDialog from "@/components/layout/InventorySelectionDialog";
 import CartDrawer from "./CartDrawer";
+import Link from "next/link";
+import { useCurrencyStore } from "@/stores/currency";
+import { useModuleStore } from "@/stores/module";
+import { useInventoryStore } from "@/stores/inventory";
 
 export default function Header() {
   const path = usePathname();
@@ -17,6 +21,12 @@ export default function Header() {
   const isHomeView = path === "/home";
   const isCatalogView = path === "/catalogue" || path.startsWith("/product");
   const isContactView = path === "/contact";
+
+  const selectedCurrency = useCurrencyStore((state) => state.selectedCurrency);
+  const selectedModule = useModuleStore((state) => state.selectedModule);
+  const selectedInventory = useInventoryStore(
+    (state) => state.selectedInventory,
+  );
 
   const getH1Content = () => {
     return isHomeView
@@ -49,7 +59,7 @@ export default function Header() {
     <>
       <AppDrawer isOpen={drawerOpen} closeDrawer={closeDrawer} />
       <CartDrawer isOpen={cartDrawerOpen} closeDrawer={closeCartDrawer} />
-      <InventorySelectionDialog />
+      <InventorySelectionDialog selectedInventory={selectedInventory} />
       <NavigationBar openMenu={openDrawer} openCart={openCartDrawer} />
       <div
         id="header"
@@ -73,13 +83,17 @@ export default function Header() {
             </h3>
           )}
           {!isCatalogView && (
-            <Button
-              className="text-button h-[44px] rounded-lg py-[10px] px-[16px] uppercase font-bold max-w-[300px] md:h-[56px] md:py-[16px]"
-              variant="contained"
-              startIcon={<IconShoppingBag />}
+            <Link
+              href={`/catalogue?inventory=${selectedInventory?._id}&currency=${selectedCurrency?._id}&module=${selectedModule?._id}&query=`}
             >
-              Explora nuestro catálogo
-            </Button>
+              <Button
+                className="text-button h-[44px] rounded-lg py-[10px] px-[16px] uppercase font-bold max-w-[300px] md:h-[56px] md:py-[16px]"
+                variant="contained"
+                startIcon={<IconShoppingBag />}
+              >
+                Explora nuestro catálogo
+              </Button>
+            </Link>
           )}
         </div>
       </div>

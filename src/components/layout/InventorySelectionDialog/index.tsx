@@ -4,19 +4,20 @@ import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { IconX, IconInfoCircle } from "@tabler/icons-react";
 import InventoryCard from "./InventoryCard";
 
-export default function InventorySelectionDialog() {
+type Props = {
+  selectedInventory: Inventory | null;
+};
+
+export default function InventorySelectionDialog({ selectedInventory }: Props) {
   const inventories = useInventoryStore((state) => state.inventories);
-  const selectedInventory = useInventoryStore(
-    (state) => state.selectedInventory
-  );
   const openSelectionModal = useInventoryStore(
-    (state) => state.openSelectionModal
+    (state) => state.openSelectionModal,
   );
   const setOpenSelectionModal = useInventoryStore(
-    (state) => state.setOpenSelectionModal
+    (state) => state.setOpenSelectionModal,
   );
   const setSelectedInventory = useInventoryStore(
-    (state) => state.setSelectedInventory
+    (state) => state.setSelectedInventory,
   );
   const inventorySelected = (inventory: Inventory) => {
     setSelectedInventory(inventory);
