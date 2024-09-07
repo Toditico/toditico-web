@@ -17,6 +17,7 @@ export default function Header() {
   const path = usePathname();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
+  const [buttonHref, setButtonHref] = useState("");
 
   const isHomeView = path === "/home";
   const isCatalogView = path === "/catalogue" || path.startsWith("/product");
@@ -55,6 +56,14 @@ export default function Header() {
     setCartDrawerOpen(false);
   }, [path]);
 
+  useEffect(() => {
+    if (selectedModule && selectedCurrency && selectedInventory) {
+      setButtonHref(
+        `/catalogue?inventory=${selectedInventory._id}&currency=${selectedCurrency._id}&module=${selectedModule._id}&query=`,
+      );
+    }
+  }, [selectedInventory, selectedCurrency, selectedModule]);
+
   return (
     <>
       <AppDrawer isOpen={drawerOpen} closeDrawer={closeDrawer} />
@@ -82,19 +91,18 @@ export default function Header() {
               que perdura
             </h3>
           )}
-          {!isCatalogView && (
-            <Link
-              href={`/catalogue?inventory=${selectedInventory?._id}&currency=${selectedCurrency?._id}&module=${selectedModule?._id}&query=`}
-            >
-              <Button
-                className="text-button h-[44px] rounded-lg py-[10px] px-[16px] uppercase font-bold max-w-[300px] md:h-[56px] md:py-[16px]"
-                variant="contained"
-                startIcon={<IconShoppingBag />}
-              >
-                Explora nuestro catálogo
-              </Button>
-            </Link>
-          )}
+          {!isCatalogView &&
+            (selectedInventory && selectedCurrency && selectedModule ? (
+              <Link href={buttonHref}>
+                <Button
+                  className="text-button h-[44px] rounded-lg py-[10px] px-[16px] uppercase font-bold max-w-[300px] md:h-[56px] md:py-[16px]"
+                  variant="contained"
+                  startIcon={<IconShoppingBag />}
+                >
+                  Explora nuestro catálogo
+                </Button>
+              </Link>
+            ) : null)}
         </div>
       </div>
       <MainBrands />
