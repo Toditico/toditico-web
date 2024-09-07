@@ -1,5 +1,5 @@
 "use client"
-import { MapContainer, TileLayer, Marker, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
@@ -9,7 +9,6 @@ import {
   latLng,
   Point,
   latLngBounds,
-  LatLngExpression,
   Map,
 } from "leaflet";
 import { useEffect, useMemo, useState } from "react";
@@ -53,7 +52,7 @@ export default function AppMap({ inventories, workshops }: Props) {
           zIndexOffset={1000}
         >
           <NoPaddingPopup>
-            <InventoryWorkshopPopup element={inventory} />
+            <InventoryWorkshopPopup element={inventory} type="Inventory" />
           </NoPaddingPopup>
         </Marker>
       ));
@@ -69,7 +68,7 @@ export default function AppMap({ inventories, workshops }: Props) {
           icon={workshopIcon}
         >
           <NoPaddingPopup>
-            <InventoryWorkshopPopup element={workshop} />
+            <InventoryWorkshopPopup element={workshop} type="Workshop" />
           </NoPaddingPopup>
         </Marker>
       ));
