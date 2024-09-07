@@ -37,6 +37,11 @@ export default function CatalogueClientWrapper({
   const selectedModule = useModuleStore((state) => state.selectedModule);
   const selectedCurrency = useCurrencyStore((state) => state.selectedCurrency);
 
+  const refetchProducts = (queryParams: string, scroll: boolean) => {
+    router.push(`${pathName}?${queryParams}`, { scroll });
+    setIsFetchingProducts(true);
+  };
+
   useEffect(() => {
     if (
       selectedCurrency &&
@@ -48,8 +53,7 @@ export default function CatalogueClientWrapper({
       const moduleParam = searchParams.get("module");
       const query = searchParams.get("query") || "";
       const queryParams = `currency=${currency}&inventory=${inventory}&query=${query}&module=${moduleParam}&page=1`;
-      router.push(`${pathName}?${queryParams}`, { scroll: true });
-      setIsFetchingProducts(true);
+      refetchProducts(queryParams, true);
     }
   }, [selectedCurrency]);
 
@@ -63,8 +67,7 @@ export default function CatalogueClientWrapper({
     const inventory = searchParams.get("inventory");
     const query = searchParams.get("query") || "";
     const queryParams = `currency=${currency}&inventory=${inventory}&query=${query}&module=${module._id}&page=1`;
-    router.push(`${pathName}?${queryParams}`, { scroll: false });
-    setIsFetchingProducts(true);
+    refetchProducts(queryParams, false);
   };
 
   const onFilter = async (userInput: string, userSelectedInventory: string) => {
@@ -80,8 +83,7 @@ export default function CatalogueClientWrapper({
     const currency = searchParams.get("currency");
     const moduleParam = searchParams.get("module");
     const queryParams = `currency=${currency}&inventory=${userSelectedInventory}&query=${userInput}&module=${moduleParam}&page=1`;
-    router.push(`${pathName}?${queryParams}`, { scroll: false });
-    setIsFetchingProducts(true);
+    refetchProducts(queryParams, false)
   };
 
   const fetchNextPage = () => {
@@ -95,8 +97,7 @@ export default function CatalogueClientWrapper({
     const query = searchParams.get("query");
     const moduleParam = searchParams.get("module");
     const queryParams = `currency=${currency}&inventory=${inventory}&query=${query}&module=${moduleParam}&page=${page + 1}`;
-    router.push(`${pathName}?${queryParams}`, { scroll: false });
-    setIsFetchingProducts(true);
+    refetchProducts(queryParams, false)
   };
 
   return (
