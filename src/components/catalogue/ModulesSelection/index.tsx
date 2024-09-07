@@ -2,7 +2,7 @@
 import SwipeableViews from "react-swipeable-views";
 
 import { Module } from "@/types/shared";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ModulesSelectionItem from "./ModuleSelectionItem";
 import { MobileStepper, Skeleton } from "@mui/material";
 
@@ -21,6 +21,14 @@ export default function ModulesSelection({
   const handleStepChanged = (step: number) => {
     setActiveStep(step);
   };
+
+  useEffect(() => {
+    if (selectedModule) {
+      setActiveStep(
+        modules.findIndex((module) => module._id === selectedModule._id),
+      );
+    }
+  }, [selectedModule]);
 
   return (
     <div className="flex flex-col gap-4 items-center max-w-[100vw]">

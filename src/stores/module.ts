@@ -5,7 +5,7 @@ type ModuleState = {
   modules: Module[];
   selectedModule: Module | null;
   setSelectedModule: (module: Module) => void;
-  setModules: (modules: Module[]) => void;
+  setModules: (modules: Module[], moduleToSelect: string | null) => void;
 };
 
 export const useModuleStore = create<ModuleState>((set) => ({
@@ -16,12 +16,21 @@ export const useModuleStore = create<ModuleState>((set) => ({
       localStorage.setItem("module", JSON.stringify(module._id));
       return { selectedModule: module };
     }),
-  setModules: (modules) =>
+  setModules: (modules, moduleToSelect) =>
     set((state) => {
-      const { selectedModule } = state;
+      let { selectedModule } = state;
+      if (!selectedModule) {
+        if (!moduleToSelect) {
+          selectedModule = modules[0];
+        } else {
+          selectedModule =
+            modules.find((module) => module._id === moduleToSelect) ??
+            modules[0];
+        }
+      }
       return {
         modules,
-        selectedModule: selectedModule ?? modules[0],
+        selectedModule,
       };
     }),
 }));
