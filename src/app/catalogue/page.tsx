@@ -1,4 +1,3 @@
-export const revalidate = 300
 import { getCommonDataAction } from "@/actions/commonActions";
 import { filterProductsAction } from "@/actions/productActions";
 import CatalogueClientWrapper from "@/components/catalogue/CatalogueClientWrapper";
