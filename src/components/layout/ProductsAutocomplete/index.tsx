@@ -52,8 +52,8 @@ export default function ProductsAutocomplete() {
       try {
         const products = await getProductsAutocompleteAction(
           value,
-          selectedCurrency!._id,
           selectedInventory!._id,
+          selectedCurrency!._id,
         );
         setOptions(products);
       } catch (error) {

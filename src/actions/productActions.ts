@@ -7,6 +7,7 @@ import { unstable_cache } from "next/cache";
 
 const GET_PRODUCT_DETAILS_REVALIDATE_SECONDS = 90;
 const FILTER_PRODUCTS_REVALIDATE_SECONDS = 90;
+const AUTOCOMPLETE_PRODUCTS_REVALIDATE_SECONDS = 60;
 
 const getProductDetailsAction = unstable_cache(
   async (
@@ -61,7 +62,7 @@ const getProductsAutocompleteAction = unstable_cache(
     return normalizeProductsData(data);
   },
   undefined,
-  { revalidate: FILTER_PRODUCTS_REVALIDATE_SECONDS },
+  { revalidate: AUTOCOMPLETE_PRODUCTS_REVALIDATE_SECONDS },
 );
 export {
   getProductDetailsAction,
