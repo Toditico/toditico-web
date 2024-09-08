@@ -4,6 +4,7 @@ import ContactBottomImage from "@/components/contact/ContactBottomImage";
 import StoreCommonData from "@/components/layout/StoreCommonData";
 import { Metadata } from "next";
 import ogImage from "@public/opengraph-image.jpg";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Nosotros | TODITICO",
@@ -33,7 +34,9 @@ export default async function Contact() {
     <div className="flex flex-col items-stretch">
       <BussinessInfo />
       <ContactBottomImage />
-      <StoreCommonData commonData={data} />
+      <Suspense>
+        <StoreCommonData commonData={data} />
+      </Suspense>
     </div>
   );
 }
