@@ -83,12 +83,12 @@ export default function CatalogueClientWrapper({
     const currency = searchParams.get("currency");
     const moduleParam = searchParams.get("module");
     const queryParams = `currency=${currency}&inventory=${userSelectedInventory}&query=${userInput}&module=${moduleParam}&page=1`;
-    refetchProducts(queryParams, false)
+    refetchProducts(queryParams, false);
   };
 
   const fetchNextPage = () => {
     const page = parseInt(searchParams.get("page") || "1");
-    if (page === maxPage) {
+    if (page === maxPage || isFetchingProducts) {
       return;
     }
 
@@ -97,7 +97,7 @@ export default function CatalogueClientWrapper({
     const query = searchParams.get("query");
     const moduleParam = searchParams.get("module");
     const queryParams = `currency=${currency}&inventory=${inventory}&query=${query}&module=${moduleParam}&page=${page + 1}`;
-    refetchProducts(queryParams, false)
+    refetchProducts(queryParams, false);
   };
 
   return (
