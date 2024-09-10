@@ -15,7 +15,7 @@ export function useCommonData(commonData: CommonResponse) {
     if (commonData) {
       const { currencies, inventories, modules } = commonData;
       setCurrencies(currencies);
-      setInventories(inventories);
+      setInventories(inventories, queryParams.get("inventory"));
       setModules(modules, queryParams.get("module"));
     }
   }, [commonData]);

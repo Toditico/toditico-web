@@ -41,34 +41,39 @@ export const metadata: Metadata = {
 export default async function Catalogue({ searchParams }: PageProps) {
   const { currency, inventory, module, query, page } = searchParams;
 
-  const promises = [
-    getCommonDataAction(),
-    filterProductsAction(
-      query || "",
-      inventory,
-      currency,
-      module,
-      page ?? 1,
-      10,
-    ),
-  ];
+  try {
+    const promises = [
+      getCommonDataAction(),
+      filterProductsAction(
+        query || "",
+        inventory,
+        currency,
+        module,
+        page ?? 1,
+        10,
+      ),
+    ];
 
-  const [data, filterProducts] = await Promise.all(promises);
-  const { result: products, paginationInfo } =
-    filterProducts as FilterProductsType;
+    const [data, filterProducts] = await Promise.all(promises);
+    const { result: products, paginationInfo } =
+      filterProducts as FilterProductsType;
 
-  return (
-    <>
-      <div className="flex flex-col gap-[10px] pt-6 px-[10x] pb-0">
-        <>
-          <StoreCommonData commonData={data as CommonResponse} />
-          <CatalogueClientWrapper
-            lastFetchedProducts={products}
-            maxPage={paginationInfo.maxPage}
-            data={data as CommonResponse}
-          />
-        </>
-      </div>
-    </>
-  );
+
+    return (
+      <>
+        <div className="flex flex-col gap-[10px] pt-6 px-[10x] pb-0">
+          <>
+            <StoreCommonData commonData={data as CommonResponse} />
+            <CatalogueClientWrapper
+              lastFetchedProducts={products}
+              maxPage={paginationInfo.maxPage}
+              data={data as CommonResponse}
+            />
+          </>
+        </div>
+      </>
+    );
+  } catch (error) {
+    console.log("Error received: ", error);
+  }
 }

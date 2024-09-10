@@ -1,9 +1,9 @@
-"use client"
+"use client";
 import NavigationBar from "@/components/layout/NavigationBar";
 import { Button } from "@mui/material";
 import { IconShoppingBag } from "@tabler/icons-react";
 import MainBrands from "@/components/layout/MainBrands";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import AppDrawer from "./AppDrawer/";
@@ -16,6 +16,8 @@ import { useInventoryStore } from "@/stores/inventory";
 
 export default function Header() {
   const path = usePathname();
+  const searchParams = useSearchParams();
+
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
   const [buttonHref, setButtonHref] = useState("");
@@ -29,6 +31,15 @@ export default function Header() {
   const selectedInventory = useInventoryStore(
     (state) => state.selectedInventory,
   );
+  const setOpenSelectionModal = useInventoryStore(
+    (state) => state.setOpenSelectionModal,
+  );
+
+  useEffect(() => {
+    if (!selectedInventory && !searchParams.get("inventory")) {
+      setOpenSelectionModal(true);
+    }
+  }, [path]);
 
   const getH1Content = () => {
     return isHomeView

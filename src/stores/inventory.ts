@@ -5,7 +5,10 @@ type InventoryState = {
   inventories: Inventory[];
   selectedInventory: Inventory | null;
   setSelectedInventory: (inventory: Inventory) => void;
-  setInventories: (inventories: Inventory[]) => void;
+  setInventories: (
+    inventories: Inventory[],
+    inventoryToSelect: string | null,
+  ) => void;
   openSelectionModal: boolean;
   setOpenSelectionModal: (open: boolean) => void;
 };
@@ -26,10 +29,20 @@ export const useInventoryStore = create<InventoryState>((set) => ({
       localStorage.setItem("inventory", JSON.stringify(inventory));
       return { selectedInventory: inventory };
     }),
-  setInventories: (inventories) =>
-    set(() => {
+  setInventories: (inventories, inventoryToSelect) =>
+    set((state) => {
+      let { selectedInventory } = state;
+      if (!selectedInventory) {
+        selectedInventory =
+          inventories.find(
+            (inventory) => inventory._id === inventoryToSelect,
+          ) ?? null;
+        localStorage.setItem("inventory", JSON.stringify(selectedInventory));
+      }
+
       return {
         inventories,
+        selectedInventory,
       };
     }),
   openSelectionModal: false,
