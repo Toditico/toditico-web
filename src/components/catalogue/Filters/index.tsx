@@ -4,7 +4,7 @@ import { colors } from "@/constants/colors";
 import { Inventory } from "@/types/shared";
 import { Button, MenuItem, Select, Skeleton, TextField } from "@mui/material";
 import { IconFilter } from "@tabler/icons-react";
-import { KeyboardEventHandler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
   inventories: Inventory[];

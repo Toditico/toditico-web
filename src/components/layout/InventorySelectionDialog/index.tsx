@@ -20,7 +20,7 @@ export default function InventorySelectionDialog({ selectedInventory }: Props) {
     (state) => state.setSelectedInventory,
   );
   const inventorySelected = (inventory: Inventory) => {
-    setSelectedInventory(inventory);
+    setSelectedInventory(inventory._id);
     setOpenSelectionModal(false);
   };
 

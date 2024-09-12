@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useModuleStore } from "@/stores/module";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCurrencyStore } from "@/stores/currency";
+import { useInventoryStore } from "@/stores/inventory";
 
 type Props = {
   data: CommonResponse;
@@ -36,6 +37,9 @@ export default function CatalogueClientWrapper({
   const setSelectedModule = useModuleStore((state) => state.setSelectedModule);
   const selectedModule = useModuleStore((state) => state.selectedModule);
   const selectedCurrency = useCurrencyStore((state) => state.selectedCurrency);
+  const setSelectedInventory = useInventoryStore(
+    (state) => state.setSelectedInventory,
+  );
 
   const refetchProducts = (queryParams: string, scroll: boolean) => {
     router.push(`${pathName}?${queryParams}`, { scroll });
@@ -83,6 +87,7 @@ export default function CatalogueClientWrapper({
     const currency = searchParams.get("currency");
     const moduleParam = searchParams.get("module");
     const queryParams = `currency=${currency}&inventory=${userSelectedInventory}&query=${userInput}&module=${moduleParam}&page=1`;
+    setSelectedInventory(userSelectedInventory);
     refetchProducts(queryParams, false);
   };
 

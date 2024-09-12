@@ -4,7 +4,7 @@ import { create } from "zustand";
 type InventoryState = {
   inventories: Inventory[];
   selectedInventory: Inventory | null;
-  setSelectedInventory: (inventory: Inventory) => void;
+  setSelectedInventory: (inventoryId: string) => void;
   setInventories: (
     inventories: Inventory[],
     inventoryToSelect: string | null,
@@ -24,15 +24,18 @@ const initialSelectedInventory = (): Inventory | null => {
 export const useInventoryStore = create<InventoryState>((set) => ({
   inventories: [],
   selectedInventory: initialSelectedInventory(),
-  setSelectedInventory: (inventory) =>
-    set(() => {
-      localStorage.setItem("inventory", JSON.stringify(inventory));
-      return { selectedInventory: inventory };
+  setSelectedInventory: (inventoryId) =>
+    set((state) => {
+      const selectedInventory = state.inventories.find(
+        (inventory) => inventory._id === inventoryId,
+      );
+      localStorage.setItem("inventory", JSON.stringify(selectedInventory));
+      return { selectedInventory };
     }),
   setInventories: (inventories, inventoryToSelect) =>
     set((state) => {
       let { selectedInventory } = state;
-      if (!selectedInventory) {
+      if (inventoryToSelect) {
         selectedInventory =
           inventories.find(
             (inventory) => inventory._id === inventoryToSelect,
