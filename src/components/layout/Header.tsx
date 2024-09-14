@@ -13,6 +13,9 @@ import Link from "next/link";
 import { useCurrencyStore } from "@/stores/currency";
 import { useModuleStore } from "@/stores/module";
 import { useInventoryStore } from "@/stores/inventory";
+import { CommonResponse } from "@/types/home";
+import { getCommonDataAction } from "@/actions/commonActions";
+import StoreCommonData from "./StoreCommonData";
 
 export default function Header() {
   const path = usePathname();
@@ -21,6 +24,7 @@ export default function Header() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
   const [buttonHref, setButtonHref] = useState("");
+  const [data, setData] = useState<CommonResponse>();
 
   const isHomeView = path === "/home";
   const isCatalogView = path === "/catalogue" || path.startsWith("/product");
@@ -34,6 +38,18 @@ export default function Header() {
   const setOpenSelectionModal = useInventoryStore(
     (state) => state.setOpenSelectionModal,
   );
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const data = await getCommonDataAction();
+        setData(data);
+      } catch (error) {
+        console.error("Error when receiving commonData: ", data);
+      }
+    };
+    getData();
+  }, [path]);
 
   useEffect(() => {
     if (!selectedInventory && !searchParams.get("inventory")) {
@@ -82,6 +98,7 @@ export default function Header() {
       <CartDrawer isOpen={cartDrawerOpen} closeDrawer={closeCartDrawer} />
       <InventorySelectionDialog selectedInventory={selectedInventory} />
       <NavigationBar openMenu={openDrawer} openCart={openCartDrawer} />
+      {data && <StoreCommonData commonData={data} />}
       <div
         id="header"
         className={clsx(

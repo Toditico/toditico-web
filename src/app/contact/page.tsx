@@ -28,15 +28,10 @@ export const metadata: Metadata = {
 };
 
 export default async function Contact() {
-  const data = await getCommonDataAction();
-
   return (
     <div className="flex flex-col items-stretch">
       <BussinessInfo />
       <ContactBottomImage />
-      <Suspense>
-        <StoreCommonData commonData={data} />
-      </Suspense>
     </div>
   );
 }

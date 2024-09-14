@@ -6,6 +6,7 @@ import { Metadata } from "next";
 import ogImage from "@public/opengraph-image.jpg";
 import { FilterProductsType } from "@/types/shared";
 import { CommonResponse } from "@/types/home";
+import { Suspense } from "react";
 
 type PageProps = {
   searchParams: {
@@ -58,17 +59,17 @@ export default async function Catalogue({ searchParams }: PageProps) {
     const { result: products, paginationInfo } =
       filterProducts as FilterProductsType;
 
-
     return (
       <>
         <div className="flex flex-col gap-[10px] pt-6 px-[10x] pb-0">
           <>
-            <StoreCommonData commonData={data as CommonResponse} />
-            <CatalogueClientWrapper
-              lastFetchedProducts={products}
-              maxPage={paginationInfo.maxPage}
-              data={data as CommonResponse}
-            />
+            <Suspense>
+              <CatalogueClientWrapper
+                lastFetchedProducts={products}
+                maxPage={paginationInfo.maxPage}
+                data={data as CommonResponse}
+              />
+            </Suspense>
           </>
         </div>
       </>

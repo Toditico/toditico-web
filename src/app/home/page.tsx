@@ -1,10 +1,9 @@
 import { getCommonDataAction } from "@/actions/commonActions";
 import OurBussiness from "@/components/home/OurBussiness";
 import OurStats from "@/components/home/OurStats";
-import StoreCommonData from "@/components/layout/StoreCommonData";
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
-import { Suspense, useMemo } from "react";
+import { useMemo } from "react";
 import ogImage from "@public/opengraph-image.jpg";
 
 export const metadata: Metadata = {
@@ -53,9 +52,6 @@ export default async function Home() {
         products={data.stats.products ?? 0}
         sales={data.stats.sales ?? 0}
       />
-      <Suspense>
-        <StoreCommonData commonData={data} />
-      </Suspense>
     </div>
   );
 }

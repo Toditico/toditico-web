@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import RootThemeProvider from "@/components/layout/RootThemeProvider";
+import { Suspense } from "react";
 
 const satoshi = localFont({ src: "../../public/fonts/Satoshi-Variable.woff2" });
 export default function RootLayout({
@@ -14,7 +15,9 @@ export default function RootLayout({
     <html lang="en">
       <RootThemeProvider>
         <body className={satoshi.className}>
-          <Header />
+          <Suspense>
+            <Header />
+          </Suspense>
           {children}
           <Footer />
         </body>

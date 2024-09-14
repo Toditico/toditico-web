@@ -37,12 +37,10 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
   const { code } = params;
   const { currency, inventory } = searchParams;
 
-  const commonData = await getCommonDataAction();
   const product = await getProductDetailsAction(code, inventory, currency);
 
   return (
     <div className="p-6">
-      <StoreCommonData commonData={commonData} />
       <Suspense>
         <ProductDetails {...{ product }}></ProductDetails>
       </Suspense>
