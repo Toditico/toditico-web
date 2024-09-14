@@ -95,9 +95,13 @@ export default function Header() {
   return (
     <>
       <AppDrawer isOpen={drawerOpen} closeDrawer={closeDrawer} />
-      <CartDrawer isOpen={cartDrawerOpen} closeDrawer={closeCartDrawer} />
+      <CartDrawer isOpen={cartDrawerOpen} closeDrawer={closeCartDrawer} selectedInventory={selectedInventory} />
       <InventorySelectionDialog selectedInventory={selectedInventory} />
-      <NavigationBar openMenu={openDrawer} openCart={openCartDrawer} />
+      <NavigationBar
+        openMenu={openDrawer}
+        openCart={openCartDrawer}
+        selectedInventory={selectedInventory}
+      />
       {data && <StoreCommonData commonData={data} />}
       <div
         id="header"

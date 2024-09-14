@@ -18,7 +18,9 @@ type Props = {
 
 export default function ProductCard({ product, isInViewportHandler }: Props) {
   const selectedCurrency = useCurrencyStore((state) => state.selectedCurrency);
-  const selectedInventory = useInventoryStore((state) => state.selectedInventory);
+  const selectedInventory = useInventoryStore(
+    (state) => state.selectedInventory,
+  );
   const { ref } = useInView({
     onChange: (inView) => {
       if (inView.valueOf() && isInViewportHandler) {
@@ -29,7 +31,9 @@ export default function ProductCard({ product, isInViewportHandler }: Props) {
 
   const increaseProduct = useCartStore((state) => state.increaseProduct);
   const addProductToCart = () => {
-    increaseProduct(product);
+    if (selectedInventory) {
+      increaseProduct(selectedInventory._id, product);
+    }
   };
 
   return (
@@ -43,7 +47,7 @@ export default function ProductCard({ product, isInViewportHandler }: Props) {
           src={product.imageUrl || PlaceHolderImage}
           alt={product.name}
           style={{ objectFit: "cover" }}
-	  quality={100}
+          quality={100}
           fill
         />
       </div>
@@ -51,7 +55,7 @@ export default function ProductCard({ product, isInViewportHandler }: Props) {
         <ProductCardInfo
           product={product}
           selectedCurrency={selectedCurrency!}
-	  selectedInventory={selectedInventory!}
+          selectedInventory={selectedInventory!}
         />
         <Button
           variant="outlined"
@@ -63,7 +67,7 @@ export default function ProductCard({ product, isInViewportHandler }: Props) {
             borderWidth: "2px",
             padding: "16px",
           }}
-	  onClick={addProductToCart}
+          onClick={addProductToCart}
         >
           <p className="text-button uppercase font-bold">Añadir a cesta</p>
         </Button>

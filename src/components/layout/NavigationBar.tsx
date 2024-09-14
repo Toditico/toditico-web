@@ -9,17 +9,26 @@ import CurrenciesSelect from "./CurrenciesSelect";
 import { useInventoryStore } from "@/stores/inventory";
 import ProductsAutocomplete from "./ProductsAutocomplete";
 import { useCartStore } from "@/stores/cart";
+import { Inventory } from "@/types/shared";
 
 type Props = {
   openMenu: () => void;
   openCart: () => void;
+  selectedInventory: Inventory | null;
 };
 
-export default function NavigationBar({ openMenu, openCart }: Props) {
+export default function NavigationBar({
+  openMenu,
+  openCart,
+  selectedInventory,
+}: Props) {
   const setOpenSelectionModal = useInventoryStore(
     (state) => state.setOpenSelectionModal,
   );
-  const totalProducts = useCartStore((state) => state.totalProducts);
+
+  const productsCount = useCartStore((state) =>
+    selectedInventory?._id ? state.totalProducts(selectedInventory._id) : 0,
+  );
 
   return (
     <>
@@ -42,9 +51,9 @@ export default function NavigationBar({ openMenu, openCart }: Props) {
                 color={colors.primary}
                 onClick={() => openCart()}
               />
-              {totalProducts ? (
+              {productsCount ? (
                 <div className="bg-primary rounded-full absolute top-[-12px] right-[-8px] h-5 w-5 text-small flex justify-center items-center text-white font-bold">
-                  {totalProducts}
+                  {productsCount}
                 </div>
               ) : null}
             </div>

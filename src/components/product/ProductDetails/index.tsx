@@ -25,7 +25,9 @@ export default function ProductDetails({ product }: Props) {
   const pathName = usePathname();
 
   const addProductToCart = () => {
-    increaseProduct(product);
+    if (selectedInventory) {
+      increaseProduct(selectedInventory._id, product);
+    }
   };
 
   useEffect(() => {

@@ -2,14 +2,25 @@ import { Button, Drawer } from "@mui/material";
 import CartProductList from "./CartProductsList";
 import { useCartStore } from "@/stores/cart";
 import { IconBrandWhatsapp, IconX } from "@tabler/icons-react";
+import { Inventory } from "@/types/shared";
 
 type Props = {
   isOpen: boolean;
   closeDrawer: () => void;
+  selectedInventory: Inventory | null;
 };
 
-export default function CartDrawer({ isOpen, closeDrawer }: Props) {
-  const products = useCartStore((state) => state.products);
+export default function CartDrawer({
+  isOpen,
+  closeDrawer,
+  selectedInventory,
+}: Props) {
+  const products = useCartStore((state) =>
+    selectedInventory
+      ? state.getCartInventoryProducts(selectedInventory._id)
+      : [],
+  );
+
   return (
     <Drawer open={isOpen} onClose={() => closeDrawer()} anchor="right">
       <div className="w-[100vw] min-w-[400px] py-4 px-6 flex flex-col justify-between h-full">
@@ -24,8 +35,8 @@ export default function CartDrawer({ isOpen, closeDrawer }: Props) {
         </div>
         <Button
           variant="contained"
-	  color="success"
-	  className="h-[56px] w-full rounded-lg p-4 text-white"
+          color="success"
+          className="h-[56px] w-full rounded-lg p-4 text-white"
           startIcon={<IconBrandWhatsapp size={24} />}
         >
           <p className="text-button uppercase font-bold">
