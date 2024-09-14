@@ -43,6 +43,7 @@ export default function ProductCard({ product, isInViewportHandler }: Props) {
           src={product.imageUrl || PlaceHolderImage}
           alt={product.name}
           style={{ objectFit: "cover" }}
+	  quality={100}
           fill
         />
       </div>

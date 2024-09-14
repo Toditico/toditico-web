@@ -27,7 +27,8 @@ export default function ProductImages({ images }: Props) {
           alt="Product image"
           fill
           className="rounded-lg"
-	  style={{objectFit: "contain"}}
+          style={{ objectFit: "contain" }}
+          quality={100}
         />
       </div>
     </div>
