@@ -40,6 +40,9 @@ export default function CatalogueClientWrapper({
   const setSelectedInventory = useInventoryStore(
     (state) => state.setSelectedInventory,
   );
+  const selectedInventoryStore = useInventoryStore(
+    (state) => state.selectedInventory,
+  );
 
   const refetchProducts = (queryParams: string, scroll: boolean) => {
     router.push(`${pathName}?${queryParams}`, { scroll });
@@ -60,6 +63,21 @@ export default function CatalogueClientWrapper({
       refetchProducts(queryParams, true);
     }
   }, [selectedCurrency]);
+
+  useEffect(() => {
+    if (
+      selectedInventoryStore &&
+      selectedInventoryStore._id !== searchParams.get("inventory")
+    ) {
+      setProducts([]);
+      const inventory = selectedInventoryStore._id;
+      const currency = searchParams.get("currency");
+      const moduleParam = searchParams.get("module");
+      const query = searchParams.get("query") || "";
+      const queryParams = `currency=${currency}&inventory=${inventory}&query=${query}&module=${moduleParam}&page=1`;
+      refetchProducts(queryParams, true);
+    }
+  }, [selectedInventoryStore]);
 
   const selectedInventory = searchParams.get("inventory") ?? "";
   const selectedQuery = searchParams.get("query") ?? "";
