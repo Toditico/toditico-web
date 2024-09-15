@@ -10,8 +10,30 @@ type CartState = {
   getCartInventoryProducts: (inventoryId: string) => ProductCount[];
 };
 
+const initialCartProducts = (): Map<string, ProductCount[]> | null => {
+  if (typeof window === "undefined") {
+    return null;
+  }
+  const storageCartProducts = localStorage.getItem("cart-products");
+  if (!storageCartProducts) {
+    return null;
+  }
+
+  const storageCartProductsObject = JSON.parse(storageCartProducts);
+  return new Map(Object.entries(storageCartProductsObject));
+};
+
+const saveProductsMapInLocalStorage = (map: Map<string, ProductCount[]>) => {
+  const obj: Record<string, ProductCount[]> = {};
+  map.forEach((products, inventoryId) => {
+    obj[inventoryId] = products;
+  });
+
+  localStorage.setItem("cart-products", JSON.stringify(obj));
+};
+
 export const useCartStore = create<CartState>((set, get) => ({
-  products: new Map<string, ProductCount[]>(),
+  products: initialCartProducts() ?? new Map<string, ProductCount[]>(),
   getCartInventoryProducts: (inventoryId: string) => {
     const productsMap = get().products;
     return productsMap.get(inventoryId) ?? [];
@@ -29,24 +51,36 @@ export const useCartStore = create<CartState>((set, get) => ({
         cartProductsForSelectedInventory?.findIndex(
           ({ product }) => product._id === selectedProduct._id,
         );
+
       if (productAlreadySelectedIdx === -1) {
         cartProductsForSelectedInventory?.push({
           product: selectedProduct,
           count: 1,
         });
+
+        const productsUpdated = products.set(
+          inventoryId,
+          cartProductsForSelectedInventory!.slice(),
+        );
+
+        saveProductsMapInLocalStorage(productsUpdated);
+
         return {
-          products: products.set(
-            inventoryId,
-            cartProductsForSelectedInventory!.slice(),
-          ),
+          products: productsUpdated,
         };
       }
+
       cartProductsForSelectedInventory[productAlreadySelectedIdx].count++;
+
+      const productsUpdated = products.set(
+        inventoryId,
+        cartProductsForSelectedInventory!.slice(),
+      );
+
+      saveProductsMapInLocalStorage(productsUpdated);
+
       return {
-        products: products.set(
-          inventoryId,
-          cartProductsForSelectedInventory.slice(),
-        ),
+        products: productsUpdated,
       };
     }),
   decreaseProduct: (inventoryId, selectedProduct) =>
@@ -60,11 +94,16 @@ export const useCartStore = create<CartState>((set, get) => ({
 
       if (productAlreadySelectedIdx === -1) {
         console.error("Trying to decrease a not selected product");
+
+        const productsUpdated = products.set(
+          inventoryId,
+          cartProductsForSelectedInventory!.slice(),
+        );
+
+        saveProductsMapInLocalStorage(productsUpdated);
+
         return {
-          products: products.set(
-            inventoryId,
-            cartProductsForSelectedInventory.slice(),
-          ),
+          products: productsUpdated,
         };
       }
 
@@ -72,20 +111,29 @@ export const useCartStore = create<CartState>((set, get) => ({
         cartProductsForSelectedInventory[productAlreadySelectedIdx].count > 1
       ) {
         cartProductsForSelectedInventory[productAlreadySelectedIdx].count--;
+
+        const productsUpdated = products.set(
+          inventoryId,
+          cartProductsForSelectedInventory!.slice(),
+        );
+
+        saveProductsMapInLocalStorage(productsUpdated);
+
         return {
-          products: products.set(
-            inventoryId,
-            cartProductsForSelectedInventory.slice(),
-          ),
+          products: productsUpdated,
         };
       }
 
       cartProductsForSelectedInventory.splice(productAlreadySelectedIdx, 1);
+
+      const productsUpdated = products.set(
+        inventoryId,
+        cartProductsForSelectedInventory!.slice(),
+      );
+
+      saveProductsMapInLocalStorage(productsUpdated);
       return {
-        products: products.set(
-          inventoryId,
-          cartProductsForSelectedInventory.slice(),
-        ),
+        products: productsUpdated,
       };
     }),
   removeProduct: (inventoryId, selectedProduct) => {
@@ -99,20 +147,30 @@ export const useCartStore = create<CartState>((set, get) => ({
 
       if (productAlreadySelectedIdx === -1) {
         console.error("Trying to decrease a not selected product");
+
+        const productsUpdated = products.set(
+          inventoryId,
+          cartProductsForSelectedInventory!.slice(),
+        );
+
+        saveProductsMapInLocalStorage(productsUpdated);
+
         return {
-          products: products.set(
-            inventoryId,
-            cartProductsForSelectedInventory.slice(),
-          ),
+          products: productsUpdated,
         };
       }
 
       cartProductsForSelectedInventory.splice(productAlreadySelectedIdx, 1);
+
+      const productsUpdated = products.set(
+        inventoryId,
+        cartProductsForSelectedInventory!.slice(),
+      );
+
+      saveProductsMapInLocalStorage(productsUpdated);
+
       return {
-        products: products.set(
-          inventoryId,
-          cartProductsForSelectedInventory.slice(),
-        ),
+        products: productsUpdated,
       };
     });
   },

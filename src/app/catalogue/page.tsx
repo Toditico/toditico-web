@@ -1,7 +1,6 @@
 import { getCommonDataAction } from "@/actions/commonActions";
 import { filterProductsAction } from "@/actions/productActions";
 import CatalogueClientWrapper from "@/components/catalogue/CatalogueClientWrapper";
-import StoreCommonData from "@/components/layout/StoreCommonData";
 import { Metadata } from "next";
 import ogImage from "@public/opengraph-image.jpg";
 import { FilterProductsType } from "@/types/shared";

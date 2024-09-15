@@ -10,6 +10,7 @@ import { useInventoryStore } from "@/stores/inventory";
 import ProductsAutocomplete from "./ProductsAutocomplete";
 import { useCartStore } from "@/stores/cart";
 import { Inventory } from "@/types/shared";
+import { useEffect, useState } from "react";
 
 type Props = {
   openMenu: () => void;
@@ -26,9 +27,15 @@ export default function NavigationBar({
     (state) => state.setOpenSelectionModal,
   );
 
+  const [showProductsCount, setShowProductscount] = useState<boolean>(false);
+
   const productsCount = useCartStore((state) =>
     selectedInventory?._id ? state.totalProducts(selectedInventory._id) : 0,
   );
+
+  useEffect(() => {
+    setShowProductscount(!!productsCount);
+  }, [productsCount]);
 
   return (
     <>
@@ -51,7 +58,7 @@ export default function NavigationBar({
                 color={colors.primary}
                 onClick={() => openCart()}
               />
-              {productsCount ? (
+              {showProductsCount ? (
                 <div className="bg-primary rounded-full absolute top-[-12px] right-[-8px] h-5 w-5 text-small flex justify-center items-center text-white font-bold">
                   {productsCount}
                 </div>
