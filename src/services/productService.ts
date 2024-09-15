@@ -17,7 +17,7 @@ class ProductService extends BaseService<Product> {
     currencyId: string,
     moduleId: string,
     page: number,
-    limit: number
+    limit: number,
   ) => {
     const queryParamsOptions = {
       text,
@@ -43,14 +43,14 @@ class ProductService extends BaseService<Product> {
     return this.instance.get(url).then((result) => result.data);
   };
 
-  getDetails = (code: string, inventoryId: string, currencyId: string) => {
+  getDetails = (codes: string[], inventoryId: string, currencyId: string) => {
     const queryParamsOptions = {
       inventoryId,
       currencyId,
     };
     const queryParams = stringify(queryParamsOptions, { indices: false });
-    const url = `/details/${code}?${queryParams}`;
-    return this.instance.get(url).then((result) => result.data);
+    const url = `/details?${queryParams}`;
+    return this.instance.post(url, { codes }).then((result) => result.data);
   };
 }
 

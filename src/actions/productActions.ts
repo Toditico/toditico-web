@@ -9,14 +9,18 @@ const GET_PRODUCT_DETAILS_REVALIDATE_SECONDS = 90;
 const FILTER_PRODUCTS_REVALIDATE_SECONDS = 90;
 const AUTOCOMPLETE_PRODUCTS_REVALIDATE_SECONDS = 60;
 
-const getProductDetailsAction = unstable_cache(
+const getProductsDetailsAction = unstable_cache(
   async (
-    code: string,
+    codes: string[],
     inventory: string,
     currency: string,
-  ): Promise<Product> => {
-    const product = await productService.getDetails(code, inventory, currency);
-    return normalizeProductsData([product])[0];
+  ): Promise<Product[]> => {
+    const products = await productService.getDetails(
+      codes,
+      inventory,
+      currency,
+    );
+    return normalizeProductsData(products);
   },
   undefined,
   { revalidate: GET_PRODUCT_DETAILS_REVALIDATE_SECONDS },
@@ -65,7 +69,7 @@ const getProductsAutocompleteAction = unstable_cache(
   { revalidate: AUTOCOMPLETE_PRODUCTS_REVALIDATE_SECONDS },
 );
 export {
-  getProductDetailsAction,
+  getProductsDetailsAction,
   filterProductsAction,
   getProductsAutocompleteAction,
 };

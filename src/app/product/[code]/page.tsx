@@ -1,6 +1,4 @@
-import { getCommonDataAction } from "@/actions/commonActions";
-import { getProductDetailsAction } from "@/actions/productActions";
-import StoreCommonData from "@/components/layout/StoreCommonData";
+import { getProductsDetailsAction } from "@/actions/productActions";
 import ProductDetails from "@/components/product/ProductDetails";
 import { Metadata } from "next";
 import { Suspense } from "react";
@@ -22,7 +20,8 @@ export async function generateMetadata({
   const { code } = params;
   const { currency, inventory } = searchParams;
 
-  const product = await getProductDetailsAction(code, inventory, currency)
+  const products = await getProductsDetailsAction([code], inventory, currency);
+  const product = products[0];
 
   return {
     title: product.name,
@@ -37,7 +36,8 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
   const { code } = params;
   const { currency, inventory } = searchParams;
 
-  const product = await getProductDetailsAction(code, inventory, currency);
+  const products = await getProductsDetailsAction([code], inventory, currency);
+  const product = products[0];
 
   return (
     <div className="p-6">
