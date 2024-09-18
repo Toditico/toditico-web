@@ -68,6 +68,7 @@ const getProductsAutocompleteAction = unstable_cache(
   undefined,
   { revalidate: AUTOCOMPLETE_PRODUCTS_REVALIDATE_SECONDS },
 );
+
 export {
   getProductsDetailsAction,
   filterProductsAction,

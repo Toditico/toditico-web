@@ -42,7 +42,7 @@ export default function ProductCard({ product, isInViewportHandler }: Props) {
       className="rounded-t-lg w-full flex flex-col shadow-md pb-3"
     >
       <div className="h-[40px] bg-primary rounded-t-lg"></div>
-      <div className="w-full h-[260px] relative">
+      <div className="w-full h-[290px] relative">
         <Image
           src={product.imageUrl || PlaceHolderImage}
           alt={product.name}

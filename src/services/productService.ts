@@ -1,4 +1,4 @@
-import { PaginationInfo, Product } from "@/types/shared";
+import { Product } from "@/types/shared";
 import { stringify } from "qs";
 import { BaseService } from "./baseService";
 
