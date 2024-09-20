@@ -36,7 +36,9 @@ export default function ProductImages({ images }: Props) {
     <div className="flex flex-col gap-2">
       <div className="w-full h-[320px] relative">
         <Image
-          onClick={() => setOpenModal(true)}
+          onClick={() => {
+            images.length > 0 && setOpenModal(true);
+          }}
           src={selectedImageUrl}
           alt="Product image"
           fill
@@ -47,14 +49,18 @@ export default function ProductImages({ images }: Props) {
         <Lightbox
           open={openModal}
           close={() => setOpenModal(false)}
-          render={{ slide: NextImageSlide }}
+          render={{
+            slide: NextImageSlide,
+            buttonNext: () => null,
+            buttonPrev: () => null,
+          }}
           slides={[
             typeof selectedImageUrl === "string"
               ? { src: nextImageUrl(selectedImageUrl) }
               : selectedImageUrl,
           ]}
           plugins={[Zoom]}
-	  zoom={{maxZoomPixelRatio: 3}}
+          zoom={{ maxZoomPixelRatio: 3 }}
         />
       </div>
     </div>
