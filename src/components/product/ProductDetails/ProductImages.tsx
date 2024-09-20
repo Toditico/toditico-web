@@ -6,6 +6,7 @@ import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import "yet-another-react-lightbox/styles.css";
 import NextImageSlide from "@/components/layout/NextImageSlide";
+import { StyledLightBox } from "./styles";
 
 type Props = {
   images: string[];
@@ -46,7 +47,7 @@ export default function ProductImages({ images }: Props) {
           style={{ objectFit: "contain" }}
           quality={100}
         />
-        <Lightbox
+        <StyledLightBox
           open={openModal}
           close={() => setOpenModal(false)}
           render={{
