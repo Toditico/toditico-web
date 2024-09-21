@@ -7,6 +7,7 @@ type CartState = {
   increaseProduct: (inventoryId: string, product: Product) => void;
   decreaseProduct: (inventoryId: string, product: Product) => void;
   removeProduct: (inventoryId: string, product: Product) => void;
+  cleanInventoryProducts: (inventoryId: string) => void;
   getCartInventoryProducts: (inventoryId: string) => ProductCount[];
 };
 
@@ -136,6 +137,15 @@ export const useCartStore = create<CartState>((set, get) => ({
         products: productsUpdated,
       };
     }),
+  cleanInventoryProducts(inventoryId) {
+    set((state) => {
+      const { products } = state;
+      products.set(inventoryId, []);
+      return {
+        products,
+      };
+    });
+  },
   removeProduct: (inventoryId, selectedProduct) => {
     set((state) => {
       const { products } = state;

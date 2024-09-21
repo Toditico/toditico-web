@@ -1,7 +1,7 @@
 import { Button, Drawer } from "@mui/material";
 import CartProductList from "./CartProductsList";
 import { useCartStore } from "@/stores/cart";
-import { IconBrandWhatsapp, IconX } from "@tabler/icons-react";
+import { IconBrandWhatsapp, IconX, IconTrash } from "@tabler/icons-react";
 import { Inventory } from "@/types/shared";
 
 type Props = {
@@ -20,6 +20,9 @@ export default function CartDrawer({
       ? state.getCartInventoryProducts(selectedInventory._id)
       : [],
   );
+  const cleanInventoryProducts = useCartStore(
+    (state) => state.cleanInventoryProducts,
+  );
 
   return (
     <Drawer open={isOpen} onClose={() => closeDrawer()} anchor="right">
@@ -29,7 +32,16 @@ export default function CartDrawer({
             <p className="text-body font-bold uppercase">
               {products.length} Artículos
             </p>
-            <IconX onClick={() => closeDrawer()} />
+            <div className="flex gap-2">
+              <IconTrash
+                onClick={() =>
+                  selectedInventory &&
+                  cleanInventoryProducts(selectedInventory._id)
+                }
+                className="text-primary"
+              />
+              <IconX onClick={() => closeDrawer()} />
+            </div>
           </div>
           <CartProductList {...{ products }} />
         </div>
