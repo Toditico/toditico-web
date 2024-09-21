@@ -1,6 +1,5 @@
-import DrawerListItem, {
-  DrawerListItem as ListItemType,
-} from "./DrawerListItem";
+import { DrawerListItem as ListItemType } from "./DrawerListItem";
+import DrawerListItem from "./DrawerListItem";
 
 type Props = {
   items: ListItemType[];
@@ -9,8 +8,8 @@ type Props = {
 export default function DrawerList({ items }: Props) {
   return (
     <div className="flex flex-col gap-[10px]">
-      {items.map(({ label, link, subItems }) => (
-        <DrawerListItem {...{ label, link, subItems }} key={link} />
+      {items.map(({ label, link, subItems, isSelected }) => (
+        <DrawerListItem {...{ label, link, subItems, isSelected }} key={link} />
       ))}
     </div>
   );

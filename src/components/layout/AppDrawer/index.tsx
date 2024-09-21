@@ -4,29 +4,47 @@ import SocialNetworks from "../SocialNetworks";
 import DrawerList from "./DrawerList";
 import { DrawerListItem } from "./DrawerList/DrawerListItem";
 import InventorySelection from "./InventorySelection";
-import { useCurrencyStore } from "@/stores/currency";
-import { useInventoryStore } from "@/stores/inventory";
-import { useModuleStore } from "@/stores/module";
+import { Currency, Inventory, Module } from "@/types/shared";
 
 type Props = {
   isOpen: boolean;
   closeDrawer: () => void;
+  modules: Module[];
+  selectedCurrency: Currency | null;
+  selectedInventory: Inventory | null;
+  selectedModule: Module | null;
+  pathName: string;
 };
 
-export default function AppDrawer({ isOpen, closeDrawer }: Props) {
-  const selectedCurrency = useCurrencyStore((state) => state.selectedCurrency);
-  const selectedInventory = useInventoryStore(
-    (state) => state.selectedInventory,
-  );
-  const selectedModule = useModuleStore((state) => state.selectedModule);
-
+export default function AppDrawer({
+  isOpen,
+  modules,
+  selectedInventory,
+  selectedCurrency,
+  selectedModule,
+  pathName,
+  closeDrawer,
+}: Props) {
   const navigationItems: DrawerListItem[] = [
-    { label: "Inicio", link: "/home" },
+    { label: "Inicio", link: "/home", isSelected: pathName === "/home" },
     {
       label: "Catálogo",
-      link: `/catalogue?inventory=${selectedInventory?._id}&currency=${selectedCurrency?._id}&module=${selectedModule?._id}&query=`,
+      isSelected: pathName === "/catalogue",
+      subItems: modules.map((module) => {
+        const subItem: DrawerListItem = {
+          label: module.name,
+          isSelected: module._id === selectedModule?._id,
+          link: `/catalogue?inventory=${selectedInventory?._id}&currency=${selectedCurrency?._id}&module=${module._id}&query=`,
+        };
+        return subItem;
+      }),
+      link: ``,
     },
-    { label: "Nosotros", link: "/contact" },
+    {
+      label: "Nosotros",
+      link: "/contact",
+      isSelected: pathName === "/contact",
+    },
   ];
 
   return (

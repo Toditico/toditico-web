@@ -35,6 +35,7 @@ export default function Header() {
   const selectedInventory = useInventoryStore(
     (state) => state.selectedInventory,
   );
+  const modules = useModuleStore((state) => state.modules);
   const setOpenSelectionModal = useInventoryStore(
     (state) => state.setOpenSelectionModal,
   );
@@ -94,8 +95,20 @@ export default function Header() {
 
   return (
     <>
-      <AppDrawer isOpen={drawerOpen} closeDrawer={closeDrawer} />
-      <CartDrawer isOpen={cartDrawerOpen} closeDrawer={closeCartDrawer} selectedInventory={selectedInventory} />
+      <AppDrawer
+        isOpen={drawerOpen}
+        closeDrawer={closeDrawer}
+        selectedCurrency={selectedCurrency}
+        selectedInventory={selectedInventory}
+        selectedModule={selectedModule}
+        pathName={path}
+        modules={modules}
+      />
+      <CartDrawer
+        isOpen={cartDrawerOpen}
+        closeDrawer={closeCartDrawer}
+        selectedInventory={selectedInventory}
+      />
       <InventorySelectionDialog selectedInventory={selectedInventory} />
       <NavigationBar
         openMenu={openDrawer}
