@@ -3,6 +3,6 @@ import Lightbox from "yet-another-react-lightbox";
 
 export const StyledLightBox = styled(Lightbox)`
   .yarl__container {
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgb(255, 255, 255);
   }
 `;

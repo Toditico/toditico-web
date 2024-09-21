@@ -2,7 +2,6 @@
 import Image, { StaticImageData } from "next/image";
 import { useEffect, useState } from "react";
 import Placeholder from "@public/images/placeholder.webp";
-import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import "yet-another-react-lightbox/styles.css";
 import NextImageSlide from "@/components/layout/NextImageSlide";
@@ -28,10 +27,10 @@ export default function ProductImages({ images }: Props) {
   const deviceSizes = [640, 750, 828, 1080, 1200, 1920, 2048, 3840];
 
   function nextImageUrl(src: string) {
-    const width = deviceSizes.find(
-      (deviceSize) => deviceSize > window.innerWidth,
-    );
-    return `/_next/image?url=${encodeURIComponent(src)}&w=${width}&q=100`;
+    // const width = deviceSizes.find(
+    //   (deviceSize) => deviceSize > window.innerWidth,
+    // );
+    return `/_next/image?url=${encodeURIComponent(src)}&w=1080&q=100`;
   }
   return (
     <div className="flex flex-col gap-2">
