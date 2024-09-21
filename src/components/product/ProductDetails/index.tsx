@@ -38,6 +38,7 @@ export default function ProductDetails({ product }: Props) {
     if (selectedCurrency && selectedInventory) {
       router.push(
         `${pathName}?currency=${selectedCurrency._id}&inventory=${selectedInventory._id}`,
+        { scroll: false },
       );
     }
   }, [selectedCurrency, selectedInventory]);

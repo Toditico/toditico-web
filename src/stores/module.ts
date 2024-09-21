@@ -19,15 +19,14 @@ export const useModuleStore = create<ModuleState>((set) => ({
   setModules: (modules, moduleToSelect) =>
     set((state) => {
       let { selectedModule } = state;
-      if (!selectedModule) {
-        if (!moduleToSelect) {
-          selectedModule = modules[0];
-        } else {
-          selectedModule =
-            modules.find((module) => module._id === moduleToSelect) ??
-            modules[0];
-        }
+      if (moduleToSelect) {
+        selectedModule =
+          modules.find((module) => module._id === moduleToSelect) ?? modules[0];
+      } else if (!selectedModule) {
+        selectedModule = modules[0];
       }
+      console.log("Modulo seleccionado", selectedModule);
+
       return {
         modules,
         selectedModule,
