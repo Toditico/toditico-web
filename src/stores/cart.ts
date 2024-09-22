@@ -9,6 +9,10 @@ type CartState = {
   removeProduct: (inventoryId: string, product: Product) => void;
   cleanInventoryProducts: (inventoryId: string) => void;
   getCartInventoryProducts: (inventoryId: string) => ProductCount[];
+  refreshCartInventoryProducts: (
+    inventoryId: string,
+    productsRefreshed: Product[],
+  ) => void;
 };
 
 const initialCartProducts = (): Map<string, ProductCount[]> | null => {
@@ -144,6 +148,32 @@ export const useCartStore = create<CartState>((set, get) => ({
       return {
         products,
       };
+    });
+  },
+  refreshCartInventoryProducts(inventoryId, productsRefreshed) {
+    set((state) => {
+      const { products } = state;
+      const cartProducts = products.get(inventoryId) ?? [];
+      const productsCountRefreshed = cartProducts
+        .map((cartProductCount) => {
+          const updatedProduct = productsRefreshed.find(
+            (prod) => prod._id === cartProductCount.product._id,
+          );
+          if (!updatedProduct) {
+            return;
+          }
+          const productCount: ProductCount = {
+            product: updatedProduct,
+            count: cartProductCount.count,
+          };
+          return productCount;
+        })
+        .filter(
+          (productCount): productCount is ProductCount =>
+            productCount !== undefined,
+        );
+      products.set(inventoryId, productsCountRefreshed);
+      return { products };
     });
   },
   removeProduct: (inventoryId, selectedProduct) => {

@@ -16,7 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <RootThemeProvider>
         <body className={satoshi.className}>
-          <Suspense fallback={<HeaderSkeleton/>}>
+          <Suspense fallback={<HeaderSkeleton />}>
             <Header />
           </Suspense>
           {children}

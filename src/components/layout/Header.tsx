@@ -108,6 +108,7 @@ export default function Header() {
         isOpen={cartDrawerOpen}
         closeDrawer={closeCartDrawer}
         selectedInventory={selectedInventory}
+	selectedCurrency={selectedCurrency}
       />
       <InventorySelectionDialog selectedInventory={selectedInventory} />
       <NavigationBar
