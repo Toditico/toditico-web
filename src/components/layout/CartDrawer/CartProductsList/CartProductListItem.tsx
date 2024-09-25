@@ -1,4 +1,4 @@
-import { Product, ProductCount } from "@/types/shared";
+import { Currency, Inventory, Product, ProductCount } from "@/types/shared";
 import Image from "next/image";
 import PlaceHolderImage from "@public/images/placeholder.webp";
 import {
@@ -6,13 +6,15 @@ import {
   IconCircleMinus,
   IconCirclePlus,
 } from "@tabler/icons-react";
-import { useCurrencyStore } from "@/stores/currency";
+import Link from "next/link";
 
 type CartProductListItemProps = {
   productCount: ProductCount;
   increaseProduct: (product: Product) => void;
   decreaseProduct: (product: Product) => void;
   removeProduct: (product: Product) => void;
+  selectedCurrency: Currency | null;
+  selectedInventory: Inventory | null;
 };
 
 export default function CartProductListItem({
@@ -20,10 +22,11 @@ export default function CartProductListItem({
   increaseProduct,
   decreaseProduct,
   removeProduct,
+  selectedCurrency,
+  selectedInventory,
 }: CartProductListItemProps) {
   const { product, count } = productCount;
   const { imageUrl, name, finalPrice } = product;
-  const selectedCurrency = useCurrencyStore((state) => state.selectedCurrency);
 
   return (
     <div className="flex gap-4 items-center">
@@ -40,16 +43,32 @@ export default function CartProductListItem({
         />
       </div>
       <div className="flex flex-col gap-4 flex-grow">
-        <p className="text-body font-bold">{name}</p>
-        <div className="flex justify-between">
-          <p className="text-body font-bold">
-            {count} x {finalPrice} {selectedCurrency?.name}
-          </p>
-          <div className="flex gap-2">
-            <IconCircleMinus onClick={() => decreaseProduct(product)} />
-            <IconCirclePlus onClick={() => increaseProduct(product)} />
+        <Link
+          href={`/product/${product.code}?currency=${selectedCurrency?._id}&inventory=${selectedInventory?._id}`}
+        >
+          <p className="text-body font-bold">{name}</p>
+          <div className="flex justify-between">
+            <p className="text-body font-bold">
+              {count} x {finalPrice} {selectedCurrency?.name}
+            </p>
+            <div className="flex gap-2">
+              <IconCircleMinus
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  decreaseProduct(product);
+                }}
+              />
+              <IconCirclePlus
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  increaseProduct(product);
+                }}
+              />
+            </div>
           </div>
-        </div>
+        </Link>
       </div>
     </div>
   );

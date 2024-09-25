@@ -3,6 +3,8 @@ import CartProductListItem from "./CartProductListItem";
 import { Product, ProductCount } from "@/types/shared";
 import { useInventoryStore } from "@/stores/inventory";
 import { Skeleton } from "@mui/material";
+import { StyledLightBox } from "../../LightBox/styles";
+import { useCurrencyStore } from "@/stores/currency";
 
 type Props = {
   products: ProductCount[];
@@ -16,6 +18,7 @@ export default function CartProductList({ products, isLoading }: Props) {
   const selectedInventory = useInventoryStore(
     (state) => state.selectedInventory,
   );
+  const selectedCurrency = useCurrencyStore((state) => state.selectedCurrency);
 
   const onProductIncreased = (product: Product) => {
     if (selectedInventory) {
@@ -58,6 +61,8 @@ export default function CartProductList({ products, isLoading }: Props) {
     <div className="flex flex-col gap-4 overflow-y-auto max-h-[75vh]">
       {products.map((productCount) => (
         <CartProductListItem
+          selectedInventory={selectedInventory}
+          selectedCurrency={selectedCurrency}
           productCount={productCount}
           key={productCount.product._id}
           increaseProduct={onProductIncreased}
@@ -65,6 +70,7 @@ export default function CartProductList({ products, isLoading }: Props) {
           removeProduct={onProductRemoved}
         />
       ))}
+      <StyledLightBox />
     </div>
   );
 }

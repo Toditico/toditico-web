@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import Placeholder from "@public/images/placeholder.webp";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import "yet-another-react-lightbox/styles.css";
-import NextImageSlide from "@/components/layout/NextImageSlide";
-import { StyledLightBox } from "./styles";
+import NextImageSlide from "@/components/layout/LightBox/NextImageSlide";
+import { StyledLightBox } from "@/components/layout/LightBox/styles";
 
 type Props = {
   images: string[];
