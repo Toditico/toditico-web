@@ -31,6 +31,19 @@ export default function ProductDetails({ product }: Props) {
   };
 
   useEffect(() => {
+    setTimeout(() => {
+      const element = document.getElementById("product-details");
+      if (element) {
+        const offsetTop = element.offsetTop - 120; //Adjust in case of tablet and desktop
+        window.scrollTo({
+          top: offsetTop,
+          behavior: "smooth",
+        });
+      }
+    }, 1000);
+  }, []);
+
+  useEffect(() => {
     setLoading(!selectedCurrency);
   }, [selectedCurrency]);
 
@@ -54,7 +67,7 @@ export default function ProductDetails({ product }: Props) {
   }, [product]);
 
   return !loading ? (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6" id="product-details">
       <ProductImages {...{ images }} />
       <div className="flex flex-col gap-6">
         <ProductInfo {...{ product }} selectedCurrency={selectedCurrency!} />

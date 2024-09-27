@@ -7,10 +7,19 @@ type ImagesModalState = {
   isModalOpen: boolean;
   openModal: () => void;
   closeModal: () => void;
+  index: number;
+  setIndex: (index: number) => void;
 };
 
 export const useImagesModalStore = create<ImagesModalState>((set) => ({
   slides: [],
+  index: 0,
+  setIndex: (index: number) =>
+    set(() => {
+      return {
+        index,
+      };
+    }),
   isModalOpen: false,
   openModal: () =>
     set(() => {
@@ -22,7 +31,7 @@ export const useImagesModalStore = create<ImagesModalState>((set) => ({
     }),
   closeModal() {
     set(() => {
-      return { isModalOpen: false };
+      return { isModalOpen: false, index: 0 };
     });
   },
 }));

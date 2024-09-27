@@ -2,7 +2,6 @@
 import Image, { StaticImageData } from "next/image";
 import { useEffect, useState } from "react";
 import Placeholder from "@public/images/placeholder.webp";
-import "yet-another-react-lightbox/styles.css";
 import { nextImageUrl } from "@/utils/images";
 import { useImagesModalStore } from "@/stores/imagesModal";
 

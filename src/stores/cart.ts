@@ -4,6 +4,7 @@ import { create } from "zustand";
 type CartState = {
   products: Map<string, ProductCount[]>;
   totalProducts: (inventoryId: string) => number;
+  subTotal: (inventoryId: string) => number;
   increaseProduct: (inventoryId: string, product: Product) => void;
   decreaseProduct: (inventoryId: string, product: Product) => void;
   removeProduct: (inventoryId: string, product: Product) => void;
@@ -47,6 +48,15 @@ export const useCartStore = create<CartState>((set, get) => ({
     const products = get().products;
     const totalProducts = products.get(inventoryId)?.length;
     return totalProducts ?? 0;
+  },
+  subTotal: (inventoryId: string) => {
+    const products = get().products;
+    const inventoryProducts = products.get(inventoryId) ?? [];
+    const subTotal = inventoryProducts?.reduce(
+      (prev, actual) => prev + actual.product.finalPrice * actual.count,
+      0,
+    );
+    return subTotal;
   },
   increaseProduct: (inventoryId, selectedProduct) =>
     set((state) => {

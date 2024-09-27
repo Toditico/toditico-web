@@ -5,4 +5,7 @@ export const StyledLightBox = styled(Lightbox)`
   .yarl__container {
     background-color: rgb(255, 255, 255);
   }
+  .yarl__button {
+    color: black;
+  }
 `;

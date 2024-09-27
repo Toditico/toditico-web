@@ -78,7 +78,6 @@ export default function CartDrawer({
                   selectedInventory &&
                   cleanInventoryProducts(selectedInventory._id)
                 }
-                className="text-primary"
               />
               <IconX onClick={() => closeDrawer()} />
             </div>

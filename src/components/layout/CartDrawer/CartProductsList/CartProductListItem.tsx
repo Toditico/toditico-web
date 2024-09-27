@@ -13,7 +13,7 @@ type CartProductListItemProps = {
   increaseProduct: (product: Product) => void;
   decreaseProduct: (product: Product) => void;
   removeProduct: (product: Product) => void;
-  openImagesModal: (imageUrl: string) => void;
+  openImagesModal: () => void;
   selectedCurrency: Currency | null;
   selectedInventory: Inventory | null;
 };
@@ -38,7 +38,7 @@ export default function CartProductListItem({
           alt="Placeholder Image"
           width={84}
           height={84}
-          onClick={() => imageUrl && openImagesModal(imageUrl)}
+          onClick={() => openImagesModal()}
         />
         <IconCircleX
           className="absolute right-0 top-0"
