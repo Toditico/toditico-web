@@ -3,8 +3,10 @@ import CartProductListItem from "./CartProductListItem";
 import { Product, ProductCount } from "@/types/shared";
 import { useInventoryStore } from "@/stores/inventory";
 import { Skeleton } from "@mui/material";
-import { StyledLightBox } from "../../LightBox/styles";
 import { useCurrencyStore } from "@/stores/currency";
+import { nextImageUrl } from "@/utils/images";
+import Placeholder from "@public/images/placeholder.webp";
+import { useImagesModalStore } from "@/stores/imagesModal";
 
 type Props = {
   products: ProductCount[];
@@ -19,6 +21,8 @@ export default function CartProductList({ products, isLoading }: Props) {
     (state) => state.selectedInventory,
   );
   const selectedCurrency = useCurrencyStore((state) => state.selectedCurrency);
+  const setSlides = useImagesModalStore((state) => state.setSlides);
+  const openModal = useImagesModalStore((state) => state.openModal);
 
   const onProductIncreased = (product: Product) => {
     if (selectedInventory) {
@@ -36,6 +40,19 @@ export default function CartProductList({ products, isLoading }: Props) {
     if (selectedInventory) {
       removeProduct(selectedInventory._id, product);
     }
+  };
+
+  const onOpenImagesModal = () => {
+    setSlides(
+      products.map(({ product }) => {
+        return product.imageUrl
+          ? {
+              src: nextImageUrl(product.imageUrl),
+            }
+          : Placeholder;
+      }),
+    );
+    openModal();
   };
 
   if (isLoading) {
@@ -68,9 +85,9 @@ export default function CartProductList({ products, isLoading }: Props) {
           increaseProduct={onProductIncreased}
           decreaseProduct={onProductDecreased}
           removeProduct={onProductRemoved}
+          openImagesModal={onOpenImagesModal}
         />
       ))}
-      <StyledLightBox />
     </div>
   );
 }

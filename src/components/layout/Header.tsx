@@ -16,6 +16,7 @@ import { useInventoryStore } from "@/stores/inventory";
 import { CommonResponse } from "@/types/home";
 import { getCommonDataAction } from "@/actions/commonActions";
 import StoreCommonData from "./StoreCommonData";
+import ImagesModal from "./ImagesModal";
 
 export default function Header() {
   const path = usePathname();
@@ -108,7 +109,7 @@ export default function Header() {
         isOpen={cartDrawerOpen}
         closeDrawer={closeCartDrawer}
         selectedInventory={selectedInventory}
-	selectedCurrency={selectedCurrency}
+        selectedCurrency={selectedCurrency}
       />
       <InventorySelectionDialog selectedInventory={selectedInventory} />
       <NavigationBar
@@ -116,6 +117,7 @@ export default function Header() {
         openCart={openCartDrawer}
         selectedInventory={selectedInventory}
       />
+      <ImagesModal />
       {data && <StoreCommonData commonData={data} />}
       <div
         id="header"

@@ -13,6 +13,7 @@ type CartProductListItemProps = {
   increaseProduct: (product: Product) => void;
   decreaseProduct: (product: Product) => void;
   removeProduct: (product: Product) => void;
+  openImagesModal: (imageUrl: string) => void;
   selectedCurrency: Currency | null;
   selectedInventory: Inventory | null;
 };
@@ -24,6 +25,7 @@ export default function CartProductListItem({
   removeProduct,
   selectedCurrency,
   selectedInventory,
+  openImagesModal,
 }: CartProductListItemProps) {
   const { product, count } = productCount;
   const { imageUrl, name, finalPrice } = product;
@@ -36,6 +38,7 @@ export default function CartProductListItem({
           alt="Placeholder Image"
           width={84}
           height={84}
+          onClick={() => imageUrl && openImagesModal(imageUrl)}
         />
         <IconCircleX
           className="absolute right-0 top-0"
