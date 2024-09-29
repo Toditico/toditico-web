@@ -40,7 +40,7 @@ export default function ProductDetails({ product }: Props) {
           behavior: "smooth",
         });
       }
-    }, 1000);
+    }, 100);
   }, []);
 
   useEffect(() => {

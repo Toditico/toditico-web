@@ -17,6 +17,7 @@ import { CommonResponse } from "@/types/home";
 import { getCommonDataAction } from "@/actions/commonActions";
 import StoreCommonData from "./StoreCommonData";
 import ImagesModal from "./ImagesModal";
+import WhatsappButton from "./WhatsappButton";
 
 export default function Header() {
   const path = usePathname();
@@ -70,6 +71,7 @@ export default function Header() {
   const openDrawer = () => {
     setDrawerOpen(true);
   };
+
   const closeDrawer = () => {
     setDrawerOpen(false);
   };
@@ -118,7 +120,12 @@ export default function Header() {
         selectedInventory={selectedInventory}
       />
       <ImagesModal />
-      {data && <StoreCommonData commonData={data} />}
+      {data && (
+        <>
+          <WhatsappButton selectedInventory={selectedInventory} />
+          <StoreCommonData commonData={data} />
+        </>
+      )}
       <div
         id="header"
         className={clsx(

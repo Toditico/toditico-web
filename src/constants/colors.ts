@@ -5,4 +5,5 @@ export const colors = {
   gray: "#EEE",
   "dark-gray": "#999",
   white: "#FFF",
+  whatsapp: "#00BB2D",
 };

@@ -6,6 +6,8 @@ import { IconBrandWhatsapp, IconX, IconTrash } from "@tabler/icons-react";
 import { Currency, Inventory } from "@/types/shared";
 import { useEffect, useState } from "react";
 import { refreshCartProductsAction } from "@/actions/cartActions";
+import { twoFixedPlacesIfFloat } from "@/utils/numbers";
+import { LaunchWhatsappApp } from "@/utils/whatsapp";
 
 type Props = {
   isOpen: boolean;
@@ -25,6 +27,9 @@ export default function CartDrawer({
     selectedInventory
       ? state.getCartInventoryProducts(selectedInventory._id)
       : [],
+  );
+  const subTotal = useCartStore((state) =>
+    selectedInventory ? state.subTotal(selectedInventory._id) : 0,
   );
 
   const cleanInventoryProducts = useCartStore(
@@ -64,6 +69,30 @@ export default function CartDrawer({
     refreshCartProducts();
   }, [isOpen]);
 
+  const sendProductsDataToWhatsapp = () => {
+    if (isLoading) {
+      return;
+    }
+
+    if (selectedInventory?.phoneNumbers?.length) {
+      const productMessages = products.map(
+        (prodCount) =>
+          `${prodCount.count} ${prodCount.product.name} - ${twoFixedPlacesIfFloat(prodCount.count * prodCount.product.finalPrice)} ${selectedCurrency?.name}`,
+      );
+
+      const phoneNumber = selectedInventory?.phoneNumbers[0];
+
+      const greetingMessage =
+        "Hola, vengo desde el sitio web y estoy interesado en los siguientes productos: ";
+
+      const subTotalMessage = `Subtotal: ${subTotal} ${selectedCurrency?.name}`;
+
+      const messages = [greetingMessage, ...productMessages, subTotalMessage];
+
+      LaunchWhatsappApp(phoneNumber, messages.join("\n"));
+    }
+  };
+
   return (
     <Drawer open={isOpen} onClose={() => closeDrawer()} anchor="right">
       <div className="w-[100vw] min-w-[320px] py-4 px-6 flex flex-col justify-between h-full">
@@ -89,6 +118,8 @@ export default function CartDrawer({
           color="success"
           className="h-[56px] w-full rounded-lg p-4 text-white"
           startIcon={<IconBrandWhatsapp size={24} />}
+          disabled={products.length === 0}
+          onClick={sendProductsDataToWhatsapp}
         >
           <p className="text-button uppercase font-bold">
             Contactar al servicio

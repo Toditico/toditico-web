@@ -38,6 +38,7 @@ const config: Config = {
         available: "#40A9FF",
         "dark-gray": "#999",
         "low-stock": "#FFC53D",
+	"whatsapp": "#00BB2D",
       },
     },
     backgroundImage: {
