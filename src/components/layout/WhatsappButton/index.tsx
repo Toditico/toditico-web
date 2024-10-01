@@ -1,6 +1,6 @@
 import { colors } from "@/constants/colors";
 import { Inventory } from "@/types/shared";
-import { LaunchWhatsappApp } from "@/utils/whatsapp";
+import { LaunchWhatsappApp, whatsappGreetingMessage } from "@/utils/whatsapp";
 import { Button } from "@mui/material";
 import { IconBrandWhatsapp } from "@tabler/icons-react";
 
@@ -15,9 +15,7 @@ export default function WhatsappButton({ selectedInventory }: Props) {
   const handleClick = () => {
     if (selectedInventory.phoneNumbers?.length) {
       const phoneNumber = selectedInventory.phoneNumbers[0];
-      const message =
-        "Hola, vengo desde el sitio web y me gustaría obtener más información. Podrían ayudarme por favor?";
-      LaunchWhatsappApp(phoneNumber, message);
+      LaunchWhatsappApp(phoneNumber, whatsappGreetingMessage);
     }
   };
 

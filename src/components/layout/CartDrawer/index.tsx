@@ -7,7 +7,11 @@ import { Currency, Inventory } from "@/types/shared";
 import { useEffect, useState } from "react";
 import { refreshCartProductsAction } from "@/actions/cartActions";
 import { twoFixedPlacesIfFloat } from "@/utils/numbers";
-import { LaunchWhatsappApp } from "@/utils/whatsapp";
+import {
+  LaunchWhatsappApp,
+  whatsappGreetingMessage,
+  whatsappProductsGreeetingMessage,
+} from "@/utils/whatsapp";
 
 type Props = {
   isOpen: boolean;
@@ -75,19 +79,25 @@ export default function CartDrawer({
     }
 
     if (selectedInventory?.phoneNumbers?.length) {
+      const phoneNumber = selectedInventory?.phoneNumbers[0];
+
+      if (products.length === 0) {
+        LaunchWhatsappApp(phoneNumber, whatsappGreetingMessage);
+        return;
+      }
+
       const productMessages = products.map(
         (prodCount) =>
           `${prodCount.count} ${prodCount.product.name} - ${twoFixedPlacesIfFloat(prodCount.count * prodCount.product.finalPrice)} ${selectedCurrency?.name}`,
       );
 
-      const phoneNumber = selectedInventory?.phoneNumbers[0];
+      const subTotalMessage = `\nSubtotal: ${twoFixedPlacesIfFloat(subTotal)} ${selectedCurrency?.name}`;
 
-      const greetingMessage =
-        "Hola, vengo desde el sitio web y estoy interesado en los siguientes productos: ";
-
-      const subTotalMessage = `Subtotal: ${subTotal} ${selectedCurrency?.name}`;
-
-      const messages = [greetingMessage, ...productMessages, subTotalMessage];
+      const messages = [
+        whatsappProductsGreeetingMessage,
+        ...productMessages,
+        subTotalMessage,
+      ];
 
       LaunchWhatsappApp(phoneNumber, messages.join("\n"));
     }
@@ -118,7 +128,6 @@ export default function CartDrawer({
           color="success"
           className="h-[56px] w-full rounded-lg p-4 text-white"
           startIcon={<IconBrandWhatsapp size={24} />}
-          disabled={products.length === 0}
           onClick={sendProductsDataToWhatsapp}
         >
           <p className="text-button uppercase font-bold">
