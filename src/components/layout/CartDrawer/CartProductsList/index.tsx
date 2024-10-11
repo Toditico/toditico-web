@@ -103,7 +103,7 @@ export default function CartProductList({ products, isLoading }: Props) {
         ))}
       </div>
       <div className="flex justify-between text-primary uppercase text-body font-bold">
-        <p>subtotal</p>
+        <p>Total</p>
         <p>
           {twoFixedPlacesIfFloat(subTotal)} {selectedCurrency?.name}
         </p>

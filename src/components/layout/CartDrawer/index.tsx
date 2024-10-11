@@ -91,7 +91,7 @@ export default function CartDrawer({
           `${prodCount.count} ${prodCount.product.name} - ${twoFixedPlacesIfFloat(prodCount.count * prodCount.product.finalPrice)} ${selectedCurrency?.name}`,
       );
 
-      const subTotalMessage = `\nSubtotal: ${twoFixedPlacesIfFloat(subTotal)} ${selectedCurrency?.name}`;
+      const subTotalMessage = `\nTotal: ${twoFixedPlacesIfFloat(subTotal)} ${selectedCurrency?.name}`;
 
       const messages = [
         whatsappProductsGreeetingMessage,
