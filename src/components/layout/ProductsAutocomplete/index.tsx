@@ -21,6 +21,9 @@ export default function ProductsAutocomplete() {
   const [value, setValue] = useState<string>("");
   const [options, setOptions] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [noOptionsText, setNoOptionsText] = useState<string>(
+    "Inserte al menos tres caracteres",
+  );
   const { width } = useWindowSize();
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
 
@@ -56,6 +59,8 @@ export default function ProductsAutocomplete() {
           selectedCurrency!._id,
         );
         setOptions(products);
+        !products.length &&
+          setNoOptionsText("No se encontraron resultados para su búsqueda");
       } catch (error) {
         setOptions([]);
       } finally {
@@ -65,7 +70,7 @@ export default function ProductsAutocomplete() {
     fetchProducts();
   }, [value]);
 
-  const selectedProduct = (product: Product) => {
+  const selectedProduct = () => {
     setOptions([]);
     setValue("");
   };
@@ -86,7 +91,7 @@ export default function ProductsAutocomplete() {
       getOptionLabel={(product) => product.name}
       onFocus={checkIfThereIsAnyInventorySelected}
       onBlur={clearOptions}
-      noOptionsText="Inserte al menos 3 caracteres"
+      noOptionsText={noOptionsText}
       loading={loading}
       loadingText=<div className="flex items-center gap-2">
         <CircularProgress size={16} />
@@ -95,6 +100,7 @@ export default function ProductsAutocomplete() {
       disabled={inventories.length === 0}
       onInputChange={(event, inputValue) => {
         clearTimeout(timerRef.current);
+        setNoOptionsText("Inserte al menos tres caracteres");
         if (!inputValue) {
           setValue("");
           setOptions([]);
