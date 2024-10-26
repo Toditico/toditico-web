@@ -1,4 +1,5 @@
 import { getProductsDetailsAction } from "@/actions/productActions";
+import NoProductPlaceholder from "@/components/product/NoProductPlaceholder";
 import ProductDetails from "@/components/product/ProductDetails";
 import { Metadata } from "next";
 import { Suspense } from "react";
@@ -23,12 +24,13 @@ export async function generateMetadata({
   const products = await getProductsDetailsAction([code], inventory, currency);
   const product = products[0];
 
-  return {
+  return product ? {
     title: product.name,
     description: product.description,
     openGraph: {
       images: [product.imageUrl || ""],
     },
+  } : {
   };
 }
 
@@ -37,6 +39,10 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
   const { currency, inventory } = searchParams;
 
   const products = await getProductsDetailsAction([code], inventory, currency);
+  if (!products.length) {
+    return <NoProductPlaceholder />;
+  }
+
   const product = products[0];
 
   return (

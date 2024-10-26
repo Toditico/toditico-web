@@ -10,6 +10,7 @@ import { useModuleStore } from "@/stores/module";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCurrencyStore } from "@/stores/currency";
 import { useInventoryStore } from "@/stores/inventory";
+import NoProductsPlaceholder from "../NoProductsPlaceholder";
 
 type Props = {
   data: CommonResponse;
@@ -137,6 +138,7 @@ export default function CatalogueClientWrapper({
         {...{ products, maxPage, fetchNextPage }}
         isLoading={isFetchingProducts}
       />
+      {!isFetchingProducts && !products.length && <NoProductsPlaceholder />}
     </>
   );
 }

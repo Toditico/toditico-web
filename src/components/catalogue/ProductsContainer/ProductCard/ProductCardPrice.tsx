@@ -16,7 +16,7 @@ export default function ProductCardPrice({
   selectedCurrency,
 }: Props) {
   return (
-    <div className="flex flex-col max-w-[60%]">
+    <div className="flex flex-col">
       {originalPrice && discount ? (
         <div className="flex justify-between items-center gap-4">
           <p className="text-body-bold font-bold text-gray line-through">
