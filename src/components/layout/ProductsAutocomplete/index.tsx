@@ -1,7 +1,6 @@
 import { breakpoints } from "@/constants/breakpoints";
 import { colors } from "@/constants/colors";
 import { useWindowSize } from "@/hooks/useWindowSize";
-import clientProductService from "@/services/clientProductsService";
 import { useCurrencyStore } from "@/stores/currency";
 import { useInventoryStore } from "@/stores/inventory";
 import { Product } from "@/types/shared";

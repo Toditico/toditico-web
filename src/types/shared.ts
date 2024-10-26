@@ -26,6 +26,7 @@ export type ProductStatus = "AVAILABLE" | "LOW_STOCK" | "NOT_AVAILABLE";
 
 export type Product = {
   name: string;
+  containedProducts: Partial<Product>[];
   description?: string;
   sellPrice: number;
   finalPrice: number;

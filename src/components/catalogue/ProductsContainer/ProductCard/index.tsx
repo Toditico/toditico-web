@@ -11,6 +11,7 @@ import { IconShoppingBag } from "@tabler/icons-react";
 import { useInView } from "react-intersection-observer";
 import { useCartStore } from "@/stores/cart";
 import { useInventoryStore } from "@/stores/inventory";
+import ProductCardKit from "./ProductCardKit";
 
 type Props = {
   product: Product;
@@ -60,6 +61,7 @@ export default function ProductCard({ product, isInViewportHandler }: Props) {
             quality={100}
             fill
           />
+          {!!product.containedProducts?.length && <ProductCardKit />}
         </div>
         <div className="px-2 pt-3">
           <ProductCardInfo
