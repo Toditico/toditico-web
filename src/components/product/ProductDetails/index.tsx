@@ -70,7 +70,11 @@ export default function ProductDetails({ product }: Props) {
     <div className="flex flex-col gap-6" id="product-details">
       <ProductImages {...{ images }} />
       <div className="flex flex-col gap-6">
-        <ProductInfo {...{ product }} selectedCurrency={selectedCurrency!} />
+        <ProductInfo
+          {...{ product }}
+          selectedCurrency={selectedCurrency!}
+          selectedInventory={selectedInventory!}
+        />
         <Button
           variant="outlined"
           startIcon={<IconShoppingBag size={24} />}

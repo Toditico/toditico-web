@@ -30,6 +30,7 @@ export type Product = {
   description?: string;
   sellPrice: number;
   finalPrice: number;
+  count: number;
   code: string;
   imageUrl?: string;
   secondaryImagesUrls?: string[];

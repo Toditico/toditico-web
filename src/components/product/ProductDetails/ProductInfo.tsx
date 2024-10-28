@@ -1,14 +1,19 @@
-import { Currency, Product } from "@/types/shared";
+import { Currency, Inventory, Product } from "@/types/shared";
 import ProductPrice from "./ProductPrice";
 import ProductCardStatus from "@/components/catalogue/ProductsContainer/ProductCard/ProductStatus";
+import KitProductsInfo from "./KitProductsInfo";
 
 type Props = {
   product: Product;
   selectedCurrency: Currency;
+  selectedInventory: Inventory;
 };
 
-export default function ProductInfo({ product, selectedCurrency }: Props) {
-  // INFO Need to add the kit section and the product status
+export default function ProductInfo({
+  product,
+  selectedCurrency,
+  selectedInventory,
+}: Props) {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-2">
@@ -18,10 +23,20 @@ export default function ProductInfo({ product, selectedCurrency }: Props) {
         )}
         <ProductCardStatus productStatus={product.status} />
       </div>
-      <hr />
+      <hr className="text-gray"/>
+      {product.containedProducts?.length > 0 && (
+        <>
+          <KitProductsInfo
+            product={product}
+            selectedCurrency={selectedCurrency}
+            selectedInventory={selectedInventory}
+          />
+          <hr className="text-gray"/>
+        </>
+      )}
       <ProductPrice
         discount={product.discountPercent}
-	originalPrice={product.sellPrice}
+        originalPrice={product.sellPrice}
         finalPrice={product.finalPrice}
         selectedCurrency={selectedCurrency}
       />
