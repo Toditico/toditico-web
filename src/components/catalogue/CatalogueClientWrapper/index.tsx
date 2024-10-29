@@ -16,12 +16,14 @@ type Props = {
   data: CommonResponse;
   lastFetchedProducts: Product[];
   maxPage: number;
+  page: number;
 };
 
 export default function CatalogueClientWrapper({
   data,
   lastFetchedProducts,
   maxPage,
+  page,
 }: Props) {
   const searchParams = useSearchParams();
   const pathName = usePathname();
@@ -34,6 +36,22 @@ export default function CatalogueClientWrapper({
     setProducts([...products, ...lastFetchedProducts]);
     setIsFetchingProducts(false);
   }, [lastFetchedProducts]);
+
+  useEffect(() => {
+    if (isFetchingProducts) {
+      return;
+    }
+
+    if (page > 1 && products.length <= 10) {
+      setProducts([]);
+      const currency = searchParams.get("currency");
+      const inventory = searchParams.get("inventory");
+      const moduleParam = searchParams.get("module");
+      const query = searchParams.get("query") || "";
+      const queryParams = `currency=${currency}&inventory=${inventory}&query=${query}&module=${moduleParam}`;
+      refetchProducts(queryParams, true);
+    }
+  }, [isFetchingProducts]);
 
   const setSelectedModule = useModuleStore((state) => state.setSelectedModule);
   const selectedModule = useModuleStore((state) => state.selectedModule);

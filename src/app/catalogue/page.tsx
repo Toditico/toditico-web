@@ -67,6 +67,7 @@ export default async function Catalogue({ searchParams }: PageProps) {
                 lastFetchedProducts={products}
                 maxPage={paginationInfo.maxPage}
                 data={data as CommonResponse}
+		page={page}
               />
             </Suspense>
           </>
