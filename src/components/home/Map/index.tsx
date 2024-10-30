@@ -1,59 +1,45 @@
-"use client"
-import { MapContainer, TileLayer, Marker } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import "leaflet-defaulticon-compatibility";
-import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
+"use client";
+
+import Map, { Marker, Popup } from "react-map-gl/maplibre";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Inventory, Workshop } from "@/types/shared";
-import {
-  Icon,
-  latLng,
-  Point,
-  latLngBounds,
-  Map,
-} from "leaflet";
-import { useEffect, useMemo, useState } from "react";
+import type { MapRef } from "react-map-gl/maplibre";
+import maplibregl from "maplibre-gl";
+import WorkshopIcon from "@public/icons/workshop.svg";
+import InventoryIcon from "@public/icons/inventory.svg";
+import Image from "next/image";
 import InventoryWorkshopPopup from "./InventoryWorkshopPopup";
-import { NoPaddingPopup } from "./styles";
-import { useInView } from "react-intersection-observer";
-import { useInventoryStore } from "@/stores/inventory";
 
 type Props = {
   inventories: Inventory[];
   workshops: Workshop[];
 };
 
-const inventoryIcon = new Icon({
-  iconUrl: "/icons/inventory.svg",
-  iconRetinaUrl: "/icons/inventory.svg",
-  iconSize: new Point(56, 56),
-});
+type PopupData = {
+  element: Inventory | Workshop;
+  type: "Inventory" | "Workshop";
+};
 
-const workshopIcon = new Icon({
-  iconUrl: "/icons/workshop.svg",
-  iconRetinaUrl: "/icons/workshop.svg",
-  iconSize: new Point(56, 56),
-});
-
-export default function AppMap({ inventories, workshops }: Props) {
-  const [map, setMap] = useState<Map | null>(null);
-  const [mapAlreadyMoved, setMapAlreadyMoved] = useState(false);
-  const selectedInventory = useInventoryStore(
-    (state) => state.selectedInventory,
-  );
+export default function AppMap({ workshops, inventories }: Props) {
+  const mapRef = useRef<MapRef>(null);
+  const [popupData, setPopupData] = useState<PopupData | undefined>(undefined);
 
   const inventoryMarkers = useMemo(() => {
     return inventories
       .filter(({ latitude, longitude }) => latitude && longitude)
       .map((inventory) => (
         <Marker
+          className="z-50"
           key={inventory.name}
-          position={latLng(inventory.latitude ?? 0, inventory.longitude ?? 0)}
-          icon={inventoryIcon}
-          zIndexOffset={1000}
+          latitude={inventory.latitude}
+          longitude={inventory.longitude}
+          onClick={() =>
+            setTimeout(() => {
+              setPopupData({ element: inventory, type: "Inventory" });
+            }, 100)
+          }
         >
-          <NoPaddingPopup>
-            <InventoryWorkshopPopup element={inventory} type="Inventory" />
-          </NoPaddingPopup>
+          <Image src={InventoryIcon} alt="" />
         </Marker>
       ));
   }, [inventories]);
@@ -63,74 +49,64 @@ export default function AppMap({ inventories, workshops }: Props) {
       .filter(({ latitude, longitude }) => latitude && longitude)
       .map((workshop) => (
         <Marker
+          className="z-40"
           key={workshop.name}
-          position={latLng(workshop.latitude ?? 0, workshop.longitude ?? 0)}
-          icon={workshopIcon}
+          latitude={workshop.latitude}
+          longitude={workshop.longitude}
+          onClick={() =>
+            setTimeout(() => {
+              setPopupData({ type: "Workshop", element: workshop });
+            }, 100)
+          }
         >
-          <NoPaddingPopup>
-            <InventoryWorkshopPopup element={workshop} type="Workshop" />
-          </NoPaddingPopup>
+          <Image src={WorkshopIcon} alt="" />
         </Marker>
       ));
   }, [workshops]);
 
-  useEffect(() => {
-    if (map) {
-      const bounds = inventories
-        .filter(({ latitude, longitude }) => latitude && longitude)
-        .reduce(
-          (acc, curr) => {
-            return acc.extend([curr.latitude ?? 0, curr.longitude ?? 0]);
-          },
-          latLngBounds(
-            latLng(
-              inventories[0]?.latitude ?? 0,
-              inventories[0]?.longitude ?? 0,
-            ),
-            latLng(
-              inventories[0]?.latitude ?? 0,
-              inventories[0]?.longitude ?? 0,
-            ),
-          ),
-        );
-      map.fitBounds(bounds, { padding: new Point(20, 15), maxZoom: 13 });
+  const onMapLoaded = () => {
+    if (!mapRef.current) {
+      return;
     }
-  }, [map]);
 
-  const { ref } = useInView({
-    onChange: (inView) => {
-      if (inView.valueOf()) {
-        map &&
-          !mapAlreadyMoved &&
-          selectedInventory &&
-          setTimeout(() => {
-            map.flyTo(
-              {
-                lat: selectedInventory.latitude,
-                lng: selectedInventory.longitude,
-              },
-              14,
-            );
-            setMapAlreadyMoved(true);
-          }, 1500);
+    const bounds = inventories.reduce((acc, { latitude, longitude }) => {
+      if (latitude && longitude) {
+        return acc.extend([longitude, latitude]);
       }
-    },
-  });
+      return acc;
+    }, new maplibregl.LngLatBounds());
+    mapRef.current.fitBounds(bounds, { padding: { left: 40, right: 40 } });
+  };
+
+  useEffect(() => {
+    console.log("New popup data: ", popupData);
+  }, [popupData]);
 
   return (
-    <MapContainer
-      ref={setMap}
-      className="w-full h-[560px]"
-      scrollWheelZoom={false}
-    >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <div ref={ref}>
+    <div className="w-full h-[560px]">
+      <Map
+        ref={mapRef}
+        onLoad={onMapLoaded}
+        mapStyle={`https://maps.geo.us-east-1.amazonaws.com/maps/v0/maps/${process.env.NEXT_PUBLIC_MAP_NAME}/style-descriptor?key=${process.env.NEXT_PUBLIC_MAP_API_KEY}`}
+        scrollZoom={false}
+      >
+        {!!popupData ? (
+          <Popup
+            longitude={popupData.element.longitude}
+            latitude={popupData.element.latitude}
+            onClose={() => setPopupData(undefined)}
+	    className="z-[60]"
+	    closeButton={false}
+          >
+            <InventoryWorkshopPopup
+              element={popupData.element}
+              type={popupData.type}
+            />
+          </Popup>
+        ) : null}
         {inventoryMarkers}
         {workshopMarkers}
-      </div>
-    </MapContainer>
+      </Map>
+    </div>
   );
 }
