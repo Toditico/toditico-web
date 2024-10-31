@@ -7,8 +7,6 @@ export function middleware(request: NextRequest) {
 
   const fromURL = request.headers.get("referer");
   const toURL = nextUrl.pathname;
-  console.log("From URL: ", fromURL);
-  console.log("To URL: ", toURL);
 
   if (!fromURL?.includes(toURL) && nextUrl.searchParams.has("page")) {
     console.log("!!!!Elimino el query param page!!!!");

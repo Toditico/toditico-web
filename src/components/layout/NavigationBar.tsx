@@ -37,6 +37,24 @@ export default function NavigationBar({
     setShowProductscount(!!productsCount);
   }, [productsCount]);
 
+  const InventoryIcon = (
+    <IconBuildingWarehouse
+      color={colors.primary}
+      onClick={() => setOpenSelectionModal(true)}
+    />
+  );
+
+  const CartIcon = (
+    <div className="relative">
+      <IconShoppingBag color={colors.primary} onClick={() => openCart()} />
+      {showProductsCount ? (
+        <div className="bg-primary rounded-full absolute top-[-12px] right-[-8px] h-5 w-5 text-small flex justify-center items-center text-white font-bold">
+          {productsCount}
+        </div>
+      ) : null}
+    </div>
+  );
+
   return (
     <>
       <nav className="h-[120px] bg-white flex flex-col px-6 py-3 gap-2.5 fixed z-[1100] w-full top-0 xl:h-20 xl:flex-row xl:justify-between xl:items-center">
@@ -49,21 +67,8 @@ export default function NavigationBar({
             priority
           />
           <div className="flex flex-row gap-4 xl:hidden">
-            <IconBuildingWarehouse
-              color={colors.primary}
-              onClick={() => setOpenSelectionModal(true)}
-            />
-            <div className="relative">
-              <IconShoppingBag
-                color={colors.primary}
-                onClick={() => openCart()}
-              />
-              {showProductsCount ? (
-                <div className="bg-primary rounded-full absolute top-[-12px] right-[-8px] h-5 w-5 text-small flex justify-center items-center text-white font-bold">
-                  {productsCount}
-                </div>
-              ) : null}
-            </div>
+            {InventoryIcon}
+            {CartIcon}
             <IconMenu2 color={colors.primary} onClick={() => openMenu()} />
           </div>
         </div>
@@ -71,12 +76,8 @@ export default function NavigationBar({
           <ProductsAutocomplete />
           <CurrenciesSelect />
           <div className="flex-row gap-4 hidden xl:flex">
-            <IconBuildingWarehouse
-              color={colors.primary}
-              onClick={() => setOpenSelectionModal(true)}
-            />
-            <IconShoppingBag color={colors.primary} />
-            <IconMenu2 color={colors.primary} />
+            {InventoryIcon}
+            {CartIcon}
           </div>
         </div>
       </nav>

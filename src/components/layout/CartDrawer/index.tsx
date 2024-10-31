@@ -105,7 +105,7 @@ export default function CartDrawer({
 
   return (
     <Drawer open={isOpen} onClose={() => closeDrawer()} anchor="right">
-      <div className="w-[100vw] min-w-[320px] py-4 px-6 flex flex-col justify-between h-full">
+      <div className="w-[100vw] min-w-[320px] py-4 px-6 flex flex-col justify-between h-full md:w-[500px]">
         <div className="flex flex-col gap-4">
           <div className="flex justify-between">
             <p className="text-body font-bold uppercase">

@@ -2,9 +2,8 @@ import { getCommonDataAction } from "@/actions/commonActions";
 import OurBussiness from "@/components/home/OurBussiness";
 import OurStats from "@/components/home/OurStats";
 import { Metadata } from "next";
-import dynamic from "next/dynamic";
-import { useMemo } from "react";
 import ogImage from "@public/opengraph-image.jpg";
+import Map from "@/components/home/Map";
 
 export const metadata: Metadata = {
   title: "Inicio | TODITICO",
@@ -28,14 +27,6 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const Map = useMemo(
-    () =>
-      dynamic(() => import("@/components/home/Map/"), {
-        ssr: false,
-      }),
-    [],
-  );
-
   const data = await getCommonDataAction();
 
   return (
