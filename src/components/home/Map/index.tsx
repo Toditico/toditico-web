@@ -9,6 +9,8 @@ import WorkshopIcon from "@public/icons/workshop.svg";
 import InventoryIcon from "@public/icons/inventory.svg";
 import Image from "next/image";
 import InventoryWorkshopPopup from "./InventoryWorkshopPopup";
+import { useInView } from "react-intersection-observer";
+import { useInventoryStore } from "@/stores/inventory";
 
 type Props = {
   inventories: Inventory[];
@@ -23,6 +25,11 @@ type PopupData = {
 export default function AppMap({ workshops, inventories }: Props) {
   const mapRef = useRef<MapRef>(null);
   const [popupData, setPopupData] = useState<PopupData | undefined>(undefined);
+
+  const selectedInventory = useInventoryStore(
+    (state) => state.selectedInventory,
+  );
+  const [mapAlreadyMoved, setMapAlreadyMoved] = useState(false);
 
   const inventoryMarkers = useMemo(() => {
     return inventories
@@ -78,12 +85,35 @@ export default function AppMap({ workshops, inventories }: Props) {
     mapRef.current.fitBounds(bounds, { padding: { left: 40, right: 40 } });
   };
 
-  useEffect(() => {
-    console.log("New popup data: ", popupData);
-  }, [popupData]);
+  const { ref } = useInView({
+    onChange: (inView) => {
+      if (inView.valueOf()) {
+        if (!mapRef.current) {
+          return;
+        }
+        if (mapAlreadyMoved) {
+          return;
+        }
+        if (!selectedInventory) {
+          return;
+        }
+        setTimeout(() => {
+          mapRef.current?.flyTo({
+            center: {
+              lat: selectedInventory.latitude,
+              lng: selectedInventory.longitude,
+            },
+            duration: 1000,
+	    zoom: 14
+          });
+          setMapAlreadyMoved(true);
+        }, 1500);
+      }
+    },
+  });
 
   return (
-    <div className="w-full h-[560px]">
+    <div className="w-full h-[560px]" ref={ref}>
       <Map
         ref={mapRef}
         onLoad={onMapLoaded}
@@ -95,8 +125,8 @@ export default function AppMap({ workshops, inventories }: Props) {
             longitude={popupData.element.longitude}
             latitude={popupData.element.latitude}
             onClose={() => setPopupData(undefined)}
-	    className="z-[60]"
-	    closeButton={false}
+            className="z-[60]"
+            closeButton={false}
           >
             <InventoryWorkshopPopup
               element={popupData.element}
