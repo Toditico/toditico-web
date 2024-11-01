@@ -18,10 +18,13 @@ import { getCommonDataAction } from "@/actions/commonActions";
 import StoreCommonData from "./StoreCommonData";
 import ImagesModal from "./ImagesModal";
 import WhatsappButton from "./WhatsappButton";
+import { DrawerListItem } from "./AppDrawer/DrawerList/DrawerListItem";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 export default function Header() {
   const path = usePathname();
   const searchParams = useSearchParams();
+  const { width } = useWindowSize();
 
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
@@ -41,6 +44,28 @@ export default function Header() {
   const setOpenSelectionModal = useInventoryStore(
     (state) => state.setOpenSelectionModal,
   );
+
+  const navigationItems: DrawerListItem[] = [
+    { label: "Inicio", link: "/home", isSelected: path === "/home" },
+    {
+      label: "Catálogo",
+      isSelected: path === "/catalogue",
+      subItems: modules.map((module) => {
+        const subItem: DrawerListItem = {
+          label: module.name,
+          isSelected: module._id === selectedModule?._id,
+          link: `/catalogue?inventory=${selectedInventory?._id}&currency=${selectedCurrency?._id}&module=${module._id}&query=`,
+        };
+        return subItem;
+      }),
+      link: `/catalogue?inventory=${selectedInventory?._id}&currency=${selectedCurrency?._id}&module=${selectedModule?._id}&query=`,
+    },
+    {
+      label: "Nosotros",
+      link: "/contact",
+      isSelected: path === "/contact",
+    },
+  ];
 
   useEffect(() => {
     const getData = async () => {
@@ -101,11 +126,7 @@ export default function Header() {
       <AppDrawer
         isOpen={drawerOpen}
         closeDrawer={closeDrawer}
-        selectedCurrency={selectedCurrency}
-        selectedInventory={selectedInventory}
-        selectedModule={selectedModule}
-        pathName={path}
-        modules={modules}
+        navigationItems={navigationItems}
       />
       <CartDrawer
         isOpen={cartDrawerOpen}
@@ -118,6 +139,7 @@ export default function Header() {
         openMenu={openDrawer}
         openCart={openCartDrawer}
         selectedInventory={selectedInventory}
+        navigationItems={width >= 1280 ? navigationItems : []}
       />
       <ImagesModal />
       {data && (

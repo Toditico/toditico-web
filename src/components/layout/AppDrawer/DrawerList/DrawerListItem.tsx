@@ -9,6 +9,7 @@ export type DrawerListItem = {
   link: string;
   subItems?: DrawerListItem[];
   isSelected: boolean;
+  isDesktop?: boolean;
 };
 
 export default function DrawerListItem({
@@ -16,12 +17,14 @@ export default function DrawerListItem({
   label,
   link,
   isSelected,
+  isDesktop = false,
 }: DrawerListItem) {
   if (subItems?.length === 0) {
     return (
       <Link
         className={clsx("font-bold text-button uppercase px-6 py2", {
           "text-primary": isSelected,
+          "underline underline-offset-4 decoration-2": isSelected && isDesktop,
         })}
         href={link}
       >
