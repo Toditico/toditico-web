@@ -12,6 +12,7 @@ import InventoryWorkshopPopup from "./InventoryWorkshopPopup";
 import { useInView } from "react-intersection-observer";
 import { useInventoryStore } from "@/stores/inventory";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import { breakpoints } from "@/constants/breakpoints";
 
 type Props = {
   inventories: Inventory[];
@@ -28,7 +29,7 @@ export default function AppMap({ workshops, inventories }: Props) {
   const [popupData, setPopupData] = useState<PopupData | undefined>(undefined);
   const { width } = useWindowSize();
 
-  const paddingValue = width < 768 ? 40 : 200;
+  const paddingValue = width < breakpoints.tablet ? 40 : 200;
   const padding: maplibregl.PaddingOptions = {
     left: paddingValue,
     right: paddingValue,

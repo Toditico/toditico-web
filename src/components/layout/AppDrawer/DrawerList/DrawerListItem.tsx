@@ -27,6 +27,7 @@ export default function DrawerListItem({
           "underline underline-offset-4 decoration-2": isSelected && isDesktop,
         })}
         href={link}
+        scroll={!isDesktop}
       >
         <p>{label}</p>
       </Link>
@@ -59,6 +60,7 @@ export default function DrawerListItem({
                 "font-bold": listSubitem.isSelected,
               })}
               href={listSubitem.link}
+              scroll={!isDesktop}
             >
               {listSubitem.label}
             </Link>

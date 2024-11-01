@@ -24,12 +24,12 @@ export default function ModulesSelectionItem({
       className={clsx("relative h-[320px] w-[320px] mx-auto grayscale", {
         "grayscale-0": isSelected,
       })}
-      key={module._id}
+      key={module?._id}
     >
       <Image
         className="rounded-3xl"
-        src={module.imageUrl || PlaceHolderImage}
-        alt={module.name}
+        src={module?.imageUrl || PlaceHolderImage}
+        alt={module?.name}
         fill
       />
     </div>

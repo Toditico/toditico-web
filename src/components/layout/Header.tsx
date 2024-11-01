@@ -20,6 +20,7 @@ import ImagesModal from "./ImagesModal";
 import WhatsappButton from "./WhatsappButton";
 import { DrawerListItem } from "./AppDrawer/DrawerList/DrawerListItem";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import { breakpoints } from "@/constants/breakpoints";
 
 export default function Header() {
   const path = usePathname();
@@ -139,7 +140,7 @@ export default function Header() {
         openMenu={openDrawer}
         openCart={openCartDrawer}
         selectedInventory={selectedInventory}
-        navigationItems={width >= 1280 ? navigationItems : []}
+        navigationItems={width >= breakpoints.desktop ? navigationItems : []}
       />
       <ImagesModal />
       {data && (
