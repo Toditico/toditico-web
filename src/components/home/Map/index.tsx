@@ -1,7 +1,7 @@
 "use client";
 
 import Map, { Marker, Popup } from "react-map-gl/maplibre";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Inventory, Workshop } from "@/types/shared";
 import type { MapRef } from "react-map-gl/maplibre";
 import maplibregl from "maplibre-gl";
@@ -11,6 +11,7 @@ import Image from "next/image";
 import InventoryWorkshopPopup from "./InventoryWorkshopPopup";
 import { useInView } from "react-intersection-observer";
 import { useInventoryStore } from "@/stores/inventory";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 type Props = {
   inventories: Inventory[];
@@ -25,6 +26,15 @@ type PopupData = {
 export default function AppMap({ workshops, inventories }: Props) {
   const mapRef = useRef<MapRef>(null);
   const [popupData, setPopupData] = useState<PopupData | undefined>(undefined);
+  const { width } = useWindowSize();
+
+  const paddingValue = width < 768 ? 40 : 200;
+  const padding: maplibregl.PaddingOptions = {
+    left: paddingValue,
+    right: paddingValue,
+    top: 0,
+    bottom: 0,
+  };
 
   const selectedInventory = useInventoryStore(
     (state) => state.selectedInventory,
@@ -71,20 +81,6 @@ export default function AppMap({ workshops, inventories }: Props) {
       ));
   }, [workshops]);
 
-  const onMapLoaded = () => {
-    if (!mapRef.current) {
-      return;
-    }
-
-    const bounds = inventories.reduce((acc, { latitude, longitude }) => {
-      if (latitude && longitude) {
-        return acc.extend([longitude, latitude]);
-      }
-      return acc;
-    }, new maplibregl.LngLatBounds());
-    mapRef.current.fitBounds(bounds, { padding: { left: 40, right: 40 } });
-  };
-
   const { ref } = useInView({
     onChange: (inView) => {
       if (inView.valueOf()) {
@@ -103,20 +99,35 @@ export default function AppMap({ workshops, inventories }: Props) {
               lat: selectedInventory.latitude,
               lng: selectedInventory.longitude,
             },
-            duration: 1000,
-	    zoom: 14
+            duration: 2000,
+            zoom: 14,
+            padding: padding,
           });
           setMapAlreadyMoved(true);
-        }, 1500);
+        }, 3500);
       }
     },
   });
 
+  useEffect(() => {
+    if (!mapRef.current) {
+      return;
+    }
+
+    const bounds = inventories.reduce((acc, { latitude, longitude }) => {
+      if (latitude && longitude) {
+        return acc.extend([longitude, latitude]);
+      }
+      return acc;
+    }, new maplibregl.LngLatBounds());
+
+    mapRef.current.fitBounds(bounds, { padding: padding });
+  }, [mapRef.current]);
+
   return (
-    <div className="w-full h-[560px]" ref={ref}>
+    <div className="w-full h-[560px] xl:h-[720px]" ref={ref}>
       <Map
         ref={mapRef}
-        onLoad={onMapLoaded}
         mapStyle={`https://maps.geo.us-east-1.amazonaws.com/maps/v0/maps/${process.env.NEXT_PUBLIC_MAP_NAME}/style-descriptor?key=${process.env.NEXT_PUBLIC_MAP_API_KEY}`}
         scrollZoom={false}
       >
