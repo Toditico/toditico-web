@@ -27,6 +27,7 @@ type PopupData = {
 export default function AppMap({ workshops, inventories }: Props) {
   const mapRef = useRef<MapRef>(null);
   const [popupData, setPopupData] = useState<PopupData | undefined>(undefined);
+  const [mapInteractionEnabled, setMapInteractionEnabled] = useState(false);
   const { width } = useWindowSize();
 
   const paddingValue = width < breakpoints.tablet ? 40 : 200;
@@ -105,6 +106,9 @@ export default function AppMap({ workshops, inventories }: Props) {
             padding: padding,
           });
           setMapAlreadyMoved(true);
+          setTimeout(() => {
+            setMapInteractionEnabled(true);
+          }, 2000);
         }, 3500);
       }
     },
@@ -115,14 +119,16 @@ export default function AppMap({ workshops, inventories }: Props) {
       return;
     }
 
-    const bounds = inventories.reduce((acc, { latitude, longitude }) => {
-      if (latitude && longitude) {
-        return acc.extend([longitude, latitude]);
-      }
-      return acc;
-    }, new maplibregl.LngLatBounds());
+    setTimeout(() => {
+      const bounds = inventories.reduce((acc, { latitude, longitude }) => {
+        if (latitude && longitude) {
+          return acc.extend([longitude, latitude]);
+        }
+        return acc;
+      }, new maplibregl.LngLatBounds());
 
-    mapRef.current.fitBounds(bounds, { padding: padding });
+      mapRef.current!.fitBounds(bounds, { padding: padding });
+    }, 500);
   }, [mapRef.current]);
 
   return (
@@ -131,6 +137,8 @@ export default function AppMap({ workshops, inventories }: Props) {
         ref={mapRef}
         mapStyle={`https://maps.geo.us-east-1.amazonaws.com/maps/v0/maps/${process.env.NEXT_PUBLIC_MAP_NAME}/style-descriptor?key=${process.env.NEXT_PUBLIC_MAP_API_KEY}`}
         scrollZoom={false}
+        dragPan={mapInteractionEnabled}
+        dragRotate={mapInteractionEnabled}
       >
         {!!popupData ? (
           <Popup
