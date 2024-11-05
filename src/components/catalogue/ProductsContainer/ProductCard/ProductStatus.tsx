@@ -10,20 +10,19 @@ export default function ProductCardStatus({ productStatus }: Props) {
     productStatus === "AVAILABLE"
       ? ""
       : productStatus === "LOW_STOCK"
-      ? "Pocas existencias"
-      : "No Disponible";
-  if (!text) {
-    return null;
-  }
+        ? "Pocas existencias"
+        : "No Disponible";
   return (
-    <p
-      className={clsx("text-body font-bold uppercase self-center", {
-        "text-low-stock": productStatus === "LOW_STOCK",
-        "text-primary": productStatus === "NOT_AVAILABLE",
-        "text-available": productStatus === "AVAILABLE",
-      })}
-    >
-      {text}
-    </p>
+    <div className="h-[22px]">
+      <p
+        className={clsx("text-body font-bold uppercase self-center", {
+          "text-low-stock": productStatus === "LOW_STOCK",
+          "text-primary": productStatus === "NOT_AVAILABLE",
+          "text-available": productStatus === "AVAILABLE",
+        })}
+      >
+        {text}
+      </p>
+    </div>
   );
 }
