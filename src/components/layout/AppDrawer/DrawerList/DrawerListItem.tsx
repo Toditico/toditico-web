@@ -1,5 +1,5 @@
 import { AccordionDetails } from "@mui/material";
-import { IconArrowDown } from "@tabler/icons-react";
+import { IconChevronDown } from "@tabler/icons-react";
 import Link from "next/link";
 import { AccordionStyled, AccordionSummaryStyled } from "./styles";
 import clsx from "clsx";
@@ -38,7 +38,7 @@ export default function DrawerListItem({
     <AccordionStyled variant="outlined">
       <AccordionSummaryStyled
         expandIcon={
-          <IconArrowDown className={clsx("", { "text-primary": isSelected })} />
+          <IconChevronDown className={clsx("", { "text-primary": isSelected })} />
         }
         aria-controls="panel2-content"
         id="panel2-header"
