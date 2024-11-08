@@ -66,7 +66,7 @@ export default function ProductDetails({ product }: Props) {
     setImages(images.filter((image) => image));
   }, [product]);
 
-  return !loading ? (
+  return (
     <div className="flex flex-col gap-6" id="product-details">
       <ProductImages {...{ images }} />
       <div className="flex flex-col gap-6">
@@ -94,5 +94,5 @@ export default function ProductDetails({ product }: Props) {
         </Button>
       </div>
     </div>
-  ) : null;
+  );
 }

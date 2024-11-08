@@ -63,30 +63,24 @@ export default function ModulesSelection({
 
   return (
     <div className="flex flex-col gap-4 items-center max-w-[100vw]">
-      {modules.length === 0 || !selectedModule ? (
-        <>
-          <Skeleton height={360} variant="rectangular" />
-        </>
-      ) : (
-        <>
-          <SwipeableViews
-            axis="x"
-            index={activeStep}
-            onChangeIndex={handleStepChanged}
-            enableMouseEvents
-            containerStyle={{ width: "100vw" }}
-          >
-            {carrouselElements}
-          </SwipeableViews>
-          <MobileStepper
-            steps={steps}
-            activeStep={activeStep}
-            nextButton={null}
-            backButton={null}
-            position="static"
-          ></MobileStepper>
-        </>
-      )}
+      <>
+        <SwipeableViews
+          axis="x"
+          index={activeStep}
+          onChangeIndex={handleStepChanged}
+          enableMouseEvents
+          containerStyle={{ width: "100vw" }}
+        >
+          {carrouselElements}
+        </SwipeableViews>
+        <MobileStepper
+          steps={steps}
+          activeStep={activeStep}
+          nextButton={null}
+          backButton={null}
+          position="static"
+        ></MobileStepper>
+      </>
     </div>
   );
 }

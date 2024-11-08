@@ -1,10 +1,7 @@
-import { getCommonDataAction } from "@/actions/commonActions";
 import BussinessInfo from "@/components/contact/BussinessInfo";
 import ContactBottomImage from "@/components/contact/ContactBottomImage";
-import StoreCommonData from "@/components/layout/StoreCommonData";
 import { Metadata } from "next";
 import ogImage from "@public/opengraph-image.jpg";
-import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Nosotros | TODITICO",

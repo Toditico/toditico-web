@@ -3,10 +3,10 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import RootThemeProvider from "@/components/layout/RootThemeProvider";
-import { Suspense } from "react";
 import HeaderSkeleton from "@/components/layout/HeaderSkeleton";
 import "yet-another-react-lightbox/styles.css";
 import "maplibre-gl/dist/maplibre-gl.css";
+import { Suspense } from "react";
 
 const satoshi = localFont({ src: "../../public/fonts/Satoshi-Variable.woff2" });
 export default function RootLayout({
