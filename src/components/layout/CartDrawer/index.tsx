@@ -32,6 +32,9 @@ export default function CartDrawer({
       ? state.getCartInventoryProducts(selectedInventory._id)
       : [],
   );
+  const totalProducts = useCartStore((state) =>
+    selectedInventory ? state.totalProducts(selectedInventory._id) : 0,
+  );
   const subTotal = useCartStore((state) =>
     selectedInventory ? state.subTotal(selectedInventory._id) : 0,
   );
@@ -109,7 +112,7 @@ export default function CartDrawer({
         <div className="flex flex-col gap-4">
           <div className="flex justify-between">
             <p className="text-body font-bold uppercase">
-              {products.length} Artículos
+              {totalProducts} Artículos
             </p>
             <div className="flex gap-2">
               <IconTrash

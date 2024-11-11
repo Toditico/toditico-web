@@ -1,7 +1,6 @@
 "use client";
 import { useCurrencyStore } from "@/stores/currency";
-import { Currency } from "@/types/shared";
-import { TextField, Autocomplete, Skeleton } from "@mui/material";
+import { Skeleton, Select, SelectChangeEvent, MenuItem } from "@mui/material";
 import { useEffect, useState } from "react";
 
 export default function CurrenciesSelect() {
@@ -18,40 +17,26 @@ export default function CurrenciesSelect() {
   }, [selectedCurrency]);
 
   return !isLoading ? (
-    <Autocomplete
+    <Select
       className="rounded"
       sx={{
         height: "40px",
         width: "96px",
+	alignItems: "flex-end"
       }}
-      disableClearable
-      options={currencies}
-      getOptionLabel={({ name }) => name}
-      isOptionEqualToValue={(option, value) => option._id === value._id}
-      value={selectedCurrency!}
-      onChange={(event: any, value: Currency) => setSelectedCurrency(value)}
+      variant="filled"
+      value={JSON.stringify(selectedCurrency!)}
+      onChange={(event: SelectChangeEvent<string>) =>
+        setSelectedCurrency(JSON.parse(event.target.value as string))
+      }
       disabled={currencies.length === 0}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          variant="filled"
-          onKeyDown={(e) => {
-            e.preventDefault();
-            return;
-          }}
-          sx={{
-            height: "40px",
-            "& .MuiInputBase-root": {
-              height: "40px !important",
-              padding: "0px",
-              "& .MuiInputBase-input": {
-                minWidth: "50px",
-              },
-            },
-          }}
-        />
-      )}
-    />
+    >
+      {currencies.map((currency) => (
+        <MenuItem key={currency._id} value={JSON.stringify(currency)}>
+          {currency.name}
+        </MenuItem>
+      ))}
+    </Select>
   ) : (
     <Skeleton variant="rectangular" width={96} height={40} />
   );
