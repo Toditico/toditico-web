@@ -45,8 +45,13 @@ export const useCartStore = create<CartState>((set, get) => ({
     return productsMap.get(inventoryId) ?? [];
   },
   totalProducts: (inventoryId: string) => {
-    const products = get().products;
-    const totalProducts = products.get(inventoryId)?.length;
+    const { products } = get();
+    const totalProducts = products
+      .get(inventoryId)
+      ?.reduce(
+        (prev: number, current: ProductCount) => prev + current.count,
+        0,
+      );
     return totalProducts ?? 0;
   },
   subTotal: (inventoryId: string) => {
