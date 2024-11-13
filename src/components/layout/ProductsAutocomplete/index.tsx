@@ -72,6 +72,9 @@ export default function ProductsAutocomplete() {
   const selectedProduct = () => {
     setOptions([]);
     setValue("");
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
   };
 
   return inventories.length && selectedCurrency ? (
