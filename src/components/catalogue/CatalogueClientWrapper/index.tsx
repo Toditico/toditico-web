@@ -55,6 +55,7 @@ export default function CatalogueClientWrapper({
 
   const setSelectedModule = useModuleStore((state) => state.setSelectedModule);
   const selectedModule = useModuleStore((state) => state.selectedModule);
+  const modules = useModuleStore((state) => state.modules);
   const selectedCurrency = useCurrencyStore((state) => state.selectedCurrency);
   const setSelectedInventory = useInventoryStore(
     (state) => state.setSelectedInventory,
@@ -100,6 +101,13 @@ export default function CatalogueClientWrapper({
 
   const selectedInventory = searchParams.get("inventory") ?? "";
   const selectedQuery = searchParams.get("query") ?? "";
+
+  useEffect(() => {
+    const newModule = modules.find(
+      (module) => module._id === searchParams.get("module"),
+    );
+    newModule && onModuleSelected(newModule);
+  }, [searchParams.get("module")]);
 
   const onModuleSelected = (module: Module) => {
     setSelectedModule(module);
