@@ -80,13 +80,9 @@ export default function ProductDetails({ product }: Props) {
             borderWidth: "2px",
             padding: "16px",
           }}
+          onClick={addProductToCart}
         >
-          <p
-            className="text-button uppercase font-bold"
-            onClick={addProductToCart}
-          >
-            Añadir a cesta
-          </p>
+          <p className="text-button uppercase font-bold">Añadir a cesta</p>
         </Button>
       </div>
     </div>
