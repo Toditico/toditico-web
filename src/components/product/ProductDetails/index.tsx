@@ -1,4 +1,5 @@
 "use client";
+
 import { Product } from "@/types/shared";
 import { useEffect, useState } from "react";
 import ProductImages from "./ProductImages";
@@ -20,7 +21,6 @@ export default function ProductDetails({ product }: Props) {
   const selectedInventory = useInventoryStore(
     (state) => state.selectedInventory,
   );
-  const [loading, setLoading] = useState(true);
   const router = useRouter();
   const pathName = usePathname();
 
@@ -42,10 +42,6 @@ export default function ProductDetails({ product }: Props) {
       }
     }, 100);
   }, []);
-
-  useEffect(() => {
-    setLoading(!selectedCurrency);
-  }, [selectedCurrency]);
 
   useEffect(() => {
     if (selectedCurrency && selectedInventory) {

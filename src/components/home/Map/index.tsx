@@ -1,6 +1,6 @@
 "use client";
 
-import Map, { Marker, Popup } from "react-map-gl/maplibre";
+import Map, { AttributionControl, Marker, Popup } from "react-map-gl/maplibre";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Inventory, Workshop } from "@/types/shared";
 import type { MapRef } from "react-map-gl/maplibre";
@@ -139,6 +139,7 @@ export default function AppMap({ workshops, inventories }: Props) {
         scrollZoom={false}
         dragPan={mapInteractionEnabled}
         dragRotate={mapInteractionEnabled}
+	attributionControl={false}
       >
         {!!popupData ? (
           <Popup
@@ -156,6 +157,7 @@ export default function AppMap({ workshops, inventories }: Props) {
         ) : null}
         {inventoryMarkers}
         {workshopMarkers}
+	<AttributionControl compact={true} />
       </Map>
     </div>
   );
