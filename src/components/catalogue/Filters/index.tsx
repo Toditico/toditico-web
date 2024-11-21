@@ -1,8 +1,9 @@
 "use client";
 
+import { IconChevronDown } from "@tabler/icons-react";
 import { colors } from "@/constants/colors";
 import { Inventory } from "@/types/shared";
-import { Button, MenuItem, Select, Skeleton, TextField } from "@mui/material";
+import { Button, MenuItem, Select, TextField } from "@mui/material";
 import { IconFilter } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 
@@ -48,6 +49,7 @@ export default function Filters({
           placeholder="Inventario"
           value={inventory}
           onChange={(el) => setInventory(el.target.value)}
+          IconComponent={IconChevronDown}
           sx={{
             height: "56px",
             borderRadius: "8px",
@@ -55,8 +57,8 @@ export default function Filters({
             lineHeight: "21.6px",
             borderWidth: "2px",
             borderColor: colors.primary,
-	    color: colors.primary,
-	    backgroundColor: colors.primaryLight,
+            color: colors.primary,
+            backgroundColor: colors.primaryLight,
             "&.Mui-focused": {
               border: "none",
             },
@@ -84,10 +86,13 @@ export default function Filters({
                 lineHeight: "21.6px",
                 borderWidth: "2px",
                 borderColor: colors.primary,
-		color: colors.primary,
+                color: colors.primary,
                 "&.Mui-focused": {
                   border: "none",
                 },
+		"&.MuiOutlinedInput-notchedOutline": {
+		  borderWidth: "0px"
+		},
               },
             },
           }}
