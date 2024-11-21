@@ -110,6 +110,9 @@ export default function CatalogueClientWrapper({
   }, [searchParams.get("module")]);
 
   const onModuleSelected = (module: Module) => {
+    if (module._id === selectedModule?._id) {
+      return;
+    }
     setSelectedModule(module);
     setProducts([]);
     const currency = searchParams.get("currency");
