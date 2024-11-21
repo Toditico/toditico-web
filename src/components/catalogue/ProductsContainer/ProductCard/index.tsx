@@ -68,22 +68,24 @@ export default function ProductCard({ product, isInViewportHandler }: Props) {
             product={product}
             selectedCurrency={selectedCurrency!}
           />
-          <Button
-            variant="outlined"
-            startIcon={<IconShoppingBag size={24} />}
-            sx={{
-              width: "100%",
-              height: "56px",
-              borderRadius: "8px",
-              borderWidth: "2px",
-              padding: "16px",
-            }}
-            onClick={addProductToCart}
-          >
-            <p className="text-button uppercase font-bold">Añadir a cesta</p>
-          </Button>
         </div>
       </Link>
+      <div className="px-2 pt-3">
+        <Button
+          variant="outlined"
+          startIcon={<IconShoppingBag size={24} />}
+          sx={{
+            width: "100%",
+            height: "56px",
+            borderRadius: "8px",
+            borderWidth: "2px",
+            padding: "16px",
+          }}
+          onClick={addProductToCart}
+        >
+          <p className="text-button uppercase font-bold">Añadir a cesta</p>
+        </Button>
+      </div>
     </div>
   );
 }
