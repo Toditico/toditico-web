@@ -55,6 +55,8 @@ export default function Filters({
             lineHeight: "21.6px",
             borderWidth: "2px",
             borderColor: colors.primary,
+	    color: colors.primary,
+	    backgroundColor: colors.primaryLight,
             "&.Mui-focused": {
               border: "none",
             },
@@ -82,6 +84,7 @@ export default function Filters({
                 lineHeight: "21.6px",
                 borderWidth: "2px",
                 borderColor: colors.primary,
+		color: colors.primary,
                 "&.Mui-focused": {
                   border: "none",
                 },
