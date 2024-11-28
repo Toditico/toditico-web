@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import ogImage from "@public/opengraph-image.jpg";
 import { FilterProductsType } from "@/types/shared";
 import { CommonResponse } from "@/types/home";
+import { pagination } from "@/constants/pagination";
 
 type PageProps = {
   searchParams: {
@@ -49,7 +50,7 @@ export default async function Catalogue({ searchParams }: PageProps) {
         currency,
         module,
         page ?? 1,
-        10,
+        pagination.pageSize,
       ),
     ];
 

@@ -11,6 +11,8 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCurrencyStore } from "@/stores/currency";
 import { useInventoryStore } from "@/stores/inventory";
 import NoProductsPlaceholder from "../NoProductsPlaceholder";
+import { pagination } from "@/constants/pagination";
+import { filterProductsAction } from "@/actions/productActions";
 
 type Props = {
   data: CommonResponse;
@@ -42,14 +44,39 @@ export default function CatalogueClientWrapper({
       return;
     }
 
-    if (page > 1 && products.length <= 10) {
-      setProducts([]);
-      const currency = searchParams.get("currency");
-      const inventory = searchParams.get("inventory");
-      const moduleParam = searchParams.get("module");
+    // INFO: If this condition is satisfied it means that user got into this view by using back button
+    if (page > 1 && products.length <= pagination.pageSize) {
+      const currency = searchParams.get("currency") || "";
+      const inventory = searchParams.get("inventory") || "";
+      const moduleParam = searchParams.get("module") || "";
       const query = searchParams.get("query") || "";
-      const queryParams = `currency=${currency}&inventory=${inventory}&query=${query}&module=${moduleParam}`;
-      refetchProducts(queryParams, true);
+      const lastProductDetails = localStorage.getItem("last-product-details");
+      if (!lastProductDetails) {
+        const queryParams = `currency=${currency}&inventory=${inventory}&query=${query}&module=${moduleParam}`;
+        refetchProducts(queryParams, true);
+        return;
+      }
+      setIsFetchingProducts(true);
+      filterProductsAction(
+        query,
+        inventory,
+        currency,
+        moduleParam,
+        1,
+        (page - 1) * pagination.pageSize,
+      ).then(({ result }) => {
+        setProducts([...result, ...products]);
+        const element = document.getElementById(lastProductDetails);
+        if (element) {
+          const offsetTop = element.offsetTop - 120; //Adjust in case of tablet and desktop
+          window.scrollTo({
+            top: offsetTop,
+            behavior: "instant",
+          });
+        }
+        setIsFetchingProducts(false);
+	localStorage.removeItem("last-product-details");
+      });
     }
   }, [isFetchingProducts]);
 

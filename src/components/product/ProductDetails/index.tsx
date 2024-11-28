@@ -41,6 +41,7 @@ export default function ProductDetails({ product }: Props) {
         });
       }
     }, 100);
+    localStorage.setItem("last-product-details", product._id);
   }, []);
 
   useEffect(() => {

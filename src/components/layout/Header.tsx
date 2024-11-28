@@ -86,6 +86,13 @@ export default function Header() {
     }
   }, [path]);
 
+  useEffect(() => {
+    if (isCatalogView) {
+      return;
+    }
+    localStorage.removeItem("last-product-details");
+  }, [path]);
+
   const getH1Content = () => {
     return isHomeView
       ? "Rueda con confianza"

@@ -46,6 +46,7 @@ export default function ProductCard({ product, isInViewportHandler }: Props) {
 
   return (
     <div
+      id={product._id}
       ref={isInViewportHandler ? ref : undefined}
       className="rounded-t-lg w-full flex flex-col shadow-md pb-3 md:max-w-[350px]"
     >
