@@ -104,6 +104,20 @@ export default function CatalogueClientWrapper({
   }, [lastFetchedProducts]);
 
   useEffect(() => {
+    const lastProductDetails = localStorage.getItem("last-product-details");
+    if (
+      lastProductDetails &&
+      (page === 1 || page === undefined) &&
+      products.length
+    ) {
+      setTimeout(() => {
+        scrollToElement(lastProductDetails);
+        localStorage.removeItem("last-product-details");
+      }, 500);
+    }
+  }, [page, products]);
+
+  useEffect(() => {
     if (isFetchingProducts) {
       return;
     }
@@ -129,17 +143,13 @@ export default function CatalogueClientWrapper({
           scrollToElement("modules-selection");
           return;
         }
-        scrollToElement(lastProductDetails);
-        setIsFetchingProducts(false);
-        localStorage.removeItem("last-product-details");
+        setTimeout(() => {
+          scrollToElement(lastProductDetails);
+          setIsFetchingProducts(false);
+          localStorage.removeItem("last-product-details");
+        }, 500);
       });
       return;
-    }
-    if ((page === 1 || page === undefined) && lastProductDetails) {
-      setTimeout(() => {
-        scrollToElement(lastProductDetails);
-        localStorage.removeItem("last-product-details");
-      }, 1000);
     }
   }, [isFetchingProducts]);
 
