@@ -62,7 +62,7 @@ export default function ModulesSelection({
   }, [selectedModule, steps]);
 
   return (
-    <div className="flex flex-col gap-4 items-center max-w-[100vw]">
+    <div className="flex flex-col gap-4 items-center max-w-[100vw]" id="modules-selection">
       <>
         <SwipeableViews
           axis="x"

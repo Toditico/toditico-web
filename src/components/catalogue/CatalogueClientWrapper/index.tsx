@@ -39,23 +39,29 @@ export default function CatalogueClientWrapper({
     setIsFetchingProducts(false);
   }, [lastFetchedProducts]);
 
+  const scrollToElement = (elementId: string) => {
+    const element = document.getElementById(elementId);
+    if (element) {
+      const offsetTop = element.offsetTop - 120; //Adjust in case of tablet and desktop
+      window.scrollTo({
+        top: offsetTop,
+        behavior: "instant",
+      });
+    }
+  };
+
   useEffect(() => {
     if (isFetchingProducts) {
       return;
     }
 
+    const currency = searchParams.get("currency") || "";
+    const inventory = searchParams.get("inventory") || "";
+    const moduleParam = searchParams.get("module") || "";
+    const query = searchParams.get("query") || "";
+    const lastProductDetails = localStorage.getItem("last-product-details");
     // INFO: If this condition is satisfied it means that user got into this view by using back button
     if (page > 1 && products.length <= pagination.pageSize) {
-      const currency = searchParams.get("currency") || "";
-      const inventory = searchParams.get("inventory") || "";
-      const moduleParam = searchParams.get("module") || "";
-      const query = searchParams.get("query") || "";
-      const lastProductDetails = localStorage.getItem("last-product-details");
-      if (!lastProductDetails) {
-        const queryParams = `currency=${currency}&inventory=${inventory}&query=${query}&module=${moduleParam}`;
-        refetchProducts(queryParams, true);
-        return;
-      }
       setIsFetchingProducts(true);
       filterProductsAction(
         query,
@@ -66,17 +72,19 @@ export default function CatalogueClientWrapper({
         (page - 1) * pagination.pageSize,
       ).then(({ result }) => {
         setProducts([...result, ...products]);
-        const element = document.getElementById(lastProductDetails);
-        if (element) {
-          const offsetTop = element.offsetTop - 120; //Adjust in case of tablet and desktop
-          window.scrollTo({
-            top: offsetTop,
-            behavior: "instant",
-          });
+        if (!lastProductDetails) {
+          scrollToElement("modules-selection");
+          return;
         }
+        scrollToElement(lastProductDetails);
         setIsFetchingProducts(false);
-	localStorage.removeItem("last-product-details");
+        localStorage.removeItem("last-product-details");
       });
+      return;
+    }
+    if (page == 1 && lastProductDetails) {
+      scrollToElement(lastProductDetails);
+      localStorage.removeItem("last-product-details");
     }
   }, [isFetchingProducts]);
 
