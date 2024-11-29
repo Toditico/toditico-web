@@ -19,7 +19,7 @@ export default function AppDrawer({
   return (
     <Drawer open={isOpen} onClose={() => closeDrawer()}>
       <div className="w-[50vw] min-w-[190px] py-4 flex flex-col justify-between h-full">
-        <DrawerList items={navigationItems} />
+        <DrawerList items={navigationItems} itemClicked={() => closeDrawer()} />
         <div className="flex flex-col gap-[10px]">
           <InventorySelection />
           <div className="px-6 pb-4">

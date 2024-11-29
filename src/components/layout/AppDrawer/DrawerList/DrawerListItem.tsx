@@ -10,6 +10,7 @@ export type DrawerListItem = {
   subItems?: DrawerListItem[];
   isSelected: boolean;
   isDesktop?: boolean;
+  itemClicked?: () => void;
 };
 
 export default function DrawerListItem({
@@ -18,6 +19,7 @@ export default function DrawerListItem({
   link,
   isSelected,
   isDesktop = false,
+  itemClicked,
 }: DrawerListItem) {
   if (subItems?.length === 0) {
     return (
@@ -28,6 +30,7 @@ export default function DrawerListItem({
         })}
         href={link}
         scroll={!isDesktop}
+        onClick={() => itemClicked?.()}
       >
         <p>{label}</p>
       </Link>
@@ -38,7 +41,9 @@ export default function DrawerListItem({
     <AccordionStyled variant="outlined">
       <AccordionSummaryStyled
         expandIcon={
-          <IconChevronDown className={clsx("", { "text-primary": isSelected })} />
+          <IconChevronDown
+            className={clsx("", { "text-primary": isSelected })}
+          />
         }
         aria-controls="panel2-content"
         id="panel2-header"
@@ -61,6 +66,7 @@ export default function DrawerListItem({
               })}
               href={listSubitem.link}
               scroll={!isDesktop}
+              onClick={() => itemClicked?.()}
             >
               {listSubitem.label}
             </Link>
