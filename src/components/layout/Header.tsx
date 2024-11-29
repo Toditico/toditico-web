@@ -51,14 +51,19 @@ export default function Header() {
     {
       label: "Catálogo",
       isSelected: path === "/catalogue",
-      subItems: modules.map((module) => {
-        const subItem: DrawerListItem = {
-          label: module.name,
-          isSelected: module._id === selectedModule?._id,
-          link: `/catalogue?inventory=${selectedInventory?._id}&currency=${selectedCurrency?._id}&module=${module._id}&query=`,
-        };
-        return subItem;
-      }),
+      subItems: modules
+        .sort((prevModule, actualModule) => {
+          if (prevModule.name < actualModule.name) return -1;
+          return 1;
+        })
+        .map((module) => {
+          const subItem: DrawerListItem = {
+            label: module.name,
+            isSelected: module._id === selectedModule?._id,
+            link: `/catalogue?inventory=${selectedInventory?._id}&currency=${selectedCurrency?._id}&module=${module._id}&query=`,
+          };
+          return subItem;
+        }),
       link: `/catalogue?inventory=${selectedInventory?._id}&currency=${selectedCurrency?._id}&module=${selectedModule?._id}&query=`,
     },
     {
