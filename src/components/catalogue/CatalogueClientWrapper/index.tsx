@@ -5,7 +5,7 @@ import { Module, Product } from "@/types/shared";
 import ModulesSelection from "../ModulesSelection";
 import Filters from "../Filters";
 import ProductsContainer from "../ProductsContainer";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useModuleStore } from "@/stores/module";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCurrencyStore } from "@/stores/currency";
@@ -13,6 +13,8 @@ import { useInventoryStore } from "@/stores/inventory";
 import NoProductsPlaceholder from "../NoProductsPlaceholder";
 import { pagination } from "@/constants/pagination";
 import { filterProductsAction } from "@/actions/productActions";
+import ScrollToTopButton from "../ScrollToTopButton";
+import { scrollToElement } from "@/utils/scroll";
 
 type Props = {
   data: CommonResponse;
@@ -31,24 +33,75 @@ export default function CatalogueClientWrapper({
   const pathName = usePathname();
   const router = useRouter();
 
+  const lowestScrollPosition = useRef(0);
+  const positionAtWhichButtonIsShown = useRef(0);
+  const showScrollButton = useRef<boolean>(false);
+
   const [products, setProducts] = useState<Product[]>([]);
   const [isFetchingProducts, setIsFetchingProducts] = useState(true);
+  const [showScrollToTopButton, setShowScrollToTopButton] = useState(
+    showScrollButton.current,
+  );
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Update the lowest scroll position when scrolling down
+      if (currentScrollY > lowestScrollPosition.current) {
+        lowestScrollPosition.current = currentScrollY;
+      }
+
+      // Show button if scrolled up more than 1500 pixels from the lowest position
+      if (
+        !showScrollButton.current &&
+        currentScrollY < lowestScrollPosition.current - 1500 &&
+        currentScrollY > 2000
+      ) {
+        showScrollButton.current = true;
+        setShowScrollToTopButton(true);
+        positionAtWhichButtonIsShown.current = currentScrollY;
+      }
+
+      // Hide button if scrolled down more than 800 pixels from the last shown position
+      if (
+        showScrollButton.current &&
+        currentScrollY > positionAtWhichButtonIsShown.current + 800
+      ) {
+        showScrollButton.current = false;
+        setShowScrollToTopButton(false);
+        lowestScrollPosition.current = currentScrollY;
+      }
+
+      if (
+        currentScrollY < positionAtWhichButtonIsShown.current &&
+        showScrollButton.current
+      ) {
+        positionAtWhichButtonIsShown.current = currentScrollY;
+      }
+
+      if (currentScrollY < 2000) {
+        showScrollButton.current = false;
+        setShowScrollToTopButton(false);
+        lowestScrollPosition.current = currentScrollY;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    setShowScrollToTopButton(showScrollButton.current);
+  }, [showScrollButton.current]);
 
   useEffect(() => {
     setProducts([...products, ...lastFetchedProducts]);
     setIsFetchingProducts(false);
   }, [lastFetchedProducts]);
-
-  const scrollToElement = (elementId: string) => {
-    const element = document.getElementById(elementId);
-    if (element) {
-      const offsetTop = element.offsetTop - 120; //Adjust in case of tablet and desktop
-      window.scrollTo({
-        top: offsetTop,
-        behavior: "instant",
-      });
-    }
-  };
 
   useEffect(() => {
     if (isFetchingProducts) {
@@ -82,9 +135,11 @@ export default function CatalogueClientWrapper({
       });
       return;
     }
-    if (page == 1 && lastProductDetails) {
-      scrollToElement(lastProductDetails);
-      localStorage.removeItem("last-product-details");
+    if ((page === 1 || page === undefined) && lastProductDetails) {
+      setTimeout(() => {
+        scrollToElement(lastProductDetails);
+        localStorage.removeItem("last-product-details");
+      }, 1000);
     }
   }, [isFetchingProducts]);
 
@@ -202,6 +257,7 @@ export default function CatalogueClientWrapper({
         {...{ products, maxPage, fetchNextPage }}
         isLoading={isFetchingProducts}
       />
+      {showScrollToTopButton && <ScrollToTopButton />}
       {!isFetchingProducts && !products.length && <NoProductsPlaceholder />}
     </>
   );
