@@ -17,7 +17,7 @@ export default function ScrollToTopButton() {
         },
       }}
     >
-    Volver a Inicio
+      Volver a Inicio
     </Button>
   );
 }

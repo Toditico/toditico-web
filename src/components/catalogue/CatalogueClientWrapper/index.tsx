@@ -15,6 +15,7 @@ import { pagination } from "@/constants/pagination";
 import { filterProductsAction } from "@/actions/productActions";
 import ScrollToTopButton from "../ScrollToTopButton";
 import { scrollToElement } from "@/utils/scroll";
+import NProgress from "nprogress";
 
 type Props = {
   data: CommonResponse;
@@ -44,6 +45,14 @@ export default function CatalogueClientWrapper({
   );
 
   useEffect(() => {
+    if (isFetchingProducts) {
+      NProgress.start();
+      return;
+    }
+    NProgress.done();
+  }, [isFetchingProducts]);
+
+  useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
@@ -66,7 +75,7 @@ export default function CatalogueClientWrapper({
       // Hide button if scrolled down more than 800 pixels from the last shown position
       if (
         showScrollButton.current &&
-        currentScrollY > positionAtWhichButtonIsShown.current + 800
+        currentScrollY > positionAtWhichButtonIsShown.current
       ) {
         showScrollButton.current = false;
         setShowScrollToTopButton(false);
@@ -147,6 +156,9 @@ export default function CatalogueClientWrapper({
           scrollToElement(lastProductDetails);
           setIsFetchingProducts(false);
           localStorage.removeItem("last-product-details");
+          showScrollButton.current = false;
+          setShowScrollToTopButton(false);
+          lowestScrollPosition.current = window.scrollY;
         }, 500);
       });
       return;
