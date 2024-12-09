@@ -1,7 +1,6 @@
 import { colors } from "@/constants/colors";
 import { scrollToElement } from "@/utils/scroll";
 import { Button } from "@mui/material";
-import { IconArrowUp } from "@tabler/icons-react";
 
 export default function ScrollToTopButton() {
   const handleClick = () => {
@@ -11,14 +10,14 @@ export default function ScrollToTopButton() {
   return (
     <Button
       onClick={() => handleClick()}
-      className="w-16 h-16 fixed bottom-4 left-4 rounded-full z-[1100] bg-primary"
+      className="fixed bottom-4 left-1/2 -translate-x-1/2 rounded-full z-[1100] bg-primary text-white text-button"
       sx={{
         "&:hover": {
           backgroundColor: colors.primary,
         },
       }}
     >
-      <IconArrowUp size={40} color="white" />
+    Volver a Inicio
     </Button>
   );
 }
