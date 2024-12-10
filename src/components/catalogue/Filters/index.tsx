@@ -62,6 +62,9 @@ export default function Filters({
             "&.Mui-focused": {
               border: "none",
             },
+            "> fieldset.MuiOutlinedInput-notchedOutline": {
+              display: "none",
+            },
           }}
         >
           {inventories.map((inventory) => (
@@ -90,9 +93,12 @@ export default function Filters({
                 "&.Mui-focused": {
                   border: "none",
                 },
-		"&.MuiOutlinedInput-notchedOutline": {
-		  borderWidth: "0px"
-		},
+                "&.MuiOutlinedInput-notchedOutline": {
+                  borderWidth: "0px",
+                },
+                "> fieldset.MuiOutlinedInput-notchedOutline": {
+                  display: "none",
+                },
               },
             },
           }}
