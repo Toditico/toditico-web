@@ -22,7 +22,12 @@ export default function CurrenciesSelect() {
       sx={{
         height: "40px",
         width: "96px",
-	alignItems: "flex-end"
+        alignItems: "flex-end",
+        ".MuiSelect-select.MuiSelect-filled": {
+          "&:focus": {
+            backgroundColor: "transparent",
+          },
+        },
       }}
       variant="filled"
       value={JSON.stringify(selectedCurrency!)}

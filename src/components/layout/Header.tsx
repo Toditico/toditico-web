@@ -149,6 +149,7 @@ export default function Header() {
       />
       <InventorySelectionDialog selectedInventory={selectedInventory} />
       <NavigationBar
+        isLoading={modules.length === 0}
         openMenu={openDrawer}
         openCart={openCartDrawer}
         selectedInventory={selectedInventory}

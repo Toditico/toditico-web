@@ -14,11 +14,13 @@ import { useEffect, useState } from "react";
 import { DrawerListItem } from "./AppDrawer/DrawerList/DrawerListItem";
 import NavigationItem from "./AppDrawer/DrawerList/DrawerListItem";
 import Link from "next/link";
+import { Skeleton } from "@mui/material";
 
 type Props = {
   openMenu: () => void;
   openCart: () => void;
   selectedInventory: Inventory | null;
+  isLoading: boolean;
   navigationItems: DrawerListItem[];
 };
 
@@ -27,6 +29,7 @@ export default function NavigationBar({
   openCart,
   selectedInventory,
   navigationItems,
+  isLoading,
 }: Props) {
   const setOpenSelectionModal = useInventoryStore(
     (state) => state.setOpenSelectionModal,
@@ -81,7 +84,11 @@ export default function NavigationBar({
           <div className="flex flex-row gap-4 xl:hidden">
             {InventoryIcon}
             {CartIcon}
-            <IconMenu2 color={colors.primary} onClick={() => openMenu()} />
+            {isLoading ? (
+              <Skeleton variant="rectangular" height={24} width={24} />
+            ) : (
+              <IconMenu2 color={colors.primary} onClick={() => openMenu()} />
+            )}
           </div>
         </div>
         <div className="flex gap-6">
