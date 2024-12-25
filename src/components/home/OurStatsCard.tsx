@@ -21,7 +21,7 @@ export default function OurStatsCard({ type, number }: Props) {
       ? "Ventas"
       : type === "customers"
       ? "Clientes satisfechos"
-      : "Piezas disonibles en stock";
+      : "Piezas disponibles en stock";
   };
 
   return (
