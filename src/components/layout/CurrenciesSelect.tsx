@@ -1,6 +1,8 @@
 "use client";
+import { colors } from "@/constants/colors";
 import { useCurrencyStore } from "@/stores/currency";
 import { Skeleton, Select, SelectChangeEvent, MenuItem } from "@mui/material";
+import { IconChevronDown } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 
 export default function CurrenciesSelect() {
@@ -18,17 +20,31 @@ export default function CurrenciesSelect() {
 
   return !isLoading ? (
     <Select
-      className="rounded"
       sx={{
         height: "40px",
         width: "96px",
         alignItems: "flex-end",
+	borderRadius: "8px",
+        color: colors.primary,
+        ":before": {
+          borderBottomColor: "transparent",
+        },
         ".MuiSelect-select.MuiSelect-filled": {
           "&:focus": {
             backgroundColor: "transparent",
           },
         },
       }}
+      IconComponent={(props) => (
+        <IconChevronDown
+          {...props}
+          style={{
+            color: colors.primary,
+            fontSize: "1.2rem",
+            ...props.style,
+          }}
+        />
+      )}
       variant="filled"
       value={JSON.stringify(selectedCurrency!)}
       onChange={(event: SelectChangeEvent<string>) =>

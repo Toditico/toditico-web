@@ -79,7 +79,7 @@ export default function ProductsAutocomplete() {
 
   return inventories.length && selectedCurrency ? (
     <Autocomplete
-      className="rounded w-[calc(100%-100px)] xl:w-[500px]"
+      className="w-[calc(100%-100px)] xl:w-[500px]"
       sx={{
         height: "40px",
       }}
@@ -135,7 +135,21 @@ export default function ProductsAutocomplete() {
           InputProps={{
             ...params.InputProps,
             ...{
-              sx: { height: "40px", paddingTop: "0 !important" },
+              sx: {
+                height: "40px",
+                paddingTop: "0 !important",
+		borderRadius: "8px",
+                ":before": {
+                  borderBottomColor: "transparent",
+                },
+                "input::placeholder": {
+                  color: colors.primary,
+                  opacity: 0.7,
+                  position: "relative",
+                  top: "2px",
+                  right: "2px",
+                },
+              },
               startAdornment: (
                 <InputAdornment position="start" style={{ marginTop: 0 }}>
                   <IconSearch color={colors.primary} />
