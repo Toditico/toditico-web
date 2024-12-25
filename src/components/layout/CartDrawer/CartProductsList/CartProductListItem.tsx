@@ -32,15 +32,18 @@ export default function CartProductListItem({
 
   return (
     <div className="flex gap-4 items-center">
-      <div className="relative flex-shrink-0">
-        <Image
-          src={`${imageUrl}` || PlaceHolderImage}
-          alt="Placeholder Image"
-          width={84}
-          height={84}
-          onClick={() => openImagesModal()}
-        />
+      <div className="relative flex-shrink-0 w-[92px] h-[92px]">
+        <div className="w-[84px] h-[84px] relative shadow-cart-images">
+          <Image
+            src={`${imageUrl}` || PlaceHolderImage}
+            alt={product.name}
+            style={{ objectFit: product.imageUrl ? "contain" : "cover" }}
+            onClick={() => openImagesModal()}
+            fill
+          />
+        </div>
         <IconCircleX
+          size={20}
           className="absolute right-0 top-0"
           onClick={() => removeProduct(product)}
         />

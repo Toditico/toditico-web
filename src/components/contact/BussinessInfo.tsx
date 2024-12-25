@@ -1,7 +1,7 @@
 export default function BussinessInfo() {
   return (
-    <div className="flex flex-col gap-6 px-6 py-12 px-6 md:w-[500px] md:mx-auto xl:py-[80px] xl:w-auto">
-      <div className="flex flex-col gap-4 text-center items-center mb-8 xl:items-start">
+    <div className="flex flex-col gap-6 py-12 px-6 md:w-[500px] md:mx-auto xl:py-[80px] xl:w-auto">
+      <div className="flex flex-col gap-4 text-center items-center mb-2 xl:items-start">
         <p className="text-h2-tablet text-primary font-bold">Que es Toditico</p>
         <div className="w-[160px] h-[4px] rounded bg-primary"></div>
       </div>

@@ -10,7 +10,7 @@ export default function ContactUs() {
     <div className="bg-gray py-12 px-6 flex flex-col gap-[10px] items-center xl:flex-row xl:px-12 xl:justify-between">
       <Image src={brand} alt="Toditico Logo" className="xl:w-[240px]" />
       <div className="flex flex-col gap-4 text-center xl:text-left">
-        <p className="text-body-bold font-bold uppercase">contáctenos</p>
+        <p className="text-body-bold font-bold uppercase mt-2">contáctenos</p>
         <div className="flex flex-col gap-2">
           <p className="text-body">{email}</p>
           <p className="text-body">{address}</p>

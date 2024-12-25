@@ -90,16 +90,19 @@ export default function CartProductList({ products, isLoading }: Props) {
         style={{ maxHeight: "calc(100dvh - 150px)" }}
       >
         {products.map((productCount, idx) => (
-          <CartProductListItem
-            selectedInventory={selectedInventory}
-            selectedCurrency={selectedCurrency}
-            productCount={productCount}
-            key={productCount.product._id}
-            increaseProduct={onProductIncreased}
-            decreaseProduct={onProductDecreased}
-            removeProduct={onProductRemoved}
-            openImagesModal={() => onOpenImagesModal(idx)}
-          />
+          <>
+            <CartProductListItem
+              selectedInventory={selectedInventory}
+              selectedCurrency={selectedCurrency}
+              productCount={productCount}
+              key={productCount.product._id}
+              increaseProduct={onProductIncreased}
+              decreaseProduct={onProductDecreased}
+              removeProduct={onProductRemoved}
+              openImagesModal={() => onOpenImagesModal(idx)}
+            />
+	    <hr className="text-gray" />
+          </>
         ))}
       </div>
       <div className="flex justify-between text-primary uppercase text-body font-bold">

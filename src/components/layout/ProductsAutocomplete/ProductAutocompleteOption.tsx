@@ -24,12 +24,14 @@ export default function ProductsAutocompleteOption({
       href={`/product/${product.code}?currency=${selectedCurrency._id}&inventory=${selectedInventory._id}`}
       onClick={() => onClick(product)}
     >
-      <Image
-        src={`${imageUrl}` || PlaceHolderImage}
-        alt="Placeholder Image"
-        width={84}
-        height={84}
-      />
+      <div className="h-[84px] w-[84px] relative">
+        <Image
+          src={`${imageUrl}` || PlaceHolderImage}
+          alt={product.name}
+          style={{ objectFit: product.imageUrl ? "contain" : "cover" }}
+	  fill
+        />
+      </div>
       <div className="flex flex-col">
         <p className="text-body font-bold text-dark-gray">{name}</p>
         <div className="flex items-center">
