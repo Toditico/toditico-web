@@ -27,10 +27,12 @@ export default function ModulesSelection({
   const { width } = useWindowSize();
 
   const steps =
-    width < breakpoints.tablet ? modules.length : modules.length - 1;
+    width < breakpoints.tablet ? modules.length : Math.ceil(modules.length / 2);
+  const totalElementsToDisplay =
+    width < breakpoints.tablet ? 1 : width < breakpoints.desktop ? 2 : 4;
 
   const carrouselElements =
-    width < breakpoints.tablet
+    totalElementsToDisplay === 1
       ? modules.map((module) => (
           <ModulesSelectionItem
             module={module}
@@ -44,7 +46,9 @@ export default function ModulesSelection({
           .map((module, index) =>
             index === modules.length - 1 ? undefined : (
               <MultipleModuleSelectionItem
-                modules={[module, modules[index + 1]]}
+                modules={modules}
+                activeStep={activeStep}
+                totalOfElementsToDisplay={totalElementsToDisplay}
                 key={module._id}
                 onModuleSelected={onModuleSelected}
                 selectedModuleId={selectedModule?._id ?? null}
@@ -57,12 +61,19 @@ export default function ModulesSelection({
       const index = modules.findIndex(
         (module) => module._id === selectedModule._id,
       );
-      setActiveStep(index >= steps ? steps - 1 : index);
+      if (width < breakpoints.tablet) {
+        setActiveStep(index);
+        return;
+      }
+      setActiveStep(Math.floor(index / totalElementsToDisplay));
     }
   }, [selectedModule, steps]);
 
   return (
-    <div className="flex flex-col gap-4 items-center max-w-[100vw]" id="modules-selection">
+    <div
+      className="flex flex-col gap-4 items-center max-w-[100vw]"
+      id="modules-selection"
+    >
       <>
         <SwipeableViews
           axis="x"
