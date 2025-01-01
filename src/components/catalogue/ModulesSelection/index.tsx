@@ -26,10 +26,9 @@ export default function ModulesSelection({
   };
   const { width } = useWindowSize();
 
-  const steps =
-    width < breakpoints.tablet ? modules.length : Math.ceil(modules.length / 2);
   const totalElementsToDisplay =
     width < breakpoints.tablet ? 1 : width < breakpoints.desktop ? 2 : 4;
+  const steps = Math.ceil(modules.length / totalElementsToDisplay);
 
   const carrouselElements =
     totalElementsToDisplay === 1
@@ -71,7 +70,7 @@ export default function ModulesSelection({
 
   return (
     <div
-      className="flex flex-col gap-4 items-center max-w-[100vw]"
+      className="flex flex-col gap-4 items-center max-w-[100vw] xl:max-w-full"
       id="modules-selection"
     >
       <>

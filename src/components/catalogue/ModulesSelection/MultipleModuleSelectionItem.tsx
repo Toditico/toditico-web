@@ -21,7 +21,7 @@ export default function MultipleModuleSelectionItem({
     .slice(0, totalOfElementsToDisplay);
 
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-4 xl:max-w-[1500px] xl:mx-auto">
       {modulesToDisplay.map((module) => (
         <ModulesSelectionItem
           key={module?._id}

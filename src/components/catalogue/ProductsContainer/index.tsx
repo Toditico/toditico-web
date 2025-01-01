@@ -18,7 +18,7 @@ export default function ProductsContainer({
 }: Props) {
 
   return (
-    <div className="flex flex-col gap-4 px-6 pb-4 md:flex-row md:flex-wrap md:justify-around">
+    <div className="flex flex-col gap-4 px-6 pb-4 md:flex-row md:flex-wrap md:justify-around xl:px-2">
       {products.map((product, index) => (
         <ProductCard
           product={product}

@@ -266,7 +266,7 @@ export default function CatalogueClientWrapper({
   };
 
   return (
-    <>
+    <div className="xl:max-w-[1500px] xl:mx-auto">
       <ModulesSelection
         modules={data.modules}
         {...{ onModuleSelected, selectedModule }}
@@ -281,6 +281,6 @@ export default function CatalogueClientWrapper({
       />
       {showScrollToTopButton && <ScrollToTopButton />}
       {!isFetchingProducts && !products.length && <NoProductsPlaceholder />}
-    </>
+    </div>
   );
 }
