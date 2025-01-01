@@ -33,8 +33,8 @@ export default function ProductImages({ images }: Props) {
   };
 
   return (
-    <div className="flex flex-col gap-2">
-      <div className="w-full h-[320px] relative">
+    <div className="flex flex-col gap-2 xl:w-[500px]">
+      <div className="w-full h-[320px] relative xl:h-[340px] xl:w-[412px]">
         <Image
           onClick={() => {
             openImagesModal();

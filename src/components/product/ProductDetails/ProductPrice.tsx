@@ -13,7 +13,6 @@ export default function ProductPrice({
   originalPrice,
   selectedCurrency,
 }: Props) {
-  // INFO Need to add the kit section and the product status
   return (
     <div className="flex flex-col">
       {originalPrice && discount ? (

@@ -64,9 +64,9 @@ export default function ProductDetails({ product }: Props) {
   }, [product]);
 
   return (
-    <div className="flex flex-col gap-6" id="product-details">
+    <div className="flex flex-col gap-6 xl:max-w-[900px] xl:mx-auto xl:flex-row" id="product-details">
       <ProductImages {...{ images }} />
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-6 xl:flex-grow">
         <ProductInfo
           {...{ product }}
           selectedCurrency={selectedCurrency!}
