@@ -4,7 +4,7 @@ import SwipeableViews from "react-swipeable-views";
 import { Module } from "@/types/shared";
 import { useEffect, useState } from "react";
 import ModulesSelectionItem from "./ModuleSelectionItem";
-import { MobileStepper, Skeleton } from "@mui/material";
+import { MobileStepper } from "@mui/material";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { breakpoints } from "@/constants/breakpoints";
 import MultipleModuleSelectionItem from "./MultipleModuleSelectionItem";
@@ -30,6 +30,14 @@ export default function ModulesSelection({
     width < breakpoints.tablet ? 1 : width < breakpoints.desktop ? 2 : 4;
   const steps = Math.ceil(modules.length / totalElementsToDisplay);
 
+  const groupedModules = [];
+
+  if (totalElementsToDisplay > 1) {
+    for (let i = 0; i < modules.length; i += totalElementsToDisplay) {
+      groupedModules.push(modules.slice(i, i + totalElementsToDisplay));
+    }
+  }
+
   const carrouselElements =
     totalElementsToDisplay === 1
       ? modules.map((module) => (
@@ -40,23 +48,21 @@ export default function ModulesSelection({
             onClick={onModuleSelected}
           />
         ))
-      : modules
-          .slice(0, modules.length - 1)
-          .map((module, index) =>
-            index === modules.length - 1 ? undefined : (
-              <MultipleModuleSelectionItem
-                modules={modules}
-                activeStep={activeStep}
-                totalOfElementsToDisplay={totalElementsToDisplay}
+      : groupedModules.map((group, groupIndex) => (
+          <div key={groupIndex} className="flex gap-4 xl:max-w-[1500px] xl:mx-auto">
+            {group.map((module) => (
+              <ModulesSelectionItem
+                module={module}
                 key={module._id}
-                onModuleSelected={onModuleSelected}
-                selectedModuleId={selectedModule?._id ?? null}
+                isSelected={module._id === selectedModule!._id}
+                onClick={onModuleSelected}
               />
-            ),
-          );
+            ))}
+          </div>
+        ));
 
   useEffect(() => {
-    if (selectedModule) {
+    if (selectedModule && width > 0) {
       const index = modules.findIndex(
         (module) => module._id === selectedModule._id,
       );
