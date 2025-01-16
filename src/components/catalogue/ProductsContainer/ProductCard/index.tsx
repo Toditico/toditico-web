@@ -1,9 +1,12 @@
 "use client";
 
 import { Product } from "@/types/shared";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import PlaceHolderImage from "@public/images/placeholder.webp";
+import AtosImage from "@public/images/atos.svg";
+import PicantoImage from "@public/images/picanto.svg";
+import TicoImage from "@public/images/tico.svg";
 import { useCurrencyStore } from "@/stores/currency";
 import ProductCardInfo from "./ProductCardInfo";
 import { Button } from "@mui/material";
@@ -12,6 +15,7 @@ import { useInView } from "react-intersection-observer";
 import { useCartStore } from "@/stores/cart";
 import { useInventoryStore } from "@/stores/inventory";
 import ProductCardKit from "./ProductCardKit";
+import { useModuleStore } from "@/stores/module";
 
 type Props = {
   product: Product;
@@ -23,6 +27,7 @@ export default function ProductCard({ product, isInViewportHandler }: Props) {
   const selectedInventory = useInventoryStore(
     (state) => state.selectedInventory,
   );
+  const selectedModule = useModuleStore((state) => state.selectedModule);
   const { ref } = useInView({
     onChange: (inView) => {
       if (inView.valueOf() && isInViewportHandler) {
@@ -30,6 +35,25 @@ export default function ProductCard({ product, isInViewportHandler }: Props) {
       }
     },
   });
+
+  const getTopImage = (moduleName: string): StaticImageData | undefined => {
+    if (moduleName.includes("atos")) {
+      return AtosImage;
+    }
+    if (moduleName.includes("picanto")) {
+      return PicantoImage;
+    }
+    if (moduleName.includes("tico")) {
+      return TicoImage;
+    }
+    // if (moduleName.includes("sandero")) {
+    //   return SanderoImage;
+    // }
+    // if (moduleName.includes("otros")) {
+    //   return OthersImage;
+    // }
+    return undefined;
+  };
 
   const increaseProduct = useCartStore((state) => state.increaseProduct);
   const addProductToCart = (e: any) => {
@@ -44,6 +68,8 @@ export default function ProductCard({ product, isInViewportHandler }: Props) {
     return null;
   }
 
+  const topImage = getTopImage(selectedModule!.name);
+
   return (
     <div
       id={product._id}
@@ -53,7 +79,11 @@ export default function ProductCard({ product, isInViewportHandler }: Props) {
       <Link
         href={`/product/${product.code}?currency=${selectedCurrency._id}&inventory=${selectedInventory._id}`}
       >
-        <div className="h-[40px] bg-primary rounded-t-lg"></div>
+        <div className="h-[40px] bg-primary rounded-t-lg flex items-center px-4">
+          {topImage && (
+            <Image src={topImage} alt={selectedModule!.name} height={18} style={{objectFit: "cover"}} />
+          )}
+        </div>
         <div className="w-full h-[290px] relative">
           <Image
             src={product.imageUrl || PlaceHolderImage}
