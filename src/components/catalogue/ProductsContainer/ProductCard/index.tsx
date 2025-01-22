@@ -7,6 +7,8 @@ import PlaceHolderImage from "@public/images/placeholder.webp";
 import AtosImage from "@public/images/atos.svg";
 import PicantoImage from "@public/images/picanto.svg";
 import TicoImage from "@public/images/tico.svg";
+import SanderoImage from "@public/images/sandero.svg";
+import OthersImage from "@public/images/otros.svg";
 import { useCurrencyStore } from "@/stores/currency";
 import ProductCardInfo from "./ProductCardInfo";
 import { Button } from "@mui/material";
@@ -46,12 +48,12 @@ export default function ProductCard({ product, isInViewportHandler }: Props) {
     if (moduleName.includes("tico")) {
       return TicoImage;
     }
-    // if (moduleName.includes("sandero")) {
-    //   return SanderoImage;
-    // }
-    // if (moduleName.includes("otros")) {
-    //   return OthersImage;
-    // }
+    if (moduleName.includes("sandero")) {
+      return SanderoImage;
+    }
+    if (moduleName.includes("otros")) {
+      return OthersImage;
+    }
     return undefined;
   };
 
