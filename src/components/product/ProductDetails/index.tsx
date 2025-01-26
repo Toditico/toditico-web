@@ -64,27 +64,37 @@ export default function ProductDetails({ product }: Props) {
   }, [product]);
 
   return (
-    <div className="flex flex-col gap-6 xl:max-w-[900px] xl:mx-auto xl:flex-row" id="product-details">
-      <ProductImages {...{ images }} />
-      <div className="flex flex-col gap-6 xl:flex-grow">
-        <ProductInfo
-          {...{ product }}
-          selectedCurrency={selectedCurrency!}
-          selectedInventory={selectedInventory!}
-        />
-        <Button
-          variant="outlined"
-          startIcon={<IconShoppingBag size={24} />}
-          sx={{
-            height: "56px",
-            borderRadius: "8px",
-            borderWidth: "2px",
-            padding: "16px",
-          }}
-          onClick={addProductToCart}
-        >
-          <p className="text-button uppercase font-bold">Añadir a cesta</p>
-        </Button>
+    <div>
+      {product && (
+        <p className="hidden font-bold text-h1-tablet text-center xl:block">
+          {product.name}
+        </p>
+      )}
+      <div
+        className="flex flex-col gap-6 xl:max-w-[900px] xl:mx-auto xl:flex-row"
+        id="product-details"
+      >
+        <ProductImages {...{ images }} />
+        <div className="flex flex-col gap-6 xl:flex-grow">
+          <ProductInfo
+            {...{ product }}
+            selectedCurrency={selectedCurrency!}
+            selectedInventory={selectedInventory!}
+          />
+          <Button
+            variant="outlined"
+            startIcon={<IconShoppingBag size={24} />}
+            sx={{
+              height: "56px",
+              borderRadius: "8px",
+              borderWidth: "2px",
+              padding: "16px",
+            }}
+            onClick={addProductToCart}
+          >
+            <p className="text-button uppercase font-bold">Añadir a cesta</p>
+          </Button>
+        </div>
       </div>
     </div>
   );

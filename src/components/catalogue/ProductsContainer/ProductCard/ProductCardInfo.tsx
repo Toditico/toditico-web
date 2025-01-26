@@ -13,10 +13,10 @@ export default function ProductCardInfo({ product, selectedCurrency }: Props) {
     <div className="flex flex-col gap-4 px-4 pb-4">
       <ProductCardStatus productStatus={product.status} />
       <div className="flex flex-col gap-2">
-        <p className="text-small font-bold">{product.name}</p>
+        <p className="text-small font-bold xl:font-bold xl:text-h3-desktop">{product.name}</p>
         <div className="md:h-[32.4px]">
           {product.description && (
-            <p className="text-small line-clamp-2">{product.description}</p>
+            <p className="text-small line-clamp-2 xl:text-body">{product.description}</p>
           )}
         </div>
       </div>
