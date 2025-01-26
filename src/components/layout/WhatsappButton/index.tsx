@@ -22,7 +22,7 @@ export default function WhatsappButton({ selectedInventory }: Props) {
   return (
     <Button
       onClick={() => handleClick()}
-      className="w-16 h-16 fixed bottom-4 right-4 rounded-full bg-whatsapp z-[1100]"
+      className="w-16 h-16 fixed bottom-4 right-4 rounded-full bg-whatsapp z-[1100] xl:bottom-14 xl:right-10"
       sx={{
         "&:hover": {
           backgroundColor: colors.whatsapp,

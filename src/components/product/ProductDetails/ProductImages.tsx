@@ -15,6 +15,9 @@ export default function ProductImages({ images }: Props) {
   >(Placeholder);
   const openModal = useImagesModalStore((state) => state.openModal);
   const setSlides = useImagesModalStore((state) => state.setSlides);
+  const setIndex = useImagesModalStore((state) => state.setIndex);
+
+  const secondaryImages = images.slice(1);
 
   useEffect(() => {
     if (typeof selectedImageUrl === "string") {
@@ -46,6 +49,18 @@ export default function ProductImages({ images }: Props) {
           style={{ objectFit: "contain" }}
           quality={100}
         />
+      </div>
+      <div className="flex gap-6 flex-wrap">
+        {secondaryImages.map((secondaryImage, index) => (
+          <div key={secondaryImage} className="w-20 h-20 relative bg-white shadow-cart-images">
+            <Image
+              src={secondaryImage}
+              alt="Product secondary image"
+              fill
+              style={{ objectFit: "contain" }}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );
