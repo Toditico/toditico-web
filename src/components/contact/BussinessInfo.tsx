@@ -42,7 +42,7 @@ export default function BussinessInfo() {
               En función de nuestra misión, ser el proyecto más exitoso y
               respetado en Cuba. Con un stock estable, de fácil alcance y
               precios altamente competitivos. Ofrecer un servicio de venta y
-              postventa de excelencia.
+              posventa de excelencia.
             </span>
           </p>
           <p className="font-bold text-button xl:text-body">

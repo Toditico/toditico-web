@@ -7,7 +7,6 @@ import ModulesSelectionItem from "./ModuleSelectionItem";
 import { MobileStepper } from "@mui/material";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { breakpoints } from "@/constants/breakpoints";
-import MultipleModuleSelectionItem from "./MultipleModuleSelectionItem";
 
 type Props = {
   modules: Module[];
@@ -72,7 +71,7 @@ export default function ModulesSelection({
       }
       setActiveStep(Math.floor(index / totalElementsToDisplay));
     }
-  }, [selectedModule, steps]);
+  }, [selectedModule, steps, width]);
 
   return (
     <div
