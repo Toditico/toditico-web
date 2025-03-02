@@ -102,8 +102,10 @@ export default function ProductsAutocomplete() {
       disabled={inventories.length === 0}
       onInputChange={(event, inputValue) => {
         clearTimeout(timerRef.current);
-        inputValue.length < 3 &&
+        if (inputValue.length < 3) {
           setNoOptionsText("Inserte al menos tres caracteres");
+          return;
+        }
         if (!inputValue) {
           setValue("");
           setOptions([]);
