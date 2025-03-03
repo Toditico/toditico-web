@@ -4,7 +4,7 @@ import brand from "../../../public/brand.svg";
 export default function ContactUs() {
   const email = "toditicocuba@gmail.com";
   const address = "Ave 21/ 44 y 46 #4418, Playa, La Habana. Cuba";
-  const phones = "+53 50745857 / +53 53476207";
+  const phones = "+53 50524119 / +53 50745857";
   const time = "Todos los días de 9:00 am - 5:00 pm";
   return (
     <div className="bg-gray py-12 px-6 flex flex-col gap-[10px] items-center xl:flex-row xl:px-12 xl:justify-between">
