@@ -1,5 +1,4 @@
 import { getProductsDetailsAction } from "@/actions/productActions";
-import NoProductPlaceholder from "@/components/product/NoProductPlaceholder";
 import ProductDetails from "@/components/product/ProductDetails";
 import { Metadata } from "next";
 
@@ -39,11 +38,7 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
   const { currency, inventory } = searchParams;
 
   const products = await getProductsDetailsAction([code], inventory, currency);
-  if (!products.length) {
-    return <NoProductPlaceholder />;
-  }
-
-  const product = products[0];
+  const product = products.length ? products[0] : null;
 
   return (
     <div className="p-6">

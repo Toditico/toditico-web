@@ -10,9 +10,10 @@ import { useCartStore } from "@/stores/cart";
 import { useCurrencyStore } from "@/stores/currency";
 import { useInventoryStore } from "@/stores/inventory";
 import { usePathname, useRouter } from "next/navigation";
+import NoProductPlaceholder from "../NoProductPlaceholder";
 
 type Props = {
-  product: Product;
+  product: Product | null;
 };
 
 export default function ProductDetails({ product }: Props) {
@@ -25,7 +26,7 @@ export default function ProductDetails({ product }: Props) {
   const pathName = usePathname();
 
   const addProductToCart = () => {
-    if (selectedInventory) {
+    if (selectedInventory && product) {
       increaseProduct(selectedInventory._id, product);
     }
   };
@@ -41,7 +42,7 @@ export default function ProductDetails({ product }: Props) {
         });
       }
     }, 100);
-    localStorage.setItem("last-product-details", product._id);
+    product && localStorage.setItem("last-product-details", product._id);
   }, []);
 
   useEffect(() => {
@@ -56,12 +57,18 @@ export default function ProductDetails({ product }: Props) {
   const [images, setImages] = useState<string[]>([]);
 
   useEffect(() => {
-    const mainImage = product.imageUrl ?? "";
-    const secondaryImages =
-      product.secondaryImagesUrls?.filter((url) => url) ?? [];
-    const images = [mainImage, ...secondaryImages];
-    setImages(images.filter((image) => image));
+    if (product) {
+      const mainImage = product.imageUrl ?? "";
+      const secondaryImages =
+        product.secondaryImagesUrls?.filter((url) => url) ?? [];
+      const images = [mainImage, ...secondaryImages];
+      setImages(images.filter((image) => image));
+    }
   }, [product]);
+
+  if (!product) {
+    return <NoProductPlaceholder />;
+  }
 
   return (
     <div>
