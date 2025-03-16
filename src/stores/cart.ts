@@ -160,6 +160,7 @@ export const useCartStore = create<CartState>((set, get) => ({
     set((state) => {
       const { products } = state;
       products.set(inventoryId, []);
+      localStorage.removeItem("cart-products");
       return {
         products,
       };
