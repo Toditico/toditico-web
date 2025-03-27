@@ -159,8 +159,10 @@ export const useCartStore = create<CartState>((set, get) => ({
   cleanInventoryProducts(inventoryId) {
     set((state) => {
       const { products } = state;
-      products.set(inventoryId, []);
-      localStorage.removeItem("cart-products");
+      const productsUpdated = products.set(inventoryId, []);
+
+      saveProductsMapInLocalStorage(productsUpdated);
+
       return {
         products,
       };
