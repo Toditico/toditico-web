@@ -1,7 +1,7 @@
 import Image from "next/image";
 import atos from "../../../public/images/atos.svg";
 import tico from "../../../public/images/tico.svg";
-import i10 from "../../../public/images/i10.svg";
+import sandero from "../../../public/images/sandero.svg";
 import picanto from "../../../public/images/picanto.svg";
 import { useEffect, useState } from "react";
 import { useWindowSize } from "@/hooks/useWindowSize";
@@ -12,7 +12,7 @@ export default function MainBrands() {
     { width: 68.53, src: tico },
     { width: 60.21, src: picanto },
     { width: 78.57, src: atos },
-    { width: 60.21, src: i10 },
+    { width: 60.21, src: sandero },
   ]);
   const { width } = useWindowSize();
   useEffect(() => {
@@ -20,22 +20,22 @@ export default function MainBrands() {
       width < breakpoints.tablet
         ? [
             { width: 68.53, src: tico },
-            { width: 60.21, src: picanto },
+            { width: 80.21, src: picanto },
             { width: 78.57, src: atos },
-            { width: 60.21, src: i10 },
+            { width: 80.21, src: sandero },
           ]
         : width < breakpoints.desktop
         ? [
             { width: 137.05, src: tico },
-            { width: 120.42, src: picanto },
+            { width: 150.42, src: picanto },
             { width: 157.14, src: atos },
-            { width: 71.34, src: i10 },
+            { width: 191.34, src: sandero },
           ]
         : [
             { width: 171.32, src: tico },
             { width: 199.44, src: picanto },
             { width: 161.42, src: atos },
-            { width: 84.72, src: i10 },
+            { width: 220.72, src: sandero },
           ]
     );
   }, [width]);
