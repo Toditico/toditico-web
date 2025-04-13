@@ -4,6 +4,7 @@ import ProductCardStatus from "@/components/catalogue/ProductsContainer/ProductC
 import KitProductsInfo from "./KitProductsInfo";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { breakpoints } from "@/constants/breakpoints";
+import { renderTextWithLinks } from "@/utils/text";
 
 type Props = {
   product: Product;
@@ -17,13 +18,13 @@ export default function ProductInfo({
   selectedInventory,
 }: Props) {
   const { width } = useWindowSize();
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-2">
         <p className="text-h3-desktop font-bold xl:hidden">{product.name}</p>
-        {product.description && (
-          <p className="text-body">{product.description}</p>
-        )}
+        {product.description &&
+          renderTextWithLinks(product.description, "text-body")}
         {width < breakpoints.desktop && (
           <ProductCardStatus productStatus={product.status} />
         )}
@@ -46,7 +47,7 @@ export default function ProductInfo({
           finalPrice={product.finalPrice}
           selectedCurrency={selectedCurrency}
         />
-	{width >= breakpoints.desktop && (
+        {width >= breakpoints.desktop && (
           <ProductCardStatus productStatus={product.status} />
         )}
       </div>
