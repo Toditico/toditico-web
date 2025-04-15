@@ -12,9 +12,10 @@ import { twoFixedPlacesIfFloat } from "@/utils/numbers";
 type Props = {
   products: ProductCount[];
   isLoading: boolean;
+  closeDrawer: () => void;
 };
 
-export default function CartProductList({ products, isLoading }: Props) {
+export default function CartProductList({ products, isLoading, closeDrawer }: Props) {
   const selectedInventory = useInventoryStore(
     (state) => state.selectedInventory,
   );
@@ -100,6 +101,7 @@ export default function CartProductList({ products, isLoading }: Props) {
               decreaseProduct={onProductDecreased}
               removeProduct={onProductRemoved}
               openImagesModal={() => onOpenImagesModal(idx)}
+	      closeDrawer={closeDrawer}
             />
 	    <hr className="text-gray" />
           </>

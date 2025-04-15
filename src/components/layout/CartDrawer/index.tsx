@@ -124,7 +124,7 @@ export default function CartDrawer({
               <IconX onClick={() => closeDrawer()} />
             </div>
           </div>
-          <CartProductList {...{ products, isLoading }} />
+          <CartProductList {...{ products, isLoading, closeDrawer }} />
         </div>
         <Button
           variant="contained"

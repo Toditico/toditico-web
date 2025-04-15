@@ -16,6 +16,7 @@ type CartProductListItemProps = {
   openImagesModal: () => void;
   selectedCurrency: Currency | null;
   selectedInventory: Inventory | null;
+  closeDrawer: () => void;
 };
 
 export default function CartProductListItem({
@@ -26,6 +27,7 @@ export default function CartProductListItem({
   selectedCurrency,
   selectedInventory,
   openImagesModal,
+  closeDrawer,
 }: CartProductListItemProps) {
   const { product, count } = productCount;
   const { imageUrl, name, finalPrice } = product;
@@ -51,6 +53,7 @@ export default function CartProductListItem({
       <div className="flex flex-col gap-4 flex-grow">
         <Link
           href={`/product/${product.code}?currency=${selectedCurrency?._id}&inventory=${selectedInventory?._id}`}
+	  onClick={() => closeDrawer()}
         >
           <p className="text-body font-bold">{name}</p>
           <div className="flex justify-between">
