@@ -36,7 +36,7 @@ export default function InventorySelectionDialog({ selectedInventory }: Props) {
       </DialogTitle>
       <DialogContent>
         <div className="flex flex-col gap-6">
-          <div className="flex gap-6">
+          <div className="flex gap-6 flex-wrap">
             {inventories.map((inventory) => (
               <InventoryCard
                 {...{ inventory }}
