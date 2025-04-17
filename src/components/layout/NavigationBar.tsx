@@ -61,8 +61,8 @@ export default function NavigationBar({
         className="cursor-pointer"
       />
       {showProductsCount ? (
-        <div className="bg-primary rounded-full absolute top-[-12px] right-[-8px] h-5 w-5 text-small flex justify-center items-center text-white font-bold">
-          {productsCount}
+        <div className="bg-primary rounded-full absolute top-[-12px] right-[-8px] h-6 w-6 text-small flex justify-center items-center text-white font-bold">
+          {productsCount < 99 ? productsCount : '+99'}
         </div>
       ) : null}
     </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import Map, { Marker, Popup } from "react-map-gl/maplibre";
+import { NavigationControl } from "react-map-gl/maplibre";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Inventory, Workshop } from "@/types/shared";
 import type { MapRef } from "react-map-gl/maplibre";
@@ -139,8 +140,9 @@ export default function AppMap({ workshops, inventories }: Props) {
         scrollZoom={false}
         dragPan={mapInteractionEnabled}
         dragRotate={mapInteractionEnabled}
-	attributionControl={false}
+        attributionControl={false}
       >
+        <NavigationControl showZoom={width >= breakpoints.desktop} showCompass={false} visualizePitch={false} />
         {!!popupData ? (
           <Popup
             longitude={popupData.element.longitude}

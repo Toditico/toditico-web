@@ -21,7 +21,7 @@ export default function ModulesSelectionItem({
       onClick={() => {
         !isSelected && onClick(module);
       }}
-      className={clsx("relative h-[320px] w-[320px] mx-auto grayscale", {
+      className={clsx("relative h-[320px] w-[320px] mx-auto grayscale cursor-pointer", {
         "grayscale-0": isSelected,
       })}
       key={module?._id}

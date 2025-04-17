@@ -112,7 +112,7 @@ export default function CartDrawer({
         <div className="flex flex-col gap-4">
           <div className="flex justify-between">
             <p className="text-body font-bold uppercase">
-              {totalProducts} Artículos
+              {totalProducts} {totalProducts === 1 ? "Artículo" : "Artículos"}
             </p>
             <div className="flex gap-2">
               <IconTrash
