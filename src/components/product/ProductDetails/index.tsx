@@ -43,7 +43,7 @@ export default function ProductDetails({ product }: Props) {
         });
       }
     }, 100);
-    product && localStorage.setItem(localStorageIDs.cartProducts, product._id);
+    product && localStorage.setItem(localStorageIDs.lastProductDetails, product._id);
   }, []);
 
   useEffect(() => {

@@ -48,8 +48,6 @@ export default function Header() {
   );
 
   const handlePopState = useCallback(function () {
-    console.log("Handle pop state");
-
     localStorage.setItem(localStorageIDs.backNavigation, "true");
   }, []);
 
@@ -108,13 +106,6 @@ export default function Header() {
       }
     }
     localStorage.removeItem(localStorageIDs.backNavigation);
-  }, [path]);
-
-  useEffect(() => {
-    if (isCatalogView) {
-      return;
-    }
-    localStorage.removeItem(localStorageIDs.lastProductDetails);
   }, [path]);
 
   const getH1Content = () => {
