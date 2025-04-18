@@ -48,7 +48,9 @@ export default function Header() {
   );
 
   const handlePopState = useCallback(function () {
-    console.log("Navigation using back button");
+    console.log("Handle pop state");
+
+    localStorage.setItem(localStorageIDs.backNavigation, "true");
   }, []);
 
   window.addEventListener("popstate", handlePopState);
@@ -96,6 +98,16 @@ export default function Header() {
     if (!selectedInventory && !searchParams.get("inventory")) {
       setOpenSelectionModal(true);
     }
+  }, [path]);
+
+  useEffect(() => {
+    if (localStorage.getItem(localStorageIDs.backNavigation) !== "true") {
+      // INFO: If navigation was not using back button and is not catalogue view, go to the top
+      if (isHomeView || isContactView) {
+        window.scrollTo({ top: 0 });
+      }
+    }
+    localStorage.removeItem(localStorageIDs.backNavigation);
   }, [path]);
 
   useEffect(() => {
