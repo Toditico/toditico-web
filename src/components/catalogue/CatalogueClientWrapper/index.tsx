@@ -16,6 +16,8 @@ import { filterProductsAction } from "@/actions/productActions";
 import ScrollToTopButton from "../ScrollToTopButton";
 import { scrollToElement } from "@/utils/scroll";
 import NProgress from "nprogress";
+import { localStorageIDs } from "@/constants/localStorage";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 type Props = {
   data: CommonResponse;
@@ -33,6 +35,7 @@ export default function CatalogueClientWrapper({
   const searchParams = useSearchParams();
   const pathName = usePathname();
   const router = useRouter();
+  const { width } = useWindowSize();
 
   const lowestScrollPosition = useRef(0);
   const positionAtWhichButtonIsShown = useRef(0);
@@ -113,17 +116,32 @@ export default function CatalogueClientWrapper({
   }, [lastFetchedProducts]);
 
   useEffect(() => {
-    const lastProductDetails = localStorage.getItem("last-product-details");
-    if (
-      lastProductDetails &&
-      (page === 1 || page === undefined) &&
-      products.length
-    ) {
-      setTimeout(() => {
-        scrollToElement(lastProductDetails);
-        localStorage.removeItem("last-product-details");
-      }, 500);
+    if (localStorage.getItem(localStorageIDs.backNavigation) !== "true") {
+      window.scrollTo({ top: 0 });
     }
+  }, []);
+
+  useEffect(() => {
+    const lastProductDetails = localStorage.getItem(
+      localStorageIDs.lastProductDetails,
+    );
+    const isBackNavigation =
+      localStorage.getItem(localStorageIDs.backNavigation) === "true";
+
+    if (!lastProductDetails) {
+      return;
+    }
+
+    setTimeout(() => {
+      if (
+        isBackNavigation &&
+        (page === 1 || page === undefined) &&
+        products.length
+      ) {
+        scrollToElement(lastProductDetails, width);
+      }
+      localStorage.removeItem(localStorageIDs.backNavigation);
+    }, 500);
   }, [page, products]);
 
   useEffect(() => {
@@ -135,7 +153,9 @@ export default function CatalogueClientWrapper({
     const inventory = searchParams.get("inventory") || "";
     const moduleParam = searchParams.get("module") || "";
     const query = searchParams.get("query") || "";
-    const lastProductDetails = localStorage.getItem("last-product-details");
+    const lastProductDetails = localStorage.getItem(
+      localStorageIDs.lastProductDetails,
+    );
     // INFO: If this condition is satisfied it means that user got into this view by using back button
     if (page > 1 && products.length <= pagination.pageSize) {
       setIsFetchingProducts(true);
@@ -146,21 +166,29 @@ export default function CatalogueClientWrapper({
         moduleParam,
         1,
         (page - 1) * pagination.pageSize,
-      ).then(({ result }) => {
-        setProducts([...result, ...products]);
-        if (!lastProductDetails) {
-          scrollToElement("modules-selection");
-          return;
-        }
-        setTimeout(() => {
-          scrollToElement(lastProductDetails);
-          setIsFetchingProducts(false);
-          localStorage.removeItem("last-product-details");
-          showScrollButton.current = false;
-          setShowScrollToTopButton(false);
-          lowestScrollPosition.current = window.scrollY;
-        }, 500);
-      });
+      )
+        .then(({ result }) => {
+          setProducts([...result, ...products]);
+          if (!lastProductDetails) {
+            scrollToElement("modules-selection", width);
+            setIsFetchingProducts(false);
+            return;
+          }
+          setTimeout(() => {
+            console.log(
+              "Voy a scrollear porque tengo la página es mayor que 1 ",
+            );
+            scrollToElement(lastProductDetails, width);
+            setIsFetchingProducts(false);
+            localStorage.removeItem(localStorageIDs.lastProductDetails);
+            showScrollButton.current = false;
+            setShowScrollToTopButton(false);
+            lowestScrollPosition.current = window.scrollY;
+          }, 500);
+        })
+        .finally(() => {
+          localStorage.removeItem(localStorageIDs.backNavigation);
+        });
       return;
     }
   }, [isFetchingProducts]);

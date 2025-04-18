@@ -5,7 +5,7 @@ import { IconShoppingBag } from "@tabler/icons-react";
 import MainBrands from "@/components/layout/MainBrands";
 import { usePathname, useSearchParams } from "next/navigation";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import AppDrawer from "./AppDrawer/";
 import InventorySelectionDialog from "@/components/layout/InventorySelectionDialog";
 import CartDrawer from "./CartDrawer";
@@ -21,6 +21,7 @@ import WhatsappButton from "./WhatsappButton";
 import { DrawerListItem } from "./AppDrawer/DrawerList/DrawerListItem";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { breakpoints } from "@/constants/breakpoints";
+import { localStorageIDs } from "@/constants/localStorage";
 
 export default function Header() {
   const path = usePathname();
@@ -45,6 +46,12 @@ export default function Header() {
   const setOpenSelectionModal = useInventoryStore(
     (state) => state.setOpenSelectionModal,
   );
+
+  const handlePopState = useCallback(function () {
+    localStorage.setItem(localStorageIDs.backNavigation, "true");
+  }, []);
+
+  typeof window !== "undefined" && window.addEventListener("popstate", handlePopState);
 
   const navigationItems: DrawerListItem[] = [
     { label: "Inicio", link: "/home", isSelected: path === "/home" },
@@ -92,10 +99,15 @@ export default function Header() {
   }, [path]);
 
   useEffect(() => {
-    if (isCatalogView) {
-      return;
+    if (localStorage.getItem(localStorageIDs.backNavigation) !== "true") {
+      // INFO: If navigation was not using back button and is not catalogue view, go to the top
+      if (isHomeView || isContactView) {
+        window.scrollTo({ top: 0 });
+      }
     }
-    localStorage.removeItem("last-product-details");
+    setTimeout(() => {
+      localStorage.removeItem(localStorageIDs.backNavigation);
+    }, 1000);
   }, [path]);
 
   const getH1Content = () => {
@@ -117,6 +129,7 @@ export default function Header() {
   const openCartDrawer = () => {
     setCartDrawerOpen(true);
   };
+
   const closeCartDrawer = () => {
     setCartDrawerOpen(false);
   };

@@ -1,3 +1,4 @@
+import { localStorageIDs } from "@/constants/localStorage";
 import { Module } from "@/types/shared";
 import { create } from "zustand";
 
@@ -13,7 +14,7 @@ export const useModuleStore = create<ModuleState>((set) => ({
   selectedModule: null,
   setSelectedModule: (module) =>
     set(() => {
-      localStorage.setItem("module", JSON.stringify(module._id));
+      localStorage.setItem(localStorageIDs.module, JSON.stringify(module._id));
       return { selectedModule: module };
     }),
   setModules: (modules, moduleToSelect) =>
@@ -25,7 +26,6 @@ export const useModuleStore = create<ModuleState>((set) => ({
       } else if (!selectedModule) {
         selectedModule = modules[0];
       }
-      console.log("Modulo seleccionado", selectedModule);
 
       return {
         modules,

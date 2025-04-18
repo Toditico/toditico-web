@@ -8,7 +8,7 @@ type Props = {
   products: Product[];
   isLoading?: boolean;
   maxPage: number;
-  fetchNextPage: () => void
+  fetchNextPage: () => void;
 };
 
 export default function ProductsContainer({
@@ -16,7 +16,6 @@ export default function ProductsContainer({
   fetchNextPage,
   isLoading = false,
 }: Props) {
-
   return (
     <div className="flex flex-col gap-4 px-6 pb-4 md:flex-row md:flex-wrap md:justify-around xl:px-2">
       {products.map((product, index) => (

@@ -1,3 +1,4 @@
+import { localStorageIDs } from "@/constants/localStorage";
 import { Currency } from "@/types/shared";
 import { create } from "zustand";
 
@@ -12,7 +13,7 @@ const initialSelectedCurrency = (): Currency | null => {
   if (typeof window === "undefined") {
     return null;
   }
-  const storageCurrency = localStorage.getItem("currency");
+  const storageCurrency = localStorage.getItem(localStorageIDs.currency);
   return storageCurrency ? JSON.parse(storageCurrency) : null;
 };
 
@@ -21,15 +22,14 @@ export const useCurrencyStore = create<CurrencyState>((set) => ({
   selectedCurrency: initialSelectedCurrency(),
   setSelectedCurrency: (currency) =>
     set(() => {
-      localStorage.setItem("currency", JSON.stringify(currency));
+      localStorage.setItem(localStorageIDs.currency, JSON.stringify(currency));
       return { selectedCurrency: currency };
     }),
   setCurrencies: (currencies) =>
     set((state) => {
       const { selectedCurrency } = state;
-      console.log("selected currency: ", selectedCurrency);
       !selectedCurrency &&
-        localStorage.setItem("currency", JSON.stringify(currencies[0]));
+        localStorage.setItem(localStorageIDs.currency, JSON.stringify(currencies[0]));
       return {
         currencies,
         selectedCurrency: selectedCurrency ?? currencies[0],

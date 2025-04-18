@@ -1,3 +1,4 @@
+import { localStorageIDs } from "@/constants/localStorage";
 import { ProductCount, Product } from "@/types/shared";
 import { create } from "zustand";
 
@@ -20,7 +21,7 @@ const initialCartProducts = (): Map<string, ProductCount[]> | null => {
   if (typeof window === "undefined") {
     return null;
   }
-  const storageCartProducts = localStorage.getItem("cart-products");
+  const storageCartProducts = localStorage.getItem(localStorageIDs.cartProducts);
   if (!storageCartProducts) {
     return null;
   }
@@ -35,7 +36,7 @@ const saveProductsMapInLocalStorage = (map: Map<string, ProductCount[]>) => {
     obj[inventoryId] = products;
   });
 
-  localStorage.setItem("cart-products", JSON.stringify(obj));
+  localStorage.setItem(localStorageIDs.cartProducts, JSON.stringify(obj));
 };
 
 export const useCartStore = create<CartState>((set, get) => ({

@@ -18,6 +18,7 @@ import { useCartStore } from "@/stores/cart";
 import { useInventoryStore } from "@/stores/inventory";
 import ProductCardKit from "./ProductCardKit";
 import { useModuleStore } from "@/stores/module";
+import { localStorageIDs } from "@/constants/localStorage";
 
 type Props = {
   product: Product;
@@ -32,8 +33,9 @@ export default function ProductCard({ product, isInViewportHandler }: Props) {
   const selectedModule = useModuleStore((state) => state.selectedModule);
   const { ref } = useInView({
     onChange: (inView) => {
-      if (inView.valueOf() && isInViewportHandler) {
-        isInViewportHandler();
+      if (inView.valueOf()) {
+        localStorage.setItem(localStorageIDs.lastProductDetails, product._id);
+        isInViewportHandler?.();
       }
     },
   });
@@ -75,7 +77,7 @@ export default function ProductCard({ product, isInViewportHandler }: Props) {
   return (
     <div
       id={product._id}
-      ref={isInViewportHandler ? ref : undefined}
+      ref={ref}
       className="rounded-t-lg w-full flex flex-col shadow-md pb-3 md:max-w-[350px] xl:max-w-[480px]"
     >
       <Link
@@ -83,7 +85,12 @@ export default function ProductCard({ product, isInViewportHandler }: Props) {
       >
         <div className="h-[40px] bg-primary rounded-t-lg flex items-center px-4">
           {topImage && (
-            <Image src={topImage} alt={selectedModule!.name} height={18} style={{objectFit: "cover"}} />
+            <Image
+              src={topImage}
+              alt={selectedModule!.name}
+              height={18}
+              style={{ objectFit: "cover" }}
+            />
           )}
         </div>
         <div className="w-full h-[290px] relative">
