@@ -11,6 +11,7 @@ import { useCurrencyStore } from "@/stores/currency";
 import { useInventoryStore } from "@/stores/inventory";
 import { usePathname, useRouter } from "next/navigation";
 import NoProductPlaceholder from "../NoProductPlaceholder";
+import { localStorageIDs } from "@/constants/localStorage";
 
 type Props = {
   product: Product | null;
@@ -42,7 +43,7 @@ export default function ProductDetails({ product }: Props) {
         });
       }
     }, 100);
-    product && localStorage.setItem("last-product-details", product._id);
+    product && localStorage.setItem(localStorageIDs.cartProducts, product._id);
   }, []);
 
   useEffect(() => {

@@ -5,7 +5,7 @@ import { IconShoppingBag } from "@tabler/icons-react";
 import MainBrands from "@/components/layout/MainBrands";
 import { usePathname, useSearchParams } from "next/navigation";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import AppDrawer from "./AppDrawer/";
 import InventorySelectionDialog from "@/components/layout/InventorySelectionDialog";
 import CartDrawer from "./CartDrawer";
@@ -21,6 +21,7 @@ import WhatsappButton from "./WhatsappButton";
 import { DrawerListItem } from "./AppDrawer/DrawerList/DrawerListItem";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { breakpoints } from "@/constants/breakpoints";
+import { localStorageIDs } from "@/constants/localStorage";
 
 export default function Header() {
   const path = usePathname();
@@ -45,6 +46,12 @@ export default function Header() {
   const setOpenSelectionModal = useInventoryStore(
     (state) => state.setOpenSelectionModal,
   );
+
+  const handlePopState = useCallback(function () {
+    console.log("Navigation using back button");
+  }, []);
+
+  window.addEventListener("popstate", handlePopState);
 
   const navigationItems: DrawerListItem[] = [
     { label: "Inicio", link: "/home", isSelected: path === "/home" },
@@ -95,7 +102,7 @@ export default function Header() {
     if (isCatalogView) {
       return;
     }
-    localStorage.removeItem("last-product-details");
+    localStorage.removeItem(localStorageIDs.lastProductDetails);
   }, [path]);
 
   const getH1Content = () => {
@@ -117,6 +124,7 @@ export default function Header() {
   const openCartDrawer = () => {
     setCartDrawerOpen(true);
   };
+
   const closeCartDrawer = () => {
     setCartDrawerOpen(false);
   };

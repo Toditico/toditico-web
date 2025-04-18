@@ -16,6 +16,7 @@ import { filterProductsAction } from "@/actions/productActions";
 import ScrollToTopButton from "../ScrollToTopButton";
 import { scrollToElement } from "@/utils/scroll";
 import NProgress from "nprogress";
+import { localStorageIDs } from "@/constants/localStorage";
 
 type Props = {
   data: CommonResponse;
@@ -113,7 +114,7 @@ export default function CatalogueClientWrapper({
   }, [lastFetchedProducts]);
 
   useEffect(() => {
-    const lastProductDetails = localStorage.getItem("last-product-details");
+    const lastProductDetails = localStorage.getItem(localStorageIDs.lastProductDetails);
     if (
       lastProductDetails &&
       (page === 1 || page === undefined) &&
@@ -121,7 +122,7 @@ export default function CatalogueClientWrapper({
     ) {
       setTimeout(() => {
         scrollToElement(lastProductDetails);
-        localStorage.removeItem("last-product-details");
+        localStorage.removeItem(localStorageIDs.lastProductDetails);
       }, 500);
     }
   }, [page, products]);
@@ -135,7 +136,7 @@ export default function CatalogueClientWrapper({
     const inventory = searchParams.get("inventory") || "";
     const moduleParam = searchParams.get("module") || "";
     const query = searchParams.get("query") || "";
-    const lastProductDetails = localStorage.getItem("last-product-details");
+    const lastProductDetails = localStorage.getItem(localStorageIDs.lastProductDetails);
     // INFO: If this condition is satisfied it means that user got into this view by using back button
     if (page > 1 && products.length <= pagination.pageSize) {
       setIsFetchingProducts(true);
@@ -155,7 +156,7 @@ export default function CatalogueClientWrapper({
         setTimeout(() => {
           scrollToElement(lastProductDetails);
           setIsFetchingProducts(false);
-          localStorage.removeItem("last-product-details");
+          localStorage.removeItem(localStorageIDs.lastProductDetails);
           showScrollButton.current = false;
           setShowScrollToTopButton(false);
           lowestScrollPosition.current = window.scrollY;

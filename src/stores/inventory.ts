@@ -1,3 +1,4 @@
+import { localStorageIDs } from "@/constants/localStorage";
 import { Inventory } from "@/types/shared";
 import { create } from "zustand";
 
@@ -17,7 +18,7 @@ const initialSelectedInventory = (): Inventory | null => {
   if (typeof window === "undefined") {
     return null;
   }
-  const storageInventory = localStorage.getItem("inventory");
+  const storageInventory = localStorage.getItem(localStorageIDs.inventory);
   return storageInventory ? JSON.parse(storageInventory) : null;
 };
 
@@ -29,7 +30,7 @@ export const useInventoryStore = create<InventoryState>((set) => ({
       const selectedInventory = state.inventories.find(
         (inventory) => inventory._id === inventoryId,
       );
-      localStorage.setItem("inventory", JSON.stringify(selectedInventory));
+      localStorage.setItem(localStorageIDs.inventory, JSON.stringify(selectedInventory));
       return { selectedInventory };
     }),
   setInventories: (inventories, inventoryToSelect) =>
@@ -40,7 +41,7 @@ export const useInventoryStore = create<InventoryState>((set) => ({
           inventories.find(
             (inventory) => inventory._id === inventoryToSelect,
           ) ?? null;
-        localStorage.setItem("inventory", JSON.stringify(selectedInventory));
+        localStorage.setItem(localStorageIDs.inventory, JSON.stringify(selectedInventory));
       }
 
       return {
