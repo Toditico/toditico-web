@@ -2,7 +2,7 @@ import { useInventoryStore } from "@/stores/inventory";
 import { Inventory } from "@/types/shared";
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { IconX, IconInfoCircle } from "@tabler/icons-react";
-import InventoryCard from "./InventoryCard";
+import InventoriesSelection from "./InventoriesSelection";
 
 type Props = {
   selectedInventory: Inventory | null;
@@ -34,17 +34,14 @@ export default function InventorySelectionDialog({ selectedInventory }: Props) {
           )}
         </>
       </DialogTitle>
-      <DialogContent>
+      <DialogContent className="w-[360px] overflow-hidden">
         <div className="flex flex-col gap-6">
-          <div className="flex gap-6 overflow-x-auto">
-            {inventories.map((inventory) => (
-              <InventoryCard
-                {...{ inventory }}
-                isSelected={inventory._id === selectedInventory?._id}
-                key={inventory._id}
-                onClick={inventorySelected}
-              />
-            ))}
+          <div className="flex gap-6 justify-around">
+            <InventoriesSelection
+              inventories={inventories}
+              selectedInventory={selectedInventory}
+              onInventorySelected={inventorySelected}
+            />
           </div>
           <div className="flex gap-2">
             <IconInfoCircle className="w-6" />
