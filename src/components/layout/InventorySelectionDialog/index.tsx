@@ -34,7 +34,7 @@ export default function InventorySelectionDialog({ selectedInventory }: Props) {
           )}
         </>
       </DialogTitle>
-      <DialogContent className="w-[360px] overflow-hidden">
+      <DialogContent className="w-full overflow-hidden">
         <div className="flex flex-col gap-6">
           <div className="flex gap-6 justify-around">
             <InventoriesSelection

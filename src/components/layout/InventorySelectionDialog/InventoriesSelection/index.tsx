@@ -4,7 +4,6 @@ import { Inventory } from "@/types/shared";
 import { useEffect, useState } from "react";
 import { MobileStepper } from "@mui/material";
 import { useWindowSize } from "@/hooks/useWindowSize";
-import { breakpoints } from "@/constants/breakpoints";
 import InventoryCard from "./InventoryCard";
 import clsx from "clsx";
 
@@ -39,7 +38,7 @@ export default function InventoriesSelection({
   const carrouselElements = groupedModules.map((group, groupIndex) => (
     <div
       key={groupIndex}
-      className={clsx("flex gap-4 max-w-[312px] mx-auto justify-around")}
+      className={clsx("flex gap-4 max-w-[100%] mx-auto justify-around")}
     >
       {group.map((inventory) => (
         <InventoryCard
@@ -62,13 +61,14 @@ export default function InventoriesSelection({
   }, [selectedInventory, steps, width]);
 
   return (
-    <div className="flex flex-col gap-4 items-center max-w-[312px]">
+    <div className="flex flex-col gap-4 items-center max-w-[100%]">
       <>
         <SwipeableViews
           axis="x"
           index={activeStep}
           onChangeIndex={handleStepChanged}
           enableMouseEvents
+	  className="w-full"
           containerStyle={{ width: "100%" }}
         >
           {carrouselElements}
