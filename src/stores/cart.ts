@@ -11,6 +11,9 @@ type CartState = {
   removeProduct: (inventoryId: string, product: Product) => void;
   cleanInventoryProducts: (inventoryId: string) => void;
   getCartInventoryProducts: (inventoryId: string) => ProductCount[];
+  openModal: boolean;
+  setOpenModal: (open: boolean) => void;
+  moveBetweenInventories: (previousInventoryId: string, actualInventoryId: string) => void;
   refreshCartInventoryProducts: (
     inventoryId: string,
     productsRefreshed: Product[],
@@ -21,7 +24,9 @@ const initialCartProducts = (): Map<string, ProductCount[]> | null => {
   if (typeof window === "undefined") {
     return null;
   }
-  const storageCartProducts = localStorage.getItem(localStorageIDs.cartProducts);
+  const storageCartProducts = localStorage.getItem(
+    localStorageIDs.cartProducts,
+  );
   if (!storageCartProducts) {
     return null;
   }
@@ -45,6 +50,11 @@ export const useCartStore = create<CartState>((set, get) => ({
     const productsMap = get().products;
     return productsMap.get(inventoryId) ?? [];
   },
+  openModal: false,
+  setOpenModal: (open: boolean) =>
+    set(() => {
+      return { openModal: open };
+    }),
   totalProducts: (inventoryId: string) => {
     const { products } = get();
     const totalProducts = products
@@ -224,6 +234,23 @@ export const useCartStore = create<CartState>((set, get) => ({
       const productsUpdated = products.set(
         inventoryId,
         cartProductsForSelectedInventory!.slice(),
+      );
+
+      saveProductsMapInLocalStorage(productsUpdated);
+
+      return {
+        products: productsUpdated,
+      };
+    });
+  },
+  moveBetweenInventories: (previousInventoryId, actualInventoryId) => {
+    set((state) => {
+      const { products } = state;
+      const cartProductsForPreviouslySelectedInventory = products.get(previousInventoryId) ?? [];
+
+      const productsUpdated = products.set(
+        actualInventoryId,
+        cartProductsForPreviouslySelectedInventory!.slice(),
       );
 
       saveProductsMapInLocalStorage(productsUpdated);

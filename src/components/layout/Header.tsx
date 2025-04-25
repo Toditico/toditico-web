@@ -22,6 +22,8 @@ import { DrawerListItem } from "./AppDrawer/DrawerList/DrawerListItem";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { breakpoints } from "@/constants/breakpoints";
 import { localStorageIDs } from "@/constants/localStorage";
+import CartProductsDialog from "./CartProductDialog";
+import { useCartStore } from "@/stores/cart";
 
 export default function Header() {
   const path = usePathname();
@@ -39,9 +41,18 @@ export default function Header() {
 
   const selectedCurrency = useCurrencyStore((state) => state.selectedCurrency);
   const selectedModule = useModuleStore((state) => state.selectedModule);
+  const previousSelectedInventory = useInventoryStore(
+    (state) => state.previousSelectedInventory,
+  );
   const selectedInventory = useInventoryStore(
     (state) => state.selectedInventory,
   );
+  const cartProducts = useCartStore((state) => state.products);
+  const setOpenCartModal = useCartStore((state) => state.setOpenModal);
+  const moveProductsBetweenInventories = useCartStore(
+    (state) => state.moveBetweenInventories,
+  );
+
   const modules = useModuleStore((state) => state.modules);
   const setOpenSelectionModal = useInventoryStore(
     (state) => state.setOpenSelectionModal,
@@ -51,7 +62,8 @@ export default function Header() {
     localStorage.setItem(localStorageIDs.backNavigation, "true");
   }, []);
 
-  typeof window !== "undefined" && window.addEventListener("popstate", handlePopState);
+  typeof window !== "undefined" &&
+    window.addEventListener("popstate", handlePopState);
 
   const navigationItems: DrawerListItem[] = [
     { label: "Inicio", link: "/home", isSelected: path === "/home" },
@@ -97,6 +109,24 @@ export default function Header() {
       setOpenSelectionModal(true);
     }
   }, [path]);
+
+  useEffect(() => {
+    if (!previousSelectedInventory || !selectedInventory) {
+      return;
+    }
+
+    const previousInventoryProducts =
+      cartProducts.get(previousSelectedInventory._id) ?? [];
+    const selectedInventoryProducts =
+      cartProducts.get(selectedInventory._id) ?? [];
+
+    if (
+      previousInventoryProducts?.length > 0 &&
+      selectedInventoryProducts.length === 0
+    ) {
+      setOpenCartModal(true);
+    }
+  }, [selectedInventory]);
 
   useEffect(() => {
     if (localStorage.getItem(localStorageIDs.backNavigation) !== "true") {
@@ -161,6 +191,14 @@ export default function Header() {
         selectedCurrency={selectedCurrency}
       />
       <InventorySelectionDialog selectedInventory={selectedInventory} />
+      <CartProductsDialog
+        onOk={() =>
+          moveProductsBetweenInventories(
+            previousSelectedInventory!._id,
+            selectedInventory!._id,
+          )
+        }
+      />
       <NavigationBar
         isLoading={modules.length === 0}
         openMenu={openDrawer}
