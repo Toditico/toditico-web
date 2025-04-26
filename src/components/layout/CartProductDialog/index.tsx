@@ -1,5 +1,4 @@
 import { useCartStore } from "@/stores/cart";
-import { Inventory } from "@/types/shared";
 import {
   Button,
   Dialog,
@@ -28,8 +27,8 @@ export default function CartProductsDialog({ onOk }: Props) {
         <div className="flex gap-2">
           <IconInfoCircle className="w-6" />
           <span className="text-small w-[calc(100%-24px)]">
-            ¿Desea mover los productos disponibles de su carrito actual al
-            nuevo?
+            ¿Desea mover los productos disponibles de su carrito anterior al
+            actual?
           </span>
         </div>
       </DialogContent>
@@ -38,10 +37,10 @@ export default function CartProductsDialog({ onOk }: Props) {
           className="text-button rounded-lg uppercase font-bold"
           variant="contained"
           size="small"
-	  onClick={() => {
-		  setOpenCartModal(false)
-		  onOk?.()
-	  }}
+          onClick={() => {
+            setOpenCartModal(false);
+            onOk?.();
+          }}
         >
           Si
         </Button>
@@ -49,7 +48,7 @@ export default function CartProductsDialog({ onOk }: Props) {
           className="text-button rounded-lg uppercase font-bold"
           variant="contained"
           size="small"
-	  onClick={() => setOpenCartModal(false)}
+          onClick={() => setOpenCartModal(false)}
         >
           No
         </Button>
