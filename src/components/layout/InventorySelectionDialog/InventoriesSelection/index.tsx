@@ -6,6 +6,7 @@ import { MobileStepper } from "@mui/material";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import InventoryCard from "./InventoryCard";
 import clsx from "clsx";
+import { breakpoints } from "@/constants/breakpoints";
 
 type Props = {
   inventories: Inventory[];
@@ -62,27 +63,41 @@ export default function InventoriesSelection({
 
   return (
     <div className="flex flex-col gap-4 items-center max-w-[100%]">
-      <>
-        <SwipeableViews
-          axis="x"
-          index={activeStep}
-          onChangeIndex={handleStepChanged}
-          enableMouseEvents
-	  className="w-full"
-          containerStyle={{ width: "100%" }}
-        >
-          {carrouselElements}
-        </SwipeableViews>
-        {steps > 1 && (
-          <MobileStepper
-            steps={steps}
-            activeStep={activeStep}
-            nextButton={null}
-            backButton={null}
-            position="static"
-          ></MobileStepper>
-        )}
-      </>
+      {width < breakpoints.desktop ? (
+        <>
+          <SwipeableViews
+            axis="x"
+            index={activeStep}
+            onChangeIndex={handleStepChanged}
+            enableMouseEvents
+            className="w-full"
+            containerStyle={{ width: "100%" }}
+          >
+            {carrouselElements}
+          </SwipeableViews>
+          {steps > 1 && (
+            <MobileStepper
+              steps={steps}
+              activeStep={activeStep}
+              nextButton={null}
+              backButton={null}
+              position="static"
+            ></MobileStepper>
+          )}
+        </>
+      ) : (
+        <div className="flex gap-3 items-center overflow-x-auto py-3 [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-thumb]:rounded-full">
+          {inventories.map((inventory) => (
+            <div key={inventory._id} className="flex-shrink-0">
+              <InventoryCard
+                inventory={inventory}
+                onClick={onInventorySelected}
+                isSelected={inventory._id === selectedInventory?._id}
+              />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
