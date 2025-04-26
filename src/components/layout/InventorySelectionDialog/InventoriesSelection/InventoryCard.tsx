@@ -18,11 +18,11 @@ export default function InventoryCard({
     <div
       onClick={() => onClick(inventory)}
       className={clsx(
-        "w-[120px] min-h-[110px] p-6 flex flex-col gap-[10px] rounded items-center text-center",
+        "w-[120px] min-h-[136px] p-6 flex flex-col gap-[10px] rounded items-center text-center cursor-pointer",
         {
           "bg-gray": !isSelected,
           "bg-primary": isSelected,
-        }
+        },
       )}
     >
       <IconBuildingWarehouse
