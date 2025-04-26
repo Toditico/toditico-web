@@ -24,7 +24,6 @@ import { breakpoints } from "@/constants/breakpoints";
 import { localStorageIDs } from "@/constants/localStorage";
 import CartProductsDialog from "./CartProductDialog";
 import { useCartStore } from "@/stores/cart";
-import { Inventory } from "@/types/shared";
 
 export default function Header() {
   const path = usePathname();
@@ -60,6 +59,8 @@ export default function Header() {
   );
 
   const handlePopState = useCallback(function () {
+    setOpenSelectionModal(false);
+    setOpenCartModal(false);
     localStorage.setItem(localStorageIDs.backNavigation, "true");
   }, []);
 
