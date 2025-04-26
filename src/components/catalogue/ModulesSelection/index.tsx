@@ -77,10 +77,6 @@ export default function ModulesSelection({
     }
   }, [selectedModule, steps, width]);
 
-  if (modules.length === 4) {
-    modules.push({ _id: "jdshfjkds73", name: "Aceites Lubricantes y Otros" });
-  }
-
   return (
     <div
       className="flex flex-col gap-4 items-center max-w-[100vw] xl:max-w-full"
