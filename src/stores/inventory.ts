@@ -42,6 +42,10 @@ export const useInventoryStore = create<InventoryState>((set) => ({
   setInventories: (inventories, inventoryToSelect) =>
     set((state) => {
       let { selectedInventory } = state;
+      if (selectedInventory?._id === inventoryToSelect) {
+        return { inventories };
+      }
+
       if (inventoryToSelect) {
         selectedInventory =
           inventories.find(
