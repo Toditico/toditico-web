@@ -116,12 +116,13 @@ export default function CartDrawer({
             </p>
             <div className="flex gap-2">
               <IconTrash
+                className="cursor-pointer"
                 onClick={() =>
                   selectedInventory &&
                   cleanInventoryProducts(selectedInventory._id)
                 }
               />
-              <IconX onClick={() => closeDrawer()} />
+              <IconX className="cursor-pointer" onClick={() => closeDrawer()} />
             </div>
           </div>
           <CartProductList {...{ products, isLoading, closeDrawer }} />

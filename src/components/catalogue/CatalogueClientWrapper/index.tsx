@@ -262,20 +262,29 @@ export default function CatalogueClientWrapper({
     refetchProducts(queryParams, false);
   };
 
-  const onFilter = async (userInput: string, userSelectedInventory: string) => {
+  const onSearch = async (userInput: string) => {
     const previousProductName = searchParams.get("query");
-    const previousSelectedInventory = searchParams.get("inventory");
-    if (
-      userInput === previousProductName &&
-      userSelectedInventory === previousSelectedInventory
-    ) {
+    if (userInput === previousProductName) {
       return;
     }
     setProducts([]);
     const currency = searchParams.get("currency");
     const moduleParam = searchParams.get("module");
-    const queryParams = `currency=${currency}&inventory=${userSelectedInventory}&query=${userInput}&module=${moduleParam}&page=1`;
-    setSelectedInventory(userSelectedInventory);
+    const inventoryParam = searchParams.get("inventory");
+    const queryParams = `currency=${currency}&inventory=${inventoryParam}&query=${userInput}&module=${moduleParam}&page=1`;
+    refetchProducts(queryParams, false);
+  };
+
+  const onSelectedInventory = async (selectedInventory: string) => {
+    const previousInventory = searchParams.get("inventory");
+    if (previousInventory === selectedInventory) {
+      return;
+    }
+    setProducts([]);
+    const currency = searchParams.get("currency");
+    const moduleParam = searchParams.get("module");
+    const queryParam = searchParams.get("query");
+    const queryParams = `currency=${currency}&inventory=${selectedInventory}&query=${queryParam}&module=${moduleParam}&page=1`;
     refetchProducts(queryParams, false);
   };
 
@@ -301,7 +310,7 @@ export default function CatalogueClientWrapper({
       />
       <Filters
         inventories={data.inventories}
-        {...{ onFilter, selectedInventory, selectedQuery }}
+        {...{ onSearch, onSelectedInventory, selectedInventory, selectedQuery }}
       />
       <ProductsContainer
         {...{ products, maxPage, fetchNextPage }}

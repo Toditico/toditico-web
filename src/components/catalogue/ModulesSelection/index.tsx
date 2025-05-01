@@ -102,7 +102,7 @@ export default function ModulesSelection({
           ></MobileStepper>
         </>
       ) : (
-        <div className="flex gap-3 items-center max-w-[1400px] overflow-x-auto py-3 [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-thumb]:rounded-full">
+        <div className="flex gap-3 items-center max-w-[1300px] overflow-x-auto py-3 [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-thumb]:rounded-full 2xl:max-w-[1400px]">
           {modules.map((module) => (
             <div key={module._id} className="flex-shrink-0">
               <ModulesSelectionItem

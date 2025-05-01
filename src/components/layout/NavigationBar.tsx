@@ -54,11 +54,9 @@ export default function NavigationBar({
   );
 
   const CartIcon = (
-    <div className="relative">
+    <div className="relative cursor-pointer" onClick={() => openCart()}>
       <IconShoppingBag
         color={colors.primary}
-        onClick={() => openCart()}
-        className="cursor-pointer"
       />
       {showProductsCount ? (
         <div className="bg-primary rounded-full absolute top-[-12px] right-[-8px] h-6 w-6 text-small flex justify-center items-center text-white font-bold">

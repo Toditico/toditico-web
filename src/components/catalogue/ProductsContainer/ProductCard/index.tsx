@@ -78,7 +78,7 @@ export default function ProductCard({ product, isInViewportHandler }: Props) {
     <div
       id={product._id}
       ref={ref}
-      className="rounded-t-lg w-full flex flex-col shadow-md pb-3 md:max-w-[350px] xl:max-w-[480px]"
+      className="rounded-t-lg w-full flex flex-col shadow-md pb-3 md:max-w-[350px] xl:max-w-[400px] 2xl:max-w-[480px]"
     >
       <Link
         href={`/product/${product.code}?currency=${selectedCurrency._id}&inventory=${selectedInventory._id}`}

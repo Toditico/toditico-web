@@ -12,14 +12,16 @@ type Props = {
   selectedInventory: string;
   selectedQuery: string;
   isLoading?: boolean;
-  onFilter: (userInput: string, userSelectedInventory: string) => void;
+  onSearch: (userInput: string) => void;
+  onSelectedInventory: (selectedInventory: string) => void;
 };
 
 export default function Filters({
   inventories,
   selectedInventory,
   selectedQuery,
-  onFilter,
+  onSearch,
+  onSelectedInventory,
 }: Props) {
   const [inventory, setInventory] = useState<string>("");
   const [productName, setProductName] = useState<string>("");
@@ -39,7 +41,7 @@ export default function Filters({
       className="flex flex-col p-6 gap-4 md:flex-row"
       onKeyDown={(e) => {
         if (e.code === "Enter") {
-          onFilter(productName, inventory);
+          onSearch(productName);
         }
       }}
     >
@@ -48,7 +50,10 @@ export default function Filters({
           className="flex-grow"
           placeholder="Inventario"
           value={inventory}
-          onChange={(el) => setInventory(el.target.value)}
+          onChange={(el) => {
+            setInventory(el.target.value);
+            onSelectedInventory(el.target.value);
+          }}
           IconComponent={IconChevronDown}
           sx={{
             height: "56px",
@@ -64,6 +69,9 @@ export default function Filters({
             },
             "> fieldset.MuiOutlinedInput-notchedOutline": {
               display: "none",
+            },
+            ".MuiSelect-icon": {
+              color: colors.primary,
             },
           }}
         >
@@ -90,14 +98,16 @@ export default function Filters({
                 borderWidth: "2px",
                 borderColor: colors.primary,
                 color: colors.primary,
-                "&.Mui-focused": {
-                  border: "none",
-                },
                 "&.MuiOutlinedInput-notchedOutline": {
                   borderWidth: "0px",
                 },
                 "> fieldset.MuiOutlinedInput-notchedOutline": {
                   display: "none",
+                },
+                '& input[type="search"]::-webkit-search-cancel-button': {
+                  cursor: "pointer",
+                  filter:
+                    "invert(24%) sepia(85%) saturate(3055%) hue-rotate(358deg) brightness(90%) contrast(101%)",
                 },
               },
             },
@@ -108,7 +118,7 @@ export default function Filters({
           className="h-[56px] rounded-lg p-4 uppercase font-bold text-button"
           variant="contained"
           startIcon={<IconFilter size={24} />}
-          onClick={() => onFilter(productName, inventory)}
+          onClick={() => onSearch(productName)}
         >
           Filtrar
         </Button>

@@ -85,7 +85,7 @@ export default function AppMap({ workshops, inventories }: Props) {
   }, [workshops]);
 
   const { ref } = useInView({
-    onChange: (inView) => {
+    onChange: (inView, entry) => {
       if (inView.valueOf()) {
         if (!mapRef.current) {
           return;
@@ -96,6 +96,7 @@ export default function AppMap({ workshops, inventories }: Props) {
         if (!selectedInventory) {
           return;
         }
+
         setTimeout(() => {
           mapRef.current?.flyTo({
             center: {
@@ -113,6 +114,7 @@ export default function AppMap({ workshops, inventories }: Props) {
         }, 3500);
       }
     },
+    threshold: 0.5
   });
 
   useEffect(() => {
