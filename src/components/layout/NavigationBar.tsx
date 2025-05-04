@@ -15,6 +15,8 @@ import { DrawerListItem } from "./AppDrawer/DrawerList/DrawerListItem";
 import NavigationItem from "./AppDrawer/DrawerList/DrawerListItem";
 import Link from "next/link";
 import { Skeleton } from "@mui/material";
+import { scrollToElement } from "@/utils/scroll";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 type Props = {
   openMenu: () => void;
@@ -34,6 +36,8 @@ export default function NavigationBar({
   const setOpenSelectionModal = useInventoryStore(
     (state) => state.setOpenSelectionModal,
   );
+
+  const { width } = useWindowSize();
 
   const [showProductsCount, setShowProductscount] = useState<boolean>(false);
 
@@ -55,12 +59,10 @@ export default function NavigationBar({
 
   const CartIcon = (
     <div className="relative cursor-pointer" onClick={() => openCart()}>
-      <IconShoppingBag
-        color={colors.primary}
-      />
+      <IconShoppingBag color={colors.primary} />
       {showProductsCount ? (
         <div className="bg-primary rounded-full absolute top-[-12px] right-[-8px] h-6 w-6 text-small flex justify-center items-center text-white font-bold">
-          {productsCount < 99 ? productsCount : '+99'}
+          {productsCount < 99 ? productsCount : "+99"}
         </div>
       ) : null}
     </div>
@@ -70,7 +72,13 @@ export default function NavigationBar({
     <>
       <nav className="h-[120px] bg-white flex flex-col px-6 py-3 gap-2.5 fixed z-[1100] w-full top-0 xl:h-20 xl:flex-row xl:justify-between xl:items-center">
         <div className="flex flex-row justify-between items-center w-full xl:w-auto">
-          <Link href="/home">
+          <Link
+            href="/home"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToElement("header", width, "instant");
+            }}
+          >
             <Image
               src="/brand-no-logo.svg"
               alt="Toditico"

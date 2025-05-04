@@ -14,7 +14,7 @@ export default function ProductCardInfo({ product, selectedCurrency }: Props) {
     <div className="flex flex-col gap-4 px-4 pb-4">
       <ProductCardStatus productStatus={product.status} />
       <div className="flex flex-col gap-2">
-        <p className="text-small font-bold xl:font-bold xl:text-h3-desktop">
+        <p className="text-small font-bold xl:font-bold xl:text-h3-desktop xl:h-[65px]">
           {product.name}
         </p>
         <div className="md:h-[32.4px]">

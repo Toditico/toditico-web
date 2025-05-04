@@ -3,6 +3,9 @@ import { IconChevronDown } from "@tabler/icons-react";
 import Link from "next/link";
 import { AccordionStyled, AccordionSummaryStyled } from "./styles";
 import clsx from "clsx";
+import { usePathname } from "next/navigation";
+import { scrollToElement } from "@/utils/scroll";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 export type DrawerListItem = {
   label: string;
@@ -21,6 +24,8 @@ export default function DrawerListItem({
   isDesktop = false,
   itemClicked,
 }: DrawerListItem) {
+  const actualPath = usePathname();
+  const { width } = useWindowSize();
   if (subItems?.length === 0) {
     return (
       <Link
@@ -30,7 +35,13 @@ export default function DrawerListItem({
         })}
         href={link}
         scroll={!isDesktop}
-        onClick={() => itemClicked?.()}
+        onClick={(e) => {
+          itemClicked?.();
+          if (link.startsWith(actualPath)) {
+            e.preventDefault();
+            scrollToElement("header", width, "instant");
+          }
+        }}
       >
         <p>{label}</p>
       </Link>

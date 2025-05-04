@@ -11,7 +11,7 @@ export const scrollToElement = (
     return;
   }
 
-  const offsetAdjustment = width < breakpoints.tablet ? 120 : 0
+  const offsetAdjustment = width < breakpoints.tablet ? 120 : 80
 
   const offsetTop = element.offsetTop - offsetAdjustment; //Adjust in case of tablet and desktop
   window.scrollTo({

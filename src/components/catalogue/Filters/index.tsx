@@ -13,7 +13,7 @@ type Props = {
   selectedQuery: string;
   isLoading?: boolean;
   onSearch: (userInput: string) => void;
-  onSelectedInventory: (selectedInventory: string) => void;
+  onSelectedInventory: (selectedInventory: string, userInput: string) => void;
 };
 
 export default function Filters({
@@ -52,7 +52,7 @@ export default function Filters({
           value={inventory}
           onChange={(el) => {
             setInventory(el.target.value);
-            onSelectedInventory(el.target.value);
+            onSelectedInventory(el.target.value, productName);
           }}
           IconComponent={IconChevronDown}
           sx={{

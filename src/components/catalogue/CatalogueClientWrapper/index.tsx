@@ -18,6 +18,8 @@ import { scrollToElement } from "@/utils/scroll";
 import NProgress from "nprogress";
 import { localStorageIDs } from "@/constants/localStorage";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import { document } from "postcss";
+import { breakpoints } from "@/constants/breakpoints";
 
 type Props = {
   data: CommonResponse;
@@ -113,6 +115,10 @@ export default function CatalogueClientWrapper({
   useEffect(() => {
     setProducts([...products, ...lastFetchedProducts]);
     setIsFetchingProducts(false);
+    if ([...products, ...lastFetchedProducts].length === 0) {
+      width >= breakpoints.desktop &&
+        scrollToElement("footer", width, "smooth");
+    }
   }, [lastFetchedProducts]);
 
   useEffect(() => {
@@ -275,7 +281,10 @@ export default function CatalogueClientWrapper({
     refetchProducts(queryParams, false);
   };
 
-  const onSelectedInventory = async (selectedInventory: string) => {
+  const onSelectedInventory = async (
+    selectedInventory: string,
+    userInput: string,
+  ) => {
     const previousInventory = searchParams.get("inventory");
     if (previousInventory === selectedInventory) {
       return;
@@ -283,8 +292,7 @@ export default function CatalogueClientWrapper({
     setProducts([]);
     const currency = searchParams.get("currency");
     const moduleParam = searchParams.get("module");
-    const queryParam = searchParams.get("query");
-    const queryParams = `currency=${currency}&inventory=${selectedInventory}&query=${queryParam}&module=${moduleParam}&page=1`;
+    const queryParams = `currency=${currency}&inventory=${selectedInventory}&query=${userInput}&module=${moduleParam}&page=1`;
     refetchProducts(queryParams, false);
   };
 
