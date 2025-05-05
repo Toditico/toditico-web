@@ -86,7 +86,7 @@ export default function InventoriesSelection({
           )}
         </>
       ) : (
-        <div className="flex gap-3 items-center overflow-x-auto py-3 [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-thumb]:rounded-full">
+        <div className="flex gap-3 items-center overflow-x-auto w-full py-3 [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-thumb]:rounded-full">
           {inventories.map((inventory) => (
             <div key={inventory._id} className="flex-shrink-0">
               <InventoryCard

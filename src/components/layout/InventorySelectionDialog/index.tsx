@@ -3,6 +3,8 @@ import { Inventory } from "@/types/shared";
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { IconX, IconInfoCircle } from "@tabler/icons-react";
 import InventoriesSelection from "./InventoriesSelection";
+import { useWindowSize } from "@/hooks/useWindowSize";
+import { breakpoints } from "@/constants/breakpoints";
 
 type Props = {
   selectedInventory: Inventory | null;
@@ -23,9 +25,24 @@ export default function InventorySelectionDialog({ selectedInventory }: Props) {
     setSelectedInventory(inventory._id);
     setOpenSelectionModal(false);
   };
+  const { width } = useWindowSize();
 
   return (
-    <Dialog open={openSelectionModal} className="rounded">
+    <Dialog
+      open={openSelectionModal}
+      className="rounded"
+      sx={
+        width >= breakpoints.desktop
+          ? {
+              "div.MuiPaper-root.MuiPaper-elevation.MuiDialog-paper": {
+                width: "min-content",
+                minWidth: "300px",
+                maxWidth: "564px",
+              },
+            }
+          : {}
+      }
+    >
       <DialogTitle className="flex items-center justify-between">
         <>
           <p>Seleccione el inventario</p>
