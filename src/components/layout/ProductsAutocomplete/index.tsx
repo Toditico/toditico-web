@@ -158,7 +158,6 @@ export default function ProductsAutocomplete() {
                   opacity: 0.7,
                   position: "relative",
                   top: "2px",
-                  right: "2px",
                 },
                 '& input[type="search"]::-webkit-search-cancel-button': {
                   cursor: "pointer",

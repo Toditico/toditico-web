@@ -11,6 +11,7 @@ export type Inventory = {
   latitude: number;
   longitude: number;
   _id: string;
+  discountOfferPercentage: number;
 };
 
 export type Workshop = {

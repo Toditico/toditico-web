@@ -142,12 +142,25 @@ export default function Header() {
     }, 1000);
   }, [path]);
 
+  const globalOfferComponent = () => {
+    return (
+      <div className="flex-col">
+        <div className="bg-primary text-white py-4 px-6">Estamos de oferta</div>
+        <div className="bg-white text-primary py-4 px-6">
+          Obtén un {selectedInventory?.discountOfferPercentage}% de descuento
+        </div>
+      </div>
+    );
+  };
+
   const getH1Content = () => {
     return isHomeView
       ? "Rueda con confianza"
       : isContactView
         ? "Sobre nosotros, Toditico"
-        : "Catálogo de productos";
+        : selectedInventory?.discountOfferPercentage === 0
+          ? "Catálogo de productos"
+          : globalOfferComponent();
   };
 
   const openDrawer = () => {
