@@ -24,7 +24,7 @@ export default function CurrenciesSelect() {
         height: "40px",
         width: "96px",
         alignItems: "flex-end",
-	borderRadius: "8px",
+        borderRadius: "8px",
         color: colors.primary,
         ":before": {
           borderBottomColor: "transparent",
@@ -33,6 +33,9 @@ export default function CurrenciesSelect() {
           "&:focus": {
             backgroundColor: "transparent",
           },
+        },
+        "&:hover:not(.Mui-disabled):before": {
+          borderBottomColor: "transparent",
         },
       }}
       IconComponent={(props) => (

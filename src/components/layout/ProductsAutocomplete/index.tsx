@@ -82,13 +82,6 @@ export default function ProductsAutocomplete() {
       className="w-[calc(100%-100px)] xl:w-[500px]"
       sx={{
         height: "40px",
-        ":hover": {
-          "> div.MuiFormControl-root > div.MuiInputBase-root.MuiFilledInput-root":
-            {
-              border: "none",
-              outline: "none",
-            },
-        },
       }}
       filterOptions={(x) => x}
       options={options}
@@ -149,7 +142,7 @@ export default function ProductsAutocomplete() {
                 height: "40px",
                 paddingTop: "0 !important",
                 borderRadius: "8px",
-		color: colors.primary,
+                color: colors.primary,
                 ":before": {
                   borderBottomColor: "transparent",
                 },
@@ -163,6 +156,9 @@ export default function ProductsAutocomplete() {
                   cursor: "pointer",
                   filter:
                     "invert(24%) sepia(85%) saturate(3055%) hue-rotate(358deg) brightness(90%) contrast(101%)",
+                },
+                "&:hover:not(.Mui-disabled):before": {
+                  borderBottomColor: "transparent",
                 },
               },
               startAdornment: (
