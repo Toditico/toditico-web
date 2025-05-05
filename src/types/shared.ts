@@ -21,6 +21,7 @@ export type Workshop = {
   latitude: number;
   longitude: number;
   _id: string;
+  discountOfferPercentage: number;
 };
 
 export type ProductStatus = "AVAILABLE" | "LOW_STOCK" | "NOT_AVAILABLE";
