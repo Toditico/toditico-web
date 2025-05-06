@@ -47,7 +47,10 @@ export default function InventorySelectionDialog({ selectedInventory }: Props) {
         <>
           <p>Seleccione el inventario</p>
           {selectedInventory && (
-            <IconX onClick={() => setOpenSelectionModal(false)} />
+            <IconX
+              className="cursor-pointer"
+              onClick={() => setOpenSelectionModal(false)}
+            />
           )}
         </>
       </DialogTitle>

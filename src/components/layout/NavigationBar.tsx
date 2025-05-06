@@ -17,6 +17,7 @@ import Link from "next/link";
 import { Skeleton } from "@mui/material";
 import { scrollToElement } from "@/utils/scroll";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import { usePathname } from "next/navigation";
 
 type Props = {
   openMenu: () => void;
@@ -38,6 +39,7 @@ export default function NavigationBar({
   );
 
   const { width } = useWindowSize();
+  const path = usePathname();
 
   const [showProductsCount, setShowProductscount] = useState<boolean>(false);
 
@@ -75,8 +77,10 @@ export default function NavigationBar({
           <Link
             href="/home"
             onClick={(e) => {
-              e.preventDefault();
-              scrollToElement("header", width, "instant");
+              if (path === "/home") {
+                e.preventDefault();
+                scrollToElement("header", width, "instant");
+              }
             }}
           >
             <Image

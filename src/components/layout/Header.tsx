@@ -24,6 +24,7 @@ import { breakpoints } from "@/constants/breakpoints";
 import { localStorageIDs } from "@/constants/localStorage";
 import CartProductsDialog from "./CartProductDialog";
 import { useCartStore } from "@/stores/cart";
+import Image from "next/image";
 
 export default function Header() {
   const path = usePathname();
@@ -231,7 +232,7 @@ export default function Header() {
       <div
         id="header"
         className={clsx(
-          "h-[400px] pb-[10px] mt-[120px] px-[24px] flex items-center xl:h-[720px] xl:mt-20",
+          "h-[400px] pb-[10px] mt-[120px] px-[24px] flex items-center xl:h-[720px] xl:mt-20 relative",
           {
             "bg-home md:bg-home-tablet bg-cover": isHomeView,
             "bg-contact bg-center": isContactView,
@@ -239,6 +240,48 @@ export default function Header() {
           },
         )}
       >
+        {selectedInventory!.discountOfferPercentage > 0 && isCatalogView && (
+          <>
+            <Image
+              alt="offerimg"
+              src="/images/offerup.svg"
+              width={
+                width < breakpoints.tablet
+                  ? 100
+                  : width < breakpoints.desktop
+                    ? 140
+                    : 300
+              }
+              height={
+                width < breakpoints.tablet
+                  ? 85
+                  : width < breakpoints.desktop
+                    ? 100
+                    : 340
+              }
+              className="absolute top-0 right-0"
+            />
+            <Image
+              alt="offerimg"
+              src="/images/offerdown.svg"
+              width={
+                width < breakpoints.tablet
+                  ? 100
+                  : width < breakpoints.desktop
+                    ? 140
+                    : 300
+              }
+              height={
+                width < breakpoints.tablet
+                  ? 85
+                  : width < breakpoints.desktop
+                    ? 100
+                    : 340
+              }
+              className="absolute bottom-0 left-0"
+            />
+          </>
+        )}
         <div className="mx-auto my-[24px] text-center flex flex-col gap-[24px] items-center xl:max-w-[1000px]">
           <h1 className="font-black text-h1 uppercase text-white md:text-h1-tablet xl:text-h1-desktop">
             {getH1Content()}
