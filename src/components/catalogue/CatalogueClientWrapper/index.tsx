@@ -116,8 +116,13 @@ export default function CatalogueClientWrapper({
     setProducts([...products, ...lastFetchedProducts]);
     setIsFetchingProducts(false);
     if ([...products, ...lastFetchedProducts].length === 0) {
-      width >= breakpoints.desktop &&
-        scrollToElement("footer", width, "smooth");
+      setTimeout(() => {
+        scrollToElement(
+          width >= breakpoints.desktop ? "footer" : "filters",
+          width,
+          "smooth",
+        );
+      }, 200);
     }
   }, [lastFetchedProducts]);
 

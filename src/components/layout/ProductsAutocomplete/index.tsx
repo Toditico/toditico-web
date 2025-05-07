@@ -83,6 +83,13 @@ export default function ProductsAutocomplete() {
       sx={{
         height: "40px",
       }}
+      onKeyDown={(e) => {
+        if (e.code === "Enter" || e.key === "Enter") {
+          if (document.activeElement instanceof HTMLElement) {
+            document.activeElement.blur();
+          }
+        }
+      }}
       filterOptions={(x) => x}
       options={options}
       autoComplete

@@ -40,6 +40,7 @@ export default function Filters({
   return (
     <div
       className="flex flex-col p-6 gap-4 md:flex-row"
+      id="filters"
       onKeyDown={(e) => {
         if (e.code === "Enter" || e.key === "Enter") {
           onSearch(productName);
