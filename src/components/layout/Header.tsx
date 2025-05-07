@@ -146,8 +146,8 @@ export default function Header() {
   const globalOfferComponent = () => {
     return (
       <div className="flex-col">
-        <div className="bg-primary text-white py-4 px-6">Estamos de oferta</div>
-        <div className="bg-white text-primary py-4 px-6">
+        <div className="bg-primary text-white py-2 px-4 md:py-4 md:px-6">Estamos de oferta</div>
+        <div className="bg-white text-primary py-2 px-4 md:py-4 md:px-6">
           Obtén un {selectedInventory?.discountOfferPercentage}% de descuento
         </div>
       </div>
@@ -192,6 +192,15 @@ export default function Header() {
       );
     }
   }, [selectedInventory, selectedCurrency, selectedModule]);
+
+  const offerImagesSize =
+    width < breakpoints.tablet
+      ? 90
+      : width < breakpoints.desktop
+        ? 140
+        : width < breakpoints.xldesktop
+          ? 220
+          : 340;
 
   return (
     <>
@@ -245,39 +254,15 @@ export default function Header() {
             <Image
               alt="offerimg"
               src="/images/offerup.svg"
-              width={
-                width < breakpoints.tablet
-                  ? 100
-                  : width < breakpoints.desktop
-                    ? 140
-                    : 300
-              }
-              height={
-                width < breakpoints.tablet
-                  ? 85
-                  : width < breakpoints.desktop
-                    ? 100
-                    : 340
-              }
+              width={offerImagesSize}
+              height={offerImagesSize}
               className="absolute top-0 right-0"
             />
             <Image
               alt="offerimg"
               src="/images/offerdown.svg"
-              width={
-                width < breakpoints.tablet
-                  ? 100
-                  : width < breakpoints.desktop
-                    ? 140
-                    : 300
-              }
-              height={
-                width < breakpoints.tablet
-                  ? 85
-                  : width < breakpoints.desktop
-                    ? 100
-                    : 340
-              }
+              width={offerImagesSize}
+              height={offerImagesSize}
               className="absolute bottom-0 left-0"
             />
           </>
