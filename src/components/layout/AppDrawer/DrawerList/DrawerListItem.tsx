@@ -26,6 +26,7 @@ export default function DrawerListItem({
 }: DrawerListItem) {
   const actualPath = usePathname();
   const { width } = useWindowSize();
+
   if (subItems?.length === 0) {
     return (
       <Link
@@ -40,6 +41,10 @@ export default function DrawerListItem({
           if (link.startsWith(actualPath)) {
             e.preventDefault();
             scrollToElement("header", width, "instant");
+            if (link === "/home") {
+              window.location.reload();
+              return;
+            }
           }
         }}
       >

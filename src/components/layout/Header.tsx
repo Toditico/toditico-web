@@ -146,7 +146,9 @@ export default function Header() {
   const globalOfferComponent = () => {
     return (
       <div className="flex-col">
-        <div className="bg-primary text-white py-2 px-4 md:py-4 md:px-6">Estamos de oferta</div>
+        <div className="bg-primary text-white py-2 px-4 md:py-4 md:px-6">
+          Estamos de oferta
+        </div>
         <div className="bg-white text-primary py-2 px-4 md:py-4 md:px-6">
           Obtén un {selectedInventory?.discountOfferPercentage}% de descuento
         </div>
@@ -241,7 +243,7 @@ export default function Header() {
       <div
         id="header"
         className={clsx(
-          "h-[400px] pb-[10px] mt-[120px] px-[24px] flex items-center xl:h-[720px] xl:mt-20 relative",
+          "h-[400px] pb-[10px] mt-[120px] px-[24px] flex items-center xl:h-[720px] xl:mt-20 xl:max-h-[100vh] relative",
           {
             "bg-home md:bg-home-tablet bg-cover": isHomeView,
             "bg-contact bg-center": isContactView,

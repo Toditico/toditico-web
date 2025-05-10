@@ -80,6 +80,7 @@ export default function NavigationBar({
               if (path === "/home") {
                 e.preventDefault();
                 scrollToElement("header", width, "instant");
+                window.location.reload();
               }
             }}
           >
