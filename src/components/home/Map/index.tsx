@@ -114,7 +114,7 @@ export default function AppMap({ workshops, inventories }: Props) {
         }, 3500);
       }
     },
-    threshold: 0.5
+    threshold: 0.5,
   });
 
   useEffect(() => {
@@ -134,6 +134,20 @@ export default function AppMap({ workshops, inventories }: Props) {
     }, 500);
   }, [mapRef.current]);
 
+  useEffect(() => {
+    if (selectedInventory && mapAlreadyMoved) {
+      mapRef.current?.flyTo({
+        center: {
+          lat: selectedInventory.latitude,
+          lng: selectedInventory.longitude,
+        },
+        duration: 2000,
+        zoom: 14,
+        padding: padding,
+      });
+    }
+  }, [selectedInventory]);
+
   return (
     <div className="w-full h-[560px] xl:h-[720px]" ref={ref}>
       <Map
@@ -144,7 +158,11 @@ export default function AppMap({ workshops, inventories }: Props) {
         dragRotate={mapInteractionEnabled}
         attributionControl={false}
       >
-        <NavigationControl showZoom={width >= breakpoints.desktop} showCompass={false} visualizePitch={false} />
+        <NavigationControl
+          showZoom={width >= breakpoints.desktop}
+          showCompass={false}
+          visualizePitch={false}
+        />
         {!!popupData ? (
           <Popup
             longitude={popupData.element.longitude}
