@@ -51,7 +51,7 @@ export default function ProductImages({ images }: Props) {
           src={selectedImageUrl}
           alt="Product image"
           fill
-          className="rounded-lg"
+          className="rounded-lg cursor-pointer"
           style={{ objectFit: "contain" }}
           quality={100}
         />
@@ -66,6 +66,7 @@ export default function ProductImages({ images }: Props) {
               src={secondaryImage}
               alt="Product secondary image"
               fill
+	      className="cursor-pointer"
               style={{ objectFit: "contain" }}
               onClick={() => openImagesModal(index + 1)}
             />
