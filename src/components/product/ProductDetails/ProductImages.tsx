@@ -1,4 +1,6 @@
 "use client";
+import SwipeableViews from "react-swipeable-views";
+import { MobileStepper } from "@mui/material";
 import Image, { StaticImageData } from "next/image";
 import { useEffect, useState } from "react";
 import Placeholder from "@public/images/placeholder.webp";
@@ -17,12 +19,48 @@ export default function ProductImages({ images }: Props) {
   const setSlides = useImagesModalStore((state) => state.setSlides);
   const setIndex = useImagesModalStore((state) => state.setIndex);
 
+  const [activeStep, setActiveStep] = useState(0);
+  const handleStepChanged = (step: number) => {
+    setActiveStep(step);
+  };
+
+  const totalElementsToDisplay = 4;
   const secondaryImages = images.slice(1);
 
   const openImagesModal = (index: number) => {
     setIndex(index);
     openModal();
   };
+
+  const steps = Math.ceil(secondaryImages.length / totalElementsToDisplay);
+
+  const groupedImages = [];
+
+  if (totalElementsToDisplay > 1) {
+    for (let i = 0; i < secondaryImages.length; i += totalElementsToDisplay) {
+      groupedImages.push(secondaryImages.slice(i, i + totalElementsToDisplay));
+    }
+  }
+
+  const carrouselElements = groupedImages.map((group, groupIndex) => (
+    <div key={groupIndex} className="flex gap-2">
+      {group.map((secondaryImage, imageIdx) => (
+        <div
+          key={secondaryImage}
+          className="w-20 h-20 relative bg-white shadow-cart-images flex"
+        >
+          <Image
+            src={secondaryImage}
+            alt="Product secondary image"
+            fill
+            className="cursor-pointer"
+            style={{ objectFit: "contain" }}
+            onClick={() => openImagesModal(groupIndex * 4 + imageIdx + 1)}
+          />
+        </div>
+      ))}
+    </div>
+  ));
 
   useEffect(() => {
     if (typeof selectedImageUrl === "string") {
@@ -57,21 +95,28 @@ export default function ProductImages({ images }: Props) {
         />
       </div>
       <div className="flex gap-6 flex-wrap">
-        {secondaryImages.map((secondaryImage, index) => (
-          <div
-            key={secondaryImage}
-            className="w-20 h-20 relative bg-white shadow-cart-images"
+        <>
+          <SwipeableViews
+            axis="x"
+            index={activeStep}
+            onChangeIndex={handleStepChanged}
+            enableMouseEvents
+            className="w-full"
+            containerStyle={{ width: "100%" }}
           >
-            <Image
-              src={secondaryImage}
-              alt="Product secondary image"
-              fill
-	      className="cursor-pointer"
-              style={{ objectFit: "contain" }}
-              onClick={() => openImagesModal(index + 1)}
-            />
-          </div>
-        ))}
+            {carrouselElements}
+          </SwipeableViews>
+          {steps > 1 && (
+            <MobileStepper
+              className="mx-auto"
+              steps={steps}
+              activeStep={activeStep}
+              nextButton={null}
+              backButton={null}
+              position="static"
+            ></MobileStepper>
+          )}
+        </>
       </div>
     </div>
   );
