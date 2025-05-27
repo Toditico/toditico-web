@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import Placeholder from "@public/images/placeholder.webp";
 import { nextImageUrl } from "@/utils/images";
 import { useImagesModalStore } from "@/stores/imagesModal";
+import { useWindowSize } from "@/hooks/useWindowSize";
+import { breakpoints } from "@/constants/breakpoints";
 
 type Props = {
   images: string[];
@@ -18,6 +20,7 @@ export default function ProductImages({ images }: Props) {
   const openModal = useImagesModalStore((state) => state.openModal);
   const setSlides = useImagesModalStore((state) => state.setSlides);
   const setIndex = useImagesModalStore((state) => state.setIndex);
+  const { width } = useWindowSize();
 
   const [activeStep, setActiveStep] = useState(0);
   const handleStepChanged = (step: number) => {
@@ -80,7 +83,7 @@ export default function ProductImages({ images }: Props) {
   }, [images]);
 
   return (
-    <div className="flex flex-col gap-2 xl:w-[500px]">
+    <div className="flex flex-col gap-2 xl:w-[500px] xl:flex-row-reverse xl:gap-4">
       <div className="w-full h-[320px] relative xl:h-[340px] xl:w-[412px]">
         <Image
           onClick={() => {
@@ -94,29 +97,49 @@ export default function ProductImages({ images }: Props) {
           quality={100}
         />
       </div>
-      <div className="flex gap-6 flex-wrap">
-        <>
-          <SwipeableViews
-            axis="x"
-            index={activeStep}
-            onChangeIndex={handleStepChanged}
-            enableMouseEvents
-            className="w-full"
-            containerStyle={{ width: "100%" }}
-          >
-            {carrouselElements}
-          </SwipeableViews>
-          {steps > 1 && (
-            <MobileStepper
-              className="mx-auto"
-              steps={steps}
-              activeStep={activeStep}
-              nextButton={null}
-              backButton={null}
-              position="static"
-            ></MobileStepper>
-          )}
-        </>
+      <div className="flex flex-col gap-6">
+        {width < breakpoints.desktop ? (
+          <>
+            <SwipeableViews
+              axis="x"
+              index={activeStep}
+              onChangeIndex={handleStepChanged}
+              enableMouseEvents
+              className="w-full"
+              containerStyle={{ width: "100%" }}
+            >
+              {carrouselElements}
+            </SwipeableViews>
+            {steps > 1 && (
+              <MobileStepper
+                className="mx-auto"
+                steps={steps}
+                activeStep={activeStep}
+                nextButton={null}
+                backButton={null}
+                position="static"
+              ></MobileStepper>
+            )}
+          </>
+        ) : (
+          <div className="flex flex-col max-h-[300px] overflow-y-auto">
+            {secondaryImages.map((secondaryImage, idx) => (
+              <div
+                key={secondaryImage}
+                className="w-20 h-20 relative bg-white flex-shrink-0"
+              >
+                <Image
+                  src={secondaryImage}
+                  alt="Product secondary image"
+                  fill
+                  className="cursor-pointer"
+                  style={{ objectFit: "contain" }}
+                  onClick={() => openImagesModal(idx)}
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -12,6 +12,7 @@ import { useInventoryStore } from "@/stores/inventory";
 import { usePathname, useRouter } from "next/navigation";
 import NoProductPlaceholder from "../NoProductPlaceholder";
 import { localStorageIDs } from "@/constants/localStorage";
+import { useModuleStore } from "@/stores/module";
 
 type Props = {
   product: Product | null;
@@ -23,6 +24,7 @@ export default function ProductDetails({ product }: Props) {
   const selectedInventory = useInventoryStore(
     (state) => state.selectedInventory,
   );
+  const selectedModule = useModuleStore((state) => state.selectedModule);
   const router = useRouter();
   const pathName = usePathname();
 
@@ -43,7 +45,8 @@ export default function ProductDetails({ product }: Props) {
         });
       }
     }, 100);
-    product && localStorage.setItem(localStorageIDs.lastProductDetails, product._id);
+    product &&
+      localStorage.setItem(localStorageIDs.lastProductDetails, product._id);
   }, []);
 
   useEffect(() => {
@@ -59,10 +62,14 @@ export default function ProductDetails({ product }: Props) {
 
   useEffect(() => {
     if (product) {
+      console.log(product.containedProducts);
       const mainImage = product.imageUrl ?? "";
       const secondaryImages =
         product.secondaryImagesUrls?.filter((url) => url) ?? [];
-      const images = [mainImage, ...secondaryImages];
+      const kitproductsImages = product.containedProducts
+        .map((product) => product.imageUrl ?? "")
+        .filter((image) => image);
+      const images = [mainImage, ...kitproductsImages, ...secondaryImages];
       setImages(images.filter((image) => image));
     }
   }, [product]);
@@ -88,6 +95,7 @@ export default function ProductDetails({ product }: Props) {
             {...{ product }}
             selectedCurrency={selectedCurrency!}
             selectedInventory={selectedInventory!}
+            selectedModule={selectedModule!}
           />
           <Button
             variant="outlined"
