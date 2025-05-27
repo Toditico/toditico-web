@@ -62,7 +62,7 @@ export default function ProductDetails({ product }: Props) {
 
   useEffect(() => {
     if (product) {
-      console.log(product.containedProducts);
+      console.log("contained products: ", product.containedProducts);
       const mainImage = product.imageUrl ?? "";
       const secondaryImages =
         product.secondaryImagesUrls?.filter((url) => url) ?? [];
