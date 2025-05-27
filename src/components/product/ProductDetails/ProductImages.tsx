@@ -122,7 +122,7 @@ export default function ProductImages({ images }: Props) {
             )}
           </>
         ) : (
-          <div className="flex flex-col max-h-[300px] overflow-y-auto">
+          <div className="flex flex-col max-h-[300px] overflow-y-auto px-3 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-thumb]:rounded-full">
             {secondaryImages.map((secondaryImage, idx) => (
               <div
                 key={secondaryImage}
