@@ -134,7 +134,7 @@ export default function ProductImages({ images }: Props) {
                   fill
                   className="cursor-pointer"
                   style={{ objectFit: "contain" }}
-                  onClick={() => openImagesModal(idx)}
+                  onClick={() => openImagesModal(idx + 1)}
                 />
               </div>
             ))}
