@@ -72,7 +72,7 @@ export default function ProductCard({ product, isInViewportHandler }: Props) {
     return null;
   }
 
-  const topImage = getTopImage(selectedModule!.name);
+  const topImage = getTopImage(selectedModule?.name || '');
 
   return (
     <div
@@ -97,7 +97,10 @@ export default function ProductCard({ product, isInViewportHandler }: Props) {
           <Image
             src={product.imageUrl || PlaceHolderImage}
             alt={product.name}
-            style={{ objectFit: product.imageUrl ? "contain" : "cover" }}
+            style={{
+              objectFit: product.imageUrl ? "contain" : "cover",
+              scale: product?.containedProducts?.length ? "90%" : "100%",
+            }}
             quality={100}
             fill
           />

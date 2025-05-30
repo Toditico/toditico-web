@@ -23,7 +23,7 @@ const getProductsDetailsAction = unstable_cache(
     return normalizeProductsData(products);
   },
   undefined,
-  { revalidate: GET_PRODUCT_DETAILS_REVALIDATE_SECONDS },
+  { revalidate: false },
 );
 
 const filterProductsAction = unstable_cache(
