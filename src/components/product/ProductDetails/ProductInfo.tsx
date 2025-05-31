@@ -68,7 +68,7 @@ export default function ProductInfo({
         )}
         <p className="text-h3-desktop font-bold xl:hidden">{product.name}</p>
         {product.description &&
-          renderTextWithLinks(product.description, "text-body max-w-[378px] break-all max-h-[300px] pr-1 overflow-y-auto xl:max-h-[145px] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-gray [&::-webkit-scrollbar-thumb]:rounded-full")}
+          renderTextWithLinks(product.description, "text-body max-w-[100%] break-all max-h-[300px] pr-1 overflow-y-auto xl:max-h-[145px] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-gray [&::-webkit-scrollbar-thumb]:rounded-full")}
         {width < breakpoints.desktop && (
           <ProductCardStatus productStatus={product.status} />
         )}

@@ -25,18 +25,23 @@ export default function ProductImages({ images }: Props) {
   const { width } = useWindowSize();
   const [selectedSecondaryImage, setSelectedSecondaryImage] = useState("");
   const [secondaryImages, setSecondaryImages] = useState<string[]>([]);
+  const [steps, setSteps] = useState(0);
   const secondaryImagesDivRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setSecondaryImages(images.slice(1));
   }, [images]);
 
+  useEffect(() => {
+    setSteps(Math.ceil(secondaryImages.length / totalElementsToDisplay));
+  }, [secondaryImages]);
+
   const [activeStep, setActiveStep] = useState(0);
   const handleStepChanged = (step: number) => {
     setActiveStep(step);
   };
 
-  const totalElementsToDisplay = 4;
+  const totalElementsToDisplay = width < breakpoints.tablet ? 4 : 8;
 
   useEffect(() => {
     if (secondaryImages.length === 0) {
@@ -51,7 +56,7 @@ export default function ProductImages({ images }: Props) {
     }
 
     setSelectedSecondaryImage(secondaryImages[imagesIdx - 1]);
-    setActiveStep(Math.floor((imagesIdx - 1) / 4));
+    steps > 1 && setActiveStep(Math.floor((imagesIdx - 1) / totalElementsToDisplay));
     secondaryImagesDivRef.current?.scrollTo({ top: (imagesIdx - 1) * 79 });
   }, [imagesIdx, secondaryImages]);
 
@@ -59,8 +64,6 @@ export default function ProductImages({ images }: Props) {
     setIndex(index);
     openModal();
   };
-
-  const steps = Math.ceil(secondaryImages.length / totalElementsToDisplay);
 
   const groupedImages = [];
 
@@ -132,7 +135,7 @@ export default function ProductImages({ images }: Props) {
               index={activeStep}
               onChangeIndex={handleStepChanged}
               enableMouseEvents
-              className="w-full"
+              className="w-full h-[82px]"
               containerStyle={{ width: "100%" }}
             >
               {carrouselElements}
