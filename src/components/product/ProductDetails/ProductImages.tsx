@@ -8,6 +8,7 @@ import { nextImageUrl } from "@/utils/images";
 import { useImagesModalStore } from "@/stores/imagesModal";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { breakpoints } from "@/constants/breakpoints";
+import clsx from "clsx";
 
 type Props = {
   images: string[];
@@ -20,7 +21,10 @@ export default function ProductImages({ images }: Props) {
   const openModal = useImagesModalStore((state) => state.openModal);
   const setSlides = useImagesModalStore((state) => state.setSlides);
   const setIndex = useImagesModalStore((state) => state.setIndex);
+  const imagesIdx = useImagesModalStore((state) => state.index);
   const { width } = useWindowSize();
+  const [selectedSecondaryImage, setSelectedSecondaryImage] = useState("");
+  const [secondaryImages, setSecondaryImages] = useState(images.slice(1));
 
   const [activeStep, setActiveStep] = useState(0);
   const handleStepChanged = (step: number) => {
@@ -28,7 +32,21 @@ export default function ProductImages({ images }: Props) {
   };
 
   const totalElementsToDisplay = 4;
-  const secondaryImages = images.slice(1);
+
+  useEffect(() => {
+    if (secondaryImages.length === 0) {
+      return;
+    }
+
+    if (imagesIdx === 0) {
+      setSelectedSecondaryImage(secondaryImages[imagesIdx]);
+      setActiveStep(0);
+      return;
+    }
+
+    setSelectedSecondaryImage(secondaryImages[imagesIdx - 1]);
+    setActiveStep(Math.floor((imagesIdx - 1) / 4));
+  }, [imagesIdx, secondaryImages]);
 
   const openImagesModal = (index: number) => {
     setIndex(index);
@@ -50,7 +68,9 @@ export default function ProductImages({ images }: Props) {
       {group.map((secondaryImage, imageIdx) => (
         <div
           key={secondaryImage}
-          className="w-20 h-20 relative bg-white shadow-cart-images flex"
+          className={clsx("w-20 h-20 relative bg-white flex-shrink-0", {
+            "border-primary border": secondaryImage === selectedSecondaryImage,
+          })}
         >
           <Image
             src={secondaryImage}
@@ -126,7 +146,10 @@ export default function ProductImages({ images }: Props) {
             {secondaryImages.map((secondaryImage, idx) => (
               <div
                 key={secondaryImage}
-                className="w-20 h-20 relative bg-white flex-shrink-0"
+                className={clsx("w-20 h-20 relative bg-white flex-shrink-0", {
+                  "border-primary border":
+                    secondaryImage === selectedSecondaryImage,
+                })}
               >
                 <Image
                   src={secondaryImage}

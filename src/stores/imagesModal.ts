@@ -31,7 +31,7 @@ export const useImagesModalStore = create<ImagesModalState>((set) => ({
     }),
   closeModal() {
     set(() => {
-      return { isModalOpen: false, index: 0 };
+      return { isModalOpen: false };
     });
   },
 }));
