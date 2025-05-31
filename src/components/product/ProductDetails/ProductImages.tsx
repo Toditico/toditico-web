@@ -2,7 +2,7 @@
 import SwipeableViews from "react-swipeable-views";
 import { MobileStepper } from "@mui/material";
 import Image, { StaticImageData } from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Placeholder from "@public/images/placeholder.webp";
 import { nextImageUrl } from "@/utils/images";
 import { useImagesModalStore } from "@/stores/imagesModal";
@@ -24,7 +24,12 @@ export default function ProductImages({ images }: Props) {
   const imagesIdx = useImagesModalStore((state) => state.index);
   const { width } = useWindowSize();
   const [selectedSecondaryImage, setSelectedSecondaryImage] = useState("");
-  const [secondaryImages, setSecondaryImages] = useState(images.slice(1));
+  const [secondaryImages, setSecondaryImages] = useState<string[]>([]);
+  const secondaryImagesDivRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setSecondaryImages(images.slice(1));
+  }, [images]);
 
   const [activeStep, setActiveStep] = useState(0);
   const handleStepChanged = (step: number) => {
@@ -41,11 +46,13 @@ export default function ProductImages({ images }: Props) {
     if (imagesIdx === 0) {
       setSelectedSecondaryImage(secondaryImages[imagesIdx]);
       setActiveStep(0);
+      secondaryImagesDivRef.current?.scrollTo({ top: 0 });
       return;
     }
 
     setSelectedSecondaryImage(secondaryImages[imagesIdx - 1]);
     setActiveStep(Math.floor((imagesIdx - 1) / 4));
+    secondaryImagesDivRef.current?.scrollTo({ top: (imagesIdx - 1) * 79 });
   }, [imagesIdx, secondaryImages]);
 
   const openImagesModal = (index: number) => {
@@ -142,7 +149,10 @@ export default function ProductImages({ images }: Props) {
             )}
           </>
         ) : (
-          <div className="flex flex-col max-h-[300px] overflow-y-auto px-3 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-thumb]:rounded-full">
+          <div
+            ref={secondaryImagesDivRef}
+            className="flex flex-col max-h-[300px] overflow-y-auto px-3 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-thumb]:rounded-full"
+          >
             {secondaryImages.map((secondaryImage, idx) => (
               <div
                 key={secondaryImage}
