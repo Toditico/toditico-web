@@ -44,7 +44,7 @@ export default function Filters({
       onKeyDown={(e) => {
         if (e.code === "Enter" || e.key === "Enter") {
           onSearch(productName);
-          inputRef.current?.blur()
+          inputRef.current?.blur();
         }
       }}
     >
@@ -90,6 +90,7 @@ export default function Filters({
           className="flex-grow"
           placeholder="Nombre"
           type="search"
+	  autoComplete="off"
           value={productName}
           onChange={(event) => setProductName(event.target.value)}
           InputProps={{
@@ -113,6 +114,24 @@ export default function Filters({
                   filter:
                     "invert(24%) sepia(85%) saturate(3055%) hue-rotate(358deg) brightness(90%) contrast(101%)",
                 },
+                "& .MuiInputBase-input:-webkit-autofill, & .MuiInputBase-input:-webkit-autofill:hover, & .MuiInputBase-input:-webkit-autofill:focus, & .MuiInputBase-input:-webkit-autofill:active":
+                  {
+                    "-webkit-box-shadow": `0 0 0 30px ${colors.white || "white"} inset !important`,
+                    "-webkit-text-fill-color": `${colors.primary} !important`,
+                    borderRadius: "8px",
+                    caretColor: colors.primary,
+                    border: "none !important",
+                    backgroundColor: "transparent !important",
+                  },
+                "& input:-webkit-autofill, & input:-webkit-autofill:hover, & input:-webkit-autofill:focus, & input:-webkit-autofill:active":
+                  {
+                    "-webkit-box-shadow": `0 0 0 30px ${colors.white || "white"} inset !important`,
+                    "-webkit-text-fill-color": `${colors.primary} !important`,
+                    borderRadius: "inherit",
+                    caretColor: colors.primary,
+                    borderWidth: "2px",
+                    border: "none !important",
+                  },
               },
             },
           }}

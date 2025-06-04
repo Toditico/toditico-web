@@ -9,7 +9,7 @@ import { IconShoppingBag } from "@tabler/icons-react";
 import { useCartStore } from "@/stores/cart";
 import { useCurrencyStore } from "@/stores/currency";
 import { useInventoryStore } from "@/stores/inventory";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import NoProductPlaceholder from "../NoProductPlaceholder";
 import { localStorageIDs } from "@/constants/localStorage";
 import { useModuleStore } from "@/stores/module";
@@ -21,12 +21,17 @@ type Props = {
 export default function ProductDetails({ product }: Props) {
   const increaseProduct = useCartStore((state) => state.increaseProduct);
   const selectedCurrency = useCurrencyStore((state) => state.selectedCurrency);
+  const setSelectedCurrency = useCurrencyStore(
+    (state) => state.setSelectedCurrency,
+  );
+  const currencies = useCurrencyStore((state) => state.currencies);
   const selectedInventory = useInventoryStore(
     (state) => state.selectedInventory,
   );
   const selectedModule = useModuleStore((state) => state.selectedModule);
   const router = useRouter();
   const pathName = usePathname();
+  const searchParams = useSearchParams();
 
   const addProductToCart = () => {
     if (selectedInventory && product) {
@@ -35,10 +40,20 @@ export default function ProductDetails({ product }: Props) {
   };
 
   useEffect(() => {
+    const newCurrency = currencies.find(
+      (currency) => currency._id === searchParams.get("currency"),
+    );
+    if (newCurrency) {
+      newCurrency._id !== selectedCurrency?._id &&
+        setSelectedCurrency(newCurrency);
+    }
+  }, [searchParams.get("currency")]);
+
+  useEffect(() => {
     setTimeout(() => {
       const element = document.getElementById("product-details");
       if (element) {
-        const offsetTop = element.offsetTop - 120; //Adjust in case of tablet and desktop
+        const offsetTop = element.offsetTop - 120;
         window.scrollTo({
           top: offsetTop,
           behavior: "smooth",
@@ -62,7 +77,6 @@ export default function ProductDetails({ product }: Props) {
 
   useEffect(() => {
     if (product) {
-      console.log("contained products: ", product.containedProducts);
       const mainImage = product.imageUrl ?? "";
       const secondaryImages =
         product.secondaryImagesUrls?.filter((url) => url) ?? [];

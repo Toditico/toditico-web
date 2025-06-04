@@ -11,6 +11,7 @@ import TicoImage from "@public/images/tico.svg";
 import SanderoImage from "@public/images/sandero.svg";
 import OthersImage from "@public/images/otros.svg";
 import Image, { StaticImageData } from "next/image";
+import ProductCardKit from "@/components/catalogue/ProductsContainer/ProductCard/ProductCardKit";
 
 type Props = {
   product: Product;
@@ -26,6 +27,7 @@ export default function ProductInfo({
   selectedModule,
 }: Props) {
   const { width } = useWindowSize();
+  console.log("Selected currency:", selectedCurrency);
 
   const getTopImage = (moduleName: string): StaticImageData | undefined => {
     if (!moduleName) {
@@ -68,9 +70,15 @@ export default function ProductInfo({
         )}
         <p className="text-h3-desktop font-bold xl:hidden">{product.name}</p>
         {product.description &&
-          renderTextWithLinks(product.description, "text-body max-w-[100%] break-all max-h-[300px] pr-1 overflow-y-auto xl:max-h-[145px] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-gray [&::-webkit-scrollbar-thumb]:rounded-full")}
+          renderTextWithLinks(
+            product.description,
+            "text-body max-w-[100%] break-all max-h-[300px] pr-1 overflow-y-auto xl:max-h-[145px] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-gray [&::-webkit-scrollbar-thumb]:rounded-full md:[&::-webkit-scrollbar]:w-2",
+          )}
         {width < breakpoints.desktop && (
-          <ProductCardStatus productStatus={product.status} />
+          <div className="flex justify-between items-center">
+            {!!product?.containedProducts?.length && <ProductCardKit />}
+            <ProductCardStatus productStatus={product.status} />
+          </div>
         )}
       </div>
       <hr className="text-gray" />
@@ -92,7 +100,12 @@ export default function ProductInfo({
           selectedCurrency={selectedCurrency}
         />
         {width >= breakpoints.desktop && (
-          <ProductCardStatus productStatus={product.status} />
+          <div className="flex flex-col justify-between items-center">
+            {!!product?.containedProducts?.length && <ProductCardKit />}
+            {product.status !== "AVAILABLE" && (
+              <ProductCardStatus productStatus={product.status} />
+            )}
+          </div>
         )}
       </div>
     </div>

@@ -39,9 +39,11 @@ const config: Config = {
         "dark-gray": "#999",
         "low-stock": "#FFC53D",
         whatsapp: "#00BB2D",
+	discount: "#ACACAC"
       },
       boxShadow: {
         "cart-images": "0 8px 12px rgba(154, 170, 207, 0.2)",
+        "secondary-images": "0 16px 40px #9AAACF33",
       },
     },
     backgroundImage: {

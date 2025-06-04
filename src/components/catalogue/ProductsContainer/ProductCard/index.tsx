@@ -16,7 +16,6 @@ import { IconShoppingBag } from "@tabler/icons-react";
 import { useInView } from "react-intersection-observer";
 import { useCartStore } from "@/stores/cart";
 import { useInventoryStore } from "@/stores/inventory";
-import ProductCardKit from "./ProductCardKit";
 import { useModuleStore } from "@/stores/module";
 import { localStorageIDs } from "@/constants/localStorage";
 
@@ -72,7 +71,7 @@ export default function ProductCard({ product, isInViewportHandler }: Props) {
     return null;
   }
 
-  const topImage = getTopImage(selectedModule?.name || '');
+  const topImage = getTopImage(selectedModule?.name || "");
 
   return (
     <div
@@ -81,7 +80,7 @@ export default function ProductCard({ product, isInViewportHandler }: Props) {
       className="rounded-t-lg w-full flex flex-col shadow-md pb-3 md:max-w-[350px] xl:max-w-[400px] 2xl:max-w-[480px]"
     >
       <Link
-        href={`/product/${product.code}?currency=${selectedCurrency._id}&inventory=${selectedInventory._id}`}
+        href={`/product/${product.code}?currency=${selectedCurrency._id}&inventory=${selectedInventory._id}&module=${selectedModule?._id}`}
       >
         <div className="h-[40px] bg-primary rounded-t-lg flex items-center px-4">
           {topImage && (
@@ -99,12 +98,10 @@ export default function ProductCard({ product, isInViewportHandler }: Props) {
             alt={product.name}
             style={{
               objectFit: product.imageUrl ? "contain" : "cover",
-              scale: product?.containedProducts?.length ? "90%" : "100%",
             }}
             quality={100}
             fill
           />
-          {!!product.containedProducts?.length && <ProductCardKit />}
         </div>
         <div className="px-2 pt-3">
           <ProductCardInfo

@@ -17,7 +17,7 @@ export default function ProductPrice({
     <div className="flex flex-col">
       {originalPrice && discount ? (
         <div className="flex justify-between">
-          <p className="text-body-bold font-bold text-gray line-through">
+          <p className="text-body-bold font-bold text-discount line-through">
             ${originalPrice}
           </p>
           <div className="bg-primary py-[2px] px-1 text-body-bold font-bold text-white">

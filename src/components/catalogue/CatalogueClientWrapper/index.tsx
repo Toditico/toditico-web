@@ -18,7 +18,6 @@ import { scrollToElement } from "@/utils/scroll";
 import NProgress from "nprogress";
 import { localStorageIDs } from "@/constants/localStorage";
 import { useWindowSize } from "@/hooks/useWindowSize";
-import { document } from "postcss";
 import { breakpoints } from "@/constants/breakpoints";
 
 type Props = {
@@ -208,9 +207,6 @@ export default function CatalogueClientWrapper({
   const selectedModule = useModuleStore((state) => state.selectedModule);
   const modules = useModuleStore((state) => state.modules);
   const selectedCurrency = useCurrencyStore((state) => state.selectedCurrency);
-  const setSelectedInventory = useInventoryStore(
-    (state) => state.setSelectedInventory,
-  );
   const selectedInventoryStore = useInventoryStore(
     (state) => state.selectedInventory,
   );

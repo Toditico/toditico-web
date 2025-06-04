@@ -20,7 +20,7 @@ export default function ProductCardPrice({
       {originalPrice && discount ? (
         <>
           <div className="flex justify-between items-center gap-4">
-            <p className="text-body-bold font-bold text-gray line-through">
+            <p className="text-body-bold font-bold text-discount line-through">
               {originalPrice} {selectedCurrency.name}
             </p>
             <div className="bg-primary py-[2px] px-1 text-body-bold font-bold text-white">

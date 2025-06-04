@@ -32,6 +32,8 @@ export default function ProductImages({ images }: Props) {
     setSecondaryImages(images.slice(1));
   }, [images]);
 
+  const totalElementsToDisplay = width < breakpoints.tablet ? 4 : 8;
+
   useEffect(() => {
     setSteps(Math.ceil(secondaryImages.length / totalElementsToDisplay));
   }, [secondaryImages]);
@@ -40,8 +42,6 @@ export default function ProductImages({ images }: Props) {
   const handleStepChanged = (step: number) => {
     setActiveStep(step);
   };
-
-  const totalElementsToDisplay = width < breakpoints.tablet ? 4 : 8;
 
   useEffect(() => {
     if (secondaryImages.length === 0) {
@@ -56,7 +56,8 @@ export default function ProductImages({ images }: Props) {
     }
 
     setSelectedSecondaryImage(secondaryImages[imagesIdx - 1]);
-    steps > 1 && setActiveStep(Math.floor((imagesIdx - 1) / totalElementsToDisplay));
+    steps > 1 &&
+      setActiveStep(Math.floor((imagesIdx - 1) / totalElementsToDisplay));
     secondaryImagesDivRef.current?.scrollTo({ top: (imagesIdx - 1) * 79 });
   }, [imagesIdx, secondaryImages]);
 
@@ -74,19 +75,23 @@ export default function ProductImages({ images }: Props) {
   }
 
   const carrouselElements = groupedImages.map((group, groupIndex) => (
-    <div key={groupIndex} className="flex gap-2">
+    <div key={groupIndex} className="flex gap-2 justify-center">
       {group.map((secondaryImage, imageIdx) => (
         <div
           key={secondaryImage}
-          className={clsx("w-20 h-20 relative bg-white flex-shrink-0", {
-            "border-primary border": secondaryImage === selectedSecondaryImage,
-          })}
+          className={clsx(
+            "w-[70px] h-[70px] relative bg-white rounded flex-shrink-0 shadow-secondary-images md:w-20 md:h-20",
+            {
+              "border-primary border-2":
+                secondaryImage === selectedSecondaryImage,
+            },
+          )}
         >
           <Image
             src={secondaryImage}
             alt="Product secondary image"
             fill
-            className="cursor-pointer"
+            className="cursor-pointer "
             style={{ objectFit: "contain" }}
             onClick={() => openImagesModal(groupIndex * 4 + imageIdx + 1)}
           />
@@ -114,7 +119,7 @@ export default function ProductImages({ images }: Props) {
 
   return (
     <div className="flex flex-col gap-2 xl:w-[500px] xl:flex-row-reverse xl:gap-4">
-      <div className="w-full h-[320px] relative xl:h-[340px] xl:w-[412px]">
+      <div className="w-full h-[320px] relative shadow-secondary-images xl:h-[340px] xl:w-[412px]">
         <Image
           onClick={() => {
             openImagesModal(0);

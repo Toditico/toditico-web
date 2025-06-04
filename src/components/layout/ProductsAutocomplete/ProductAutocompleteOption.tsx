@@ -38,7 +38,7 @@ export default function ProductsAutocompleteOption({
           <p
             className={clsx("text-body font-bold", {
               "line-through": discountPercent > 0,
-              "text-gray": discountPercent > 0,
+              "text-discount": discountPercent > 0,
             })}
           >{`${sellPrice ?? -0} ${selectedCurrency.name}`}</p>
           {discountPercent > 0 && (

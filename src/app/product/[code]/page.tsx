@@ -9,6 +9,7 @@ type PageProps = {
   searchParams: {
     currency: string;
     inventory: string;
+    module: string;
   };
 };
 
@@ -35,7 +36,7 @@ export async function generateMetadata({
 
 export default async function ProductPage({ params, searchParams }: PageProps) {
   const { code } = params;
-  const { currency, inventory } = searchParams;
+  const { currency, inventory, module } = searchParams;
 
   const products = await getProductsDetailsAction([code], inventory, currency);
   const product = products.length ? products[0] : null;
