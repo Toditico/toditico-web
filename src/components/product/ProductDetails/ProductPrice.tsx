@@ -18,7 +18,7 @@ export default function ProductPrice({
       {originalPrice && discount ? (
         <div className="flex justify-between">
           <p className="text-body-bold font-bold text-discount line-through">
-            ${originalPrice}
+            {originalPrice} {selectedCurrency.name}
           </p>
           <div className="bg-primary py-[2px] px-1 text-body-bold font-bold text-white">
             -{discount}%
