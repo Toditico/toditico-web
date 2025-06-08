@@ -43,7 +43,8 @@ const config: Config = {
       },
       boxShadow: {
         "cart-images": "0 8px 12px rgba(154, 170, 207, 0.2)",
-        "secondary-images": "0 16px 40px #9AAACF33",
+        "main-image": "0 16px 40px #9AAACF33",
+        "secondary-images": "0 80px 80px 20px #9AAACF33",
       },
     },
     backgroundImage: {
