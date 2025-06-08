@@ -210,6 +210,9 @@ export default function CatalogueClientWrapper({
   const selectedInventoryStore = useInventoryStore(
     (state) => state.selectedInventory,
   );
+  const setSelectedInventory = useInventoryStore(
+    (state) => state.setSelectedInventory,
+  );
 
   const refetchProducts = (queryParams: string, scroll: boolean) => {
     router.push(`${pathName}?${queryParams}`, { scroll });
@@ -291,6 +294,7 @@ export default function CatalogueClientWrapper({
       return;
     }
     setProducts([]);
+    setSelectedInventory(selectedInventory);
     const currency = searchParams.get("currency");
     const moduleParam = searchParams.get("module");
     const queryParams = `currency=${currency}&inventory=${selectedInventory}&query=${userInput}&module=${moduleParam}&page=1`;
