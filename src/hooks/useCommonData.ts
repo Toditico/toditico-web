@@ -18,5 +18,5 @@ export function useCommonData(commonData: CommonResponse) {
       setInventories(inventories, queryParams.get("inventory"));
       setModules(modules, queryParams.get("module"));
     }
-  }, [commonData]);
+  }, [commonData, queryParams]);
 }
