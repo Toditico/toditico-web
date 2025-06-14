@@ -16,9 +16,10 @@ import { useModuleStore } from "@/stores/module";
 
 type Props = {
   product: Product | null;
+  module?: string;
 };
 
-export default function ProductDetails({ product }: Props) {
+export default function ProductDetails({ product, module }: Props) {
   const increaseProduct = useCartStore((state) => state.increaseProduct);
   const selectedCurrency = useCurrencyStore((state) => state.selectedCurrency);
   const setSelectedCurrency = useCurrencyStore(
@@ -66,10 +67,10 @@ export default function ProductDetails({ product }: Props) {
 
   useEffect(() => {
     if (selectedCurrency && selectedInventory) {
-      router.push(
-        `${pathName}?currency=${selectedCurrency._id}&inventory=${selectedInventory._id}`,
-        { scroll: false },
-      );
+      const path = `${pathName}?currency=${selectedCurrency._id}&inventory=${selectedInventory._id}`;
+      router.push(module ? `${path}&module=${module}` : path, {
+        scroll: false,
+      });
     }
   }, [selectedCurrency, selectedInventory]);
 

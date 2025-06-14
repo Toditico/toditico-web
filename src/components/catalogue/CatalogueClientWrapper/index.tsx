@@ -185,9 +185,6 @@ export default function CatalogueClientWrapper({
             return;
           }
           setTimeout(() => {
-            console.log(
-              "Voy a scrollear porque tengo la página es mayor que 1 ",
-            );
             scrollToElement(lastProductDetails, width);
             setIsFetchingProducts(false);
             localStorage.removeItem(localStorageIDs.lastProductDetails);
@@ -293,7 +290,6 @@ export default function CatalogueClientWrapper({
     const currency = searchParams.get("currency");
     const moduleParam = searchParams.get("module");
     const queryParams = `currency=${currency}&inventory=${selectedInventory}&query=${userInput}&module=${moduleParam}&page=1`;
-    console.log("Query params: ", queryParams);
     refetchProducts(queryParams, false);
   };
 

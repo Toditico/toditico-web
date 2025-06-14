@@ -43,7 +43,7 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
 
   return (
     <div className="p-6">
-      <ProductDetails {...{ product }}></ProductDetails>
+      <ProductDetails {...{ product, module }}></ProductDetails>
     </div>
   );
 }

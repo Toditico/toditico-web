@@ -27,8 +27,6 @@ export default function ProductInfo({
   selectedModule,
 }: Props) {
   const { width } = useWindowSize();
-  console.log("Selected currency:", selectedCurrency);
-
   const getTopImage = (moduleName: string): StaticImageData | undefined => {
     if (!moduleName) {
       return undefined;
@@ -75,7 +73,7 @@ export default function ProductInfo({
             "text-body max-w-[100%] break-all max-h-[300px] pr-1 overflow-y-auto xl:max-h-[145px] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-gray [&::-webkit-scrollbar-thumb]:rounded-full md:[&::-webkit-scrollbar]:w-2",
           )}
         {width < breakpoints.desktop && (
-          <div className="flex justify-between items-center">
+          <div className="flex gap-3 items-center">
             {!!product?.containedProducts?.length && <ProductCardKit />}
             <ProductCardStatus productStatus={product.status} />
           </div>

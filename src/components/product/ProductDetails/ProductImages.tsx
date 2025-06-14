@@ -119,7 +119,7 @@ export default function ProductImages({ images }: Props) {
 
   return (
     <div className="flex flex-col gap-2 xl:w-[500px] xl:flex-row-reverse xl:gap-4">
-      <div className="w-full h-[320px] relative shadow-secondary-images xl:h-[340px] xl:w-[412px]">
+      <div className="w-full h-[320px] relative shadow-main-image xl:h-[340px] xl:w-[412px]">
         <Image
           onClick={() => {
             openImagesModal(0);
@@ -132,56 +132,58 @@ export default function ProductImages({ images }: Props) {
           quality={100}
         />
       </div>
-      <div className="flex flex-col gap-6">
-        {width < breakpoints.desktop ? (
-          <>
-            <SwipeableViews
-              axis="x"
-              index={activeStep}
-              onChangeIndex={handleStepChanged}
-              enableMouseEvents
-              className="w-full h-[82px]"
-              containerStyle={{ width: "100%" }}
-            >
-              {carrouselElements}
-            </SwipeableViews>
-            {steps > 1 && (
-              <MobileStepper
-                className="mx-auto"
-                steps={steps}
-                activeStep={activeStep}
-                nextButton={null}
-                backButton={null}
-                position="static"
-              ></MobileStepper>
-            )}
-          </>
-        ) : (
-          <div
-            ref={secondaryImagesDivRef}
-            className="flex flex-col max-h-[300px] overflow-y-auto px-3 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-thumb]:rounded-full"
-          >
-            {secondaryImages.map((secondaryImage, idx) => (
-              <div
-                key={secondaryImage}
-                className={clsx("w-20 h-20 relative bg-white flex-shrink-0", {
-                  "border-primary border":
-                    secondaryImage === selectedSecondaryImage,
-                })}
+      {secondaryImages.length > 0 && (
+        <div className="flex flex-col gap-6">
+          {width < breakpoints.desktop ? (
+            <>
+              <SwipeableViews
+                axis="x"
+                index={activeStep}
+                onChangeIndex={handleStepChanged}
+                enableMouseEvents
+                className="w-full h-[82px]"
+                containerStyle={{ width: "100%" }}
               >
-                <Image
-                  src={secondaryImage}
-                  alt="Product secondary image"
-                  fill
-                  className="cursor-pointer"
-                  style={{ objectFit: "contain" }}
-                  onClick={() => openImagesModal(idx + 1)}
-                />
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+                {carrouselElements}
+              </SwipeableViews>
+              {steps > 1 && (
+                <MobileStepper
+                  className="mx-auto"
+                  steps={steps}
+                  activeStep={activeStep}
+                  nextButton={null}
+                  backButton={null}
+                  position="static"
+                ></MobileStepper>
+              )}
+            </>
+          ) : (
+            <div
+              ref={secondaryImagesDivRef}
+              className="flex flex-col max-h-[300px] overflow-y-auto px-3 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-thumb]:rounded-full"
+            >
+              {secondaryImages.map((secondaryImage, idx) => (
+                <div
+                  key={secondaryImage}
+                  className={clsx("w-20 h-20 relative bg-white flex-shrink-0", {
+                    "border-primary border-2":
+                      secondaryImage === selectedSecondaryImage,
+                  })}
+                >
+                  <Image
+                    src={secondaryImage}
+                    alt="Product secondary image"
+                    fill
+                    className="cursor-pointer"
+                    style={{ objectFit: "contain" }}
+                    onClick={() => openImagesModal(idx + 1)}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

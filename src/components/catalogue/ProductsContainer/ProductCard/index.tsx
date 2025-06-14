@@ -67,7 +67,7 @@ export default function ProductCard({ product, isInViewportHandler }: Props) {
     }
   };
 
-  if (!selectedInventory || !selectedCurrency) {
+  if (!selectedInventory || !selectedCurrency || !selectedModule) {
     return null;
   }
 

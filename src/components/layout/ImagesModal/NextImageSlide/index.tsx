@@ -34,7 +34,6 @@ export default function NextImageSlide({ slide, offset, rect }: Props) {
 
   if (!isNextJsImage(slide)) return undefined;
 
-  console.log("Width and height: ", slide.width, slide.height);
 
   const width = !cover
     ? Math.round(
