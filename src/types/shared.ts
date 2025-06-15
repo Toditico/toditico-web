@@ -38,6 +38,7 @@ export type Product = {
   secondaryImagesUrls?: string[];
   discountPercent: number;
   status: ProductStatus;
+  modules: string[];
   _id: string;
 };
 

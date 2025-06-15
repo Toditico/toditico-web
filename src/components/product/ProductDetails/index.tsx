@@ -30,9 +30,14 @@ export default function ProductDetails({ product, module }: Props) {
     (state) => state.selectedInventory,
   );
   const selectedModule = useModuleStore((state) => state.selectedModule);
+  const modules = useModuleStore((state) => state.modules);
   const router = useRouter();
   const pathName = usePathname();
   const searchParams = useSearchParams();
+
+  const mainModule = modules.find((module) =>
+    product?.modules.includes(module._id),
+  );
 
   const addProductToCart = () => {
     if (selectedInventory && product) {
@@ -110,7 +115,7 @@ export default function ProductDetails({ product, module }: Props) {
             {...{ product }}
             selectedCurrency={selectedCurrency!}
             selectedInventory={selectedInventory!}
-            selectedModule={selectedModule!}
+            selectedModule={module ? selectedModule! : mainModule!}
           />
           <Button
             variant="outlined"
