@@ -101,9 +101,11 @@ export default function ProductDetails({ product, module }: Props) {
   return (
     <div>
       {product && (
-        <p className="hidden font-bold text-h1-tablet text-center xl:block">
-          {product.name}
-        </p>
+        <div>
+          <p className="hidden font-bold text-h1-tablet mx-auto xl:block xl:w-[80%] text-center">
+            {product.name}
+          </p>
+        </div>
       )}
       <div
         className="flex flex-col gap-6 xl:max-w-[900px] xl:mx-auto xl:flex-row"

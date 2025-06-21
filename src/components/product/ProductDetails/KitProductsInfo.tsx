@@ -15,7 +15,9 @@ export default function KitProductsInfo({
 }: Props) {
   return (
     <div className="flex flex-col gap-2">
-      <p className="text-body-bold font-bold">Componentes del kit</p>
+      <div className="flex justify-between">
+        <p className="text-body-bold font-bold">Componentes del kit</p>
+      </div>
       <div className="flex flex-col gap-1">
         {product.containedProducts.map(({ name, count, code }) => (
           <Link

@@ -44,7 +44,7 @@ const config: Config = {
       boxShadow: {
         "cart-images": "0 8px 12px rgba(154, 170, 207, 0.2)",
         "main-image": "0 16px 40px #9AAACF33",
-        "secondary-images": "0px 16px 40px 0px #9AAACF33",
+        "secondary-images": "1px 1px 20px 1px #9AAACF33, 1px 1px 10px 5px #fafbfda6;",
       },
     },
     backgroundImage: {

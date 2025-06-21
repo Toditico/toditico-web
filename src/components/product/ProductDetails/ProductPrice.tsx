@@ -1,4 +1,6 @@
 import { Currency } from "@/types/shared";
+import { Skeleton } from "@mui/material";
+import { useEffect, useState } from "react";
 
 type Props = {
   originalPrice?: number;
@@ -13,7 +15,19 @@ export default function ProductPrice({
   originalPrice,
   selectedCurrency,
 }: Props) {
-  return (
+  const [showSkeleton, setShowSkeleton] = useState(true);
+
+  useEffect(() => {
+    setShowSkeleton(true);
+  }, [selectedCurrency]);
+
+  useEffect(() => {
+    setShowSkeleton(false);
+  }, [finalPrice]);
+
+  return showSkeleton ? (
+    <Skeleton variant="rectangular" height={40} width={150}></Skeleton>
+  ) : (
     <div className="flex flex-col">
       {originalPrice && discount ? (
         <div className="flex justify-between">

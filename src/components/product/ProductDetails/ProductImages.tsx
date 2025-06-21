@@ -128,7 +128,10 @@ export default function ProductImages({ images }: Props) {
           alt="Product image"
           fill
           className="rounded-lg cursor-pointer"
-          style={{ objectFit: "contain" }}
+          style={{
+            objectFit:
+              typeof selectedImageUrl === "string" ? "contain" : "cover",
+          }}
           quality={100}
         />
       </div>
