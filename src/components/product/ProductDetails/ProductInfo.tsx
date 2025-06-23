@@ -86,6 +86,7 @@ export default function ProductInfo({
             product={product}
             selectedCurrency={selectedCurrency}
             selectedInventory={selectedInventory}
+            selectedModule={selectedModule}
           />
           <hr className="text-gray" />
         </>

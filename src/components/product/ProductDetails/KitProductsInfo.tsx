@@ -1,4 +1,4 @@
-import { Currency, Inventory, Product } from "@/types/shared";
+import { Currency, Inventory, Product, Module } from "@/types/shared";
 import Link from "next/link";
 import { IconCheck } from "@tabler/icons-react";
 import ProductCardKit from "@/components/catalogue/ProductsContainer/ProductCard/ProductCardKit";
@@ -9,12 +9,14 @@ type Props = {
   product: Product;
   selectedCurrency: Currency;
   selectedInventory: Inventory;
+  selectedModule: Module;
 };
 
 export default function KitProductsInfo({
   product,
   selectedInventory,
   selectedCurrency,
+  selectedModule,
 }: Props) {
   const { width } = useWindowSize();
   return (
@@ -28,7 +30,7 @@ export default function KitProductsInfo({
         {product.containedProducts.map(({ name, count, code }) => (
           <Link
             key={code}
-            href={`/product/${code}?currency=${selectedCurrency._id}&inventory=${selectedInventory._id}`}
+            href={`/product/${code}?currency=${selectedCurrency._id}&inventory=${selectedInventory._id}&module=${selectedModule?._id ?? ""}`}
           >
             <div className="flex gap-1 items-center">
               <IconCheck className="text-primary" />
