@@ -99,7 +99,6 @@ export default function ProductInfo({
         />
         {width >= breakpoints.desktop && (
           <div className="flex flex-col justify-between items-center">
-            {!!product?.containedProducts?.length && <ProductCardKit />}
             {product.status !== "AVAILABLE" && (
               <ProductCardStatus productStatus={product.status} />
             )}
