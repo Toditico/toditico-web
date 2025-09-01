@@ -12,6 +12,7 @@ import SanderoImage from "@public/images/sandero.svg";
 import OthersImage from "@public/images/otros.svg";
 import Image, { StaticImageData } from "next/image";
 import ProductCardKit from "@/components/catalogue/ProductsContainer/ProductCard/ProductCardKit";
+import clsx from "clsx";
 
 type Props = {
   product: Product;
@@ -91,7 +92,7 @@ export default function ProductInfo({
           <hr className="text-gray" />
         </>
       )}
-      <div className="xl:flex xl:justify-between xl:items-center">
+      <div className="xl:flex xl:justify-between xl:items-center xl:gap-1">
         <ProductPrice
           discount={product.discountPercent}
           originalPrice={product.sellPrice}
@@ -99,7 +100,12 @@ export default function ProductInfo({
           selectedCurrency={selectedCurrency}
         />
         {width >= breakpoints.desktop && (
-          <div className="flex flex-col justify-between items-center">
+          <div
+            className={clsx("flex flex-col justify-between items-center", {
+              "basis-28": product.status !== "AVAILABLE",
+              "flex-shrink-0": product.status !== "AVAILABLE",
+            })}
+          >
             {product.status !== "AVAILABLE" && (
               <ProductCardStatus productStatus={product.status} />
             )}
