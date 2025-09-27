@@ -12,8 +12,9 @@ type Props = {
   selectedInventory: string;
   selectedQuery: string;
   isLoading?: boolean;
-  onSearch: (userInput: string) => void;
-  onSelectedInventory: (selectedInventory: string, userInput: string) => void;
+  onSearch: () => void;
+  onQueryChanged: (selectedQuery: string) => void;
+  onSelectedInventory: (selectedInventory: string) => void;
 };
 
 export default function Filters({
@@ -22,14 +23,10 @@ export default function Filters({
   selectedQuery,
   onSearch,
   onSelectedInventory,
+  onQueryChanged,
 }: Props) {
   const [inventory, setInventory] = useState<string>("");
-  const [productName, setProductName] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    setProductName(selectedQuery);
-  }, [selectedQuery]);
 
   useEffect(() => {
     if (selectedInventory) {
@@ -43,7 +40,7 @@ export default function Filters({
       id="filters"
       onKeyDown={(e) => {
         if (e.code === "Enter" || e.key === "Enter") {
-          onSearch(productName);
+          onSearch();
           inputRef.current?.blur();
         }
       }}
@@ -55,7 +52,7 @@ export default function Filters({
           value={inventory}
           onChange={(el) => {
             setInventory(el.target.value);
-            onSelectedInventory(el.target.value, productName);
+            onSelectedInventory(el.target.value);
           }}
           IconComponent={IconChevronDown}
           sx={{
@@ -90,9 +87,9 @@ export default function Filters({
           className="flex-grow"
           placeholder="Nombre"
           type="search"
-	  autoComplete="off"
-          value={productName}
-          onChange={(event) => setProductName(event.target.value)}
+          autoComplete="off"
+          value={selectedQuery}
+          onChange={(event) => onQueryChanged(event.target.value)}
           InputProps={{
             ...{
               sx: {
@@ -141,7 +138,7 @@ export default function Filters({
           className="h-[56px] rounded-lg p-4 uppercase font-bold text-button"
           variant="contained"
           startIcon={<IconFilter size={24} />}
-          onClick={() => onSearch(productName)}
+          onClick={() => onSearch()}
         >
           Filtrar
         </Button>

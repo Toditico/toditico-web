@@ -99,7 +99,7 @@ export default function ProductDetails({ product, module }: Props) {
   }
 
   return (
-    <div>
+    <div id="product-details">
       {product && (
         <div>
           <p className="hidden font-bold text-h1-tablet mx-auto xl:block xl:w-[80%] text-center">
@@ -107,10 +107,7 @@ export default function ProductDetails({ product, module }: Props) {
           </p>
         </div>
       )}
-      <div
-        className="flex flex-col gap-6 xl:max-w-[900px] xl:mx-auto xl:flex-row"
-        id="product-details"
-      >
+      <div className="flex flex-col gap-6 xl:max-w-[900px] xl:mx-auto xl:flex-row">
         <ProductImages {...{ images }} />
         <div className="flex flex-col gap-6 xl:flex-grow">
           <ProductInfo

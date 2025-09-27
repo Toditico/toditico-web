@@ -3,7 +3,8 @@ import brand from "../../../public/brand.svg";
 
 export default function ContactUs() {
   const email = "toditicocuba@gmail.com";
-  const address = "Ave 21/ 44 y 46 #4418, Playa, La Habana. Cuba";
+  const address = "Ave 21/ 44 y 46 #4418, Playa,";
+  const addressLine2 = "La Habana, Cuba.";
   const phones = "+53 50524119 / +53 50745857";
   const time = "Todos los días de 9:00 am - 5:00 pm";
   return (
@@ -13,14 +14,24 @@ export default function ContactUs() {
         <p className="text-body-bold font-bold uppercase mt-2">contáctenos</p>
         <div className="flex flex-col gap-2">
           <p className="text-body">{email}</p>
-          <p className="text-body">{address}</p>
+          <p className="text-body hidden xl:block">
+            {address} {addressLine2}
+          </p>
+          <p className="text-body xl:hidden">
+            {address} <br /> {addressLine2}
+          </p>
           <p className="text-body">{phones}</p>
           <p className="text-body">{time}</p>
         </div>
       </div>
       <div className="flex flex-col gap-4 text-center xl:text-left xl:max-w-[300px]">
-        <p className="mt-2 text-body-bold font-bold uppercase">Rueda con confianza</p>
-        <p className="text-body">Servicio superior, precios justos, calidad insuperable y garantía que perdura.</p>
+        <p className="mt-2 text-body-bold font-bold uppercase">
+          Rueda con confianza
+        </p>
+        <p className="text-body">
+          Servicio superior, precios justos, calidad insuperable y garantía que
+          perdura.
+        </p>
       </div>
     </div>
   );

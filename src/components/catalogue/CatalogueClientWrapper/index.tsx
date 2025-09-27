@@ -47,6 +47,9 @@ export default function CatalogueClientWrapper({
   const [showScrollToTopButton, setShowScrollToTopButton] = useState(
     showScrollButton.current,
   );
+  const [selectedQuery, setSelectedQuery] = useState<string>(
+    searchParams.get("query") ?? "",
+  );
 
   useEffect(() => {
     if (isFetchingProducts) {
@@ -243,7 +246,6 @@ export default function CatalogueClientWrapper({
   }, [selectedInventoryStore]);
 
   const selectedInventory = searchParams.get("inventory") ?? "";
-  const selectedQuery = searchParams.get("query") ?? "";
 
   useEffect(() => {
     const newModule = modules.find(
@@ -260,28 +262,25 @@ export default function CatalogueClientWrapper({
     setProducts([]);
     const currency = searchParams.get("currency");
     const inventory = searchParams.get("inventory");
-    const query = searchParams.get("query") || "";
+    const query = selectedQuery;
     const queryParams = `currency=${currency}&inventory=${inventory}&query=${query}&module=${module._id}&page=1`;
     refetchProducts(queryParams, false);
   };
 
-  const onSearch = async (userInput: string) => {
+  const onSearch = async () => {
     const previousProductName = searchParams.get("query");
-    if (userInput === previousProductName) {
+    if (selectedQuery === previousProductName) {
       return;
     }
     setProducts([]);
     const currency = searchParams.get("currency");
     const moduleParam = searchParams.get("module");
     const inventoryParam = searchParams.get("inventory");
-    const queryParams = `currency=${currency}&inventory=${inventoryParam}&query=${userInput}&module=${moduleParam}&page=1`;
+    const queryParams = `currency=${currency}&inventory=${inventoryParam}&query=${selectedQuery}&module=${moduleParam}&page=1`;
     refetchProducts(queryParams, false);
   };
 
-  const onSelectedInventory = async (
-    selectedInventory: string,
-    userInput: string,
-  ) => {
+  const onSelectedInventory = async (selectedInventory: string) => {
     const previousInventory = searchParams.get("inventory");
     if (previousInventory === selectedInventory) {
       return;
@@ -289,7 +288,7 @@ export default function CatalogueClientWrapper({
     setProducts([]);
     const currency = searchParams.get("currency");
     const moduleParam = searchParams.get("module");
-    const queryParams = `currency=${currency}&inventory=${selectedInventory}&query=${userInput}&module=${moduleParam}&page=1`;
+    const queryParams = `currency=${currency}&inventory=${selectedInventory}&query=${selectedQuery}&module=${moduleParam}&page=1`;
     refetchProducts(queryParams, false);
   };
 
@@ -307,6 +306,10 @@ export default function CatalogueClientWrapper({
     refetchProducts(queryParams, false);
   };
 
+  useEffect(() => {
+    console.log("Selected query changed:", selectedQuery);
+  }, [selectedQuery]);
+
   return (
     <div className="xl:max-w-[1500px] xl:mx-auto">
       <ModulesSelection
@@ -315,6 +318,7 @@ export default function CatalogueClientWrapper({
       />
       <Filters
         inventories={data.inventories}
+        onQueryChanged={setSelectedQuery}
         {...{ onSearch, onSelectedInventory, selectedInventory, selectedQuery }}
       />
       <ProductsContainer
