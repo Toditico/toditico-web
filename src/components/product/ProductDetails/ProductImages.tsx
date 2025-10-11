@@ -75,7 +75,7 @@ export default function ProductImages({ images }: Props) {
   }
 
   const carrouselElements = groupedImages.map((group, groupIndex) => (
-    <div key={groupIndex} className="flex gap-2 justify-center pb-3">
+    <div key={groupIndex} className="flex justify-start pb-3 gap-5">
       {group.map((secondaryImage, imageIdx) => (
         <div
           key={secondaryImage}
