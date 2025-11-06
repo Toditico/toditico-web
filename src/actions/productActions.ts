@@ -36,7 +36,7 @@ const filterProductsAction = unstable_cache(
     limit: number,
   ): Promise<FilterProductsType> => {
     const { result, paginationInfo } = await productService.filterProducts(
-      text,
+      text.trim(),
       inventoryId,
       currencyId,
       moduleId,
@@ -59,7 +59,7 @@ const getProductsAutocompleteAction = unstable_cache(
     currencyId: string,
   ): Promise<Product[]> => {
     const data = await productService.getAutocomplete(
-      text,
+      text.trim(),
       inventoryId,
       currencyId,
     );
